@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.1] - 2026-05-06
+
+### Fixed
+- show build metadata only in dev mode
+
+
 ## [0.7.0] - 2026-05-05
 
 ### Added
