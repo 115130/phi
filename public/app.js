@@ -10,7 +10,7 @@ import { MessageRenderer } from './message-renderer.js';
 import { ToolCardRenderer } from './tool-card.js';
 import { StateManager } from './state.js';
 import { SessionSidebar } from './session-sidebar.js';
-import { EXTENSION_VERSION, PI_SDK_VERSION } from './version.js';
+import { EXTENSION_VERSION, EXTENSION_VERSION_WITH_BUILD, PI_SDK_VERSION } from './version.js';
 
 // Modules extracted from app.js
 import { AttachmentManager } from './attachment-manager.js';
@@ -89,8 +89,10 @@ const autocomplete = new PromptAutocomplete(chatInput, {
 modelPicker.onContextWindowChange = (size) => costMonitor.setContextWindowSize(size);
 modelPicker.onRequestLogin = () => panels.openAccounts();
 
-// Set version info
-document.getElementById('about-version').textContent = `v${EXTENSION_VERSION}`;
+// Set version info. Release builds show the marketplace version only; Extension Development Host shows build metadata.
+const isDevelopmentMode = document.body.dataset.extensionMode === 'development';
+const displayVersion = isDevelopmentMode ? EXTENSION_VERSION_WITH_BUILD : EXTENSION_VERSION;
+document.getElementById('about-version').textContent = `v${displayVersion}`;
 document.getElementById('about-pi-version').textContent = `v${PI_SDK_VERSION}`;
 
 // ─── DOM refs ─────────────────────────────────────────────────────────────────

@@ -419,7 +419,7 @@ pnpm run release -- minor
 - **ALWAYS run `pnpm run release:status` before preparing a release** to check if a bump is needed
 
 **Build details:**
-- `build` — first runs `scripts/build-num.mjs` to auto-increment `.build-number` and generate `src/version.ts` / `public/version.js`, then runs `build:ext` and `build:web`
+- `build` — first runs `scripts/build-num.mjs` to auto-increment `.build-number` and generate `src/version.ts` / `public/version.js` with base version plus build metadata, then runs `build:ext` and `build:web`
 - `build:ext` — runs `scripts/build-ext.mjs` to bundle `src/extension.ts` + all dependencies (including Pi SDK) into a single `dist/extension.js` via esbuild (ESM, Node.js, minified). It loads local `.env` first (ignored by git and excluded from VSIX packaging), then optionally embeds legacy Google OAuth credentials from `PHI_EMBEDDED_GOOGLE_*` environment variables so release builds can match Pi's old out-of-box Google login without committing secrets to git.
 - `build:web` — bundles `public/app.js` (and all its module imports) into `dist/public/app.js` via esbuild (ESM) + copies `style.css`
 - `vscode` is marked as external (provided by VS Code at runtime)

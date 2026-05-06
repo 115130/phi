@@ -29,7 +29,7 @@ Phi-managed credentials still live in `~/.phi/auth.json`; sessions remain shared
 
 Build: Extension host bundled with esbuild (Pi SDK `0.73.0` included). Self-contained `.vsix`
 at 1.5 MB — no `node_modules` required (though the webview bundle is slightly larger due to full Shiki language support). Published as `gnassro` on Open VSX.
-Auto-incrementing build numbers injected directly into the webview footer.
+Auto-incrementing build numbers are injected into generated version modules and shown in the About panel only while running the VS Code Extension Development Host.
 
 Added Skills integration: Phi now fully supports Pi SDK skills. A dedicated "Skills" panel has been added to the header overlay, and typing `/` in the chat input instantly triggers an interactive slash-command autocomplete to quickly inject `/skill:name` templates.
 

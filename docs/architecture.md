@@ -251,6 +251,7 @@ All styles use VS Code's built-in `--vscode-*` CSS variables exclusively. The ex
 
 ```bash
 # Auto-increment build number (creates src/version.ts and public/version.js)
+# Generated modules export the base extension version, build number, version+build, and Pi SDK version.
 node scripts/build-num.mjs
 
 # Bundle extension host (src/ + Pi SDK → dist/extension.js)
@@ -270,7 +271,7 @@ pnpm run typecheck        # or: npx tsc --noEmit
 pnpm run watch            # or: npm run watch
 ```
 
-VS Code launches the extension from `dist/extension.js` (defined in package.json `"main"` field). The Pi SDK and all dependencies are bundled into this single file — no `node_modules` needed at runtime. `scripts/build-ext.mjs` loads local `.env` values before bundling. If the optional `PHI_EMBEDDED_GOOGLE_*` variables are present during `build:ext`, the resulting bundle includes legacy Google OAuth defaults so users get Pi-like Google login behavior; the values must come from CI/local secrets and must never be committed to source. `.env` / `.env.*` are ignored by git and excluded from VSIX packaging.
+VS Code launches the extension from `dist/extension.js` (defined in package.json `"main"` field). The Pi SDK and all dependencies are bundled into this single file — no `node_modules` needed at runtime. `scripts/build-ext.mjs` loads local `.env` values before bundling. If the optional `PHI_EMBEDDED_GOOGLE_*` variables are present during `build:ext`, the resulting bundle includes legacy Google OAuth defaults so users get Pi-like Google login behavior; the values must come from CI/local secrets and must never be committed to source. `.env` / `.env.*` are ignored by git and excluded from VSIX packaging. `panel-manager.ts` marks the webview with `data-extension-mode="development"` only for VS Code Extension Development Host, so the About panel shows build metadata in dev mode but only the marketplace version in installed builds.
 
 ---
 
