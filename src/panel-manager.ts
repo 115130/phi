@@ -26,7 +26,10 @@ const messageHandlers: MessageHandler[] = [];
 class PhiChatViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = 'phi.chatView';
 
-  constructor(private readonly _extensionUri: vscode.Uri) {}
+  constructor(
+    private readonly _extensionUri: vscode.Uri,
+    private readonly _extensionMode: vscode.ExtensionMode
+  ) {}
 
   resolveWebviewView(
     webviewView: vscode.WebviewView,
@@ -44,7 +47,8 @@ class PhiChatViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.html = buildWebviewHtml(
       webviewView.webview,
-      this._extensionUri
+      this._extensionUri,
+      this._extensionMode
     );
 
     // Route inbound messages to registered handlers
@@ -68,7 +72,7 @@ class PhiChatViewProvider implements vscode.WebviewViewProvider {
 export function initialize(ctx: vscode.ExtensionContext): void {
   extensionCtx = ctx;
 
-  const provider = new PhiChatViewProvider(ctx.extensionUri);
+  const provider = new PhiChatViewProvider(ctx.extensionUri, ctx.extensionMode);
   ctx.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       PhiChatViewProvider.viewType,
@@ -116,10 +120,12 @@ export function onMessage(handler: MessageHandler): void {
 
 function buildWebviewHtml(
   webview: vscode.Webview,
-  extensionUri: vscode.Uri
+  extensionUri: vscode.Uri,
+  extensionMode: vscode.ExtensionMode
 ): string {
   const nonce = getNonce();
   const cacheBust = Date.now();
+  const webviewMode = extensionMode === vscode.ExtensionMode.Development ? 'development' : 'production';
 
   // Convert local file URIs to webview-safe URIs
   const scriptUri = webview.asWebviewUri(
@@ -145,7 +151,7 @@ function buildWebviewHtml(
   <link rel="stylesheet" href="${styleUri}?v=${cacheBust}">
   <title>Phi</title>
 </head>
-<body>
+<body data-extension-mode="${webviewMode}">
   <div class="app-layout">
 
     <!-- ── Header ── -->

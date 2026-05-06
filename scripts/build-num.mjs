@@ -31,9 +31,11 @@ try {
   piSdkVersion = depVersion.replace(/[\^~>=<]/g, '');
 }
 
-const versionStr = `${version}+${num}`;
+const versionWithBuild = `${version}+${num}`;
 
-fs.writeFileSync(path.resolve('src/version.ts'), `export const EXTENSION_VERSION = '${versionStr}';\nexport const PI_SDK_VERSION = '${piSdkVersion}';\n`, 'utf8');
-fs.writeFileSync(path.resolve('public/version.js'), `export const EXTENSION_VERSION = '${versionStr}';\nexport const PI_SDK_VERSION = '${piSdkVersion}';\n`, 'utf8');
+const versionModule = `export const EXTENSION_VERSION = '${version}';\nexport const EXTENSION_BUILD = '${num}';\nexport const EXTENSION_VERSION_WITH_BUILD = '${versionWithBuild}';\nexport const PI_SDK_VERSION = '${piSdkVersion}';\n`;
 
-console.log(`Updated version files to ${versionStr} (Pi SDK ${piSdkVersion})`);
+fs.writeFileSync(path.resolve('src/version.ts'), versionModule, 'utf8');
+fs.writeFileSync(path.resolve('public/version.js'), versionModule, 'utf8');
+
+console.log(`Updated version files to ${versionWithBuild} (Pi SDK ${piSdkVersion})`);
