@@ -21,3 +21,4 @@ scripts
 .env.*
 
 .published-version
+pi-sdk
