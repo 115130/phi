@@ -143,15 +143,15 @@ Responsibilities:
 All `vscode.commands.registerCommand()` calls.
 
 Commands registered:
-- `phi.openChat` — open/reveal the Phi panel
-- `phi.askAboutSelection` — get selection context → send to Pi
-- `phi.newSession` — create a new Pi session
-- `phi.abortSession` — abort the current Pi turn
-- `phi.login` — unified provider login/setup (auth method picker → provider picker → OAuth browser flow or API-key/setup guidance)
-- `phi.logout` — OAuth logout (QuickPick)
-- `phi.addApiKey` — direct API-key setup shortcut (provider picker → masked input → `~/.phi/auth.json`)
-- `phi.removeApiKey` — remove stored API key (QuickPick → `~/.phi/auth.json`)
-- `phi.openTree` — open conversation tree panel (browse/navigate branches)
+- `phi-pi.openChat` — 打开/显示 Phi-Pi 面板
+- `phi-pi.askAboutSelection` — 获取选中内容发送给 Pi
+- `phi-pi.newSession` — 创建新会话
+- `phi-pi.abortSession` — 中止当前轮次
+- `phi-pi.login` — 统一提供商登录/设置（认证方式选择 → 提供商选择 → OAuth 浏览器流程或 API 密钥/设置引导）
+- `phi-pi.logout` — OAuth 退出登录（QuickPick）
+- `phi-pi.addApiKey` — 直接 API 密钥设置（提供商选择 → 密码输入 → `~/.phi/auth.json`）
+- `phi-pi.removeApiKey` — 删除已存的 API 密钥（QuickPick → `~/.phi/auth.json`）
+- `phi-pi.openTree` — 打开对话树面板（浏览/导航分支）
 
 ---
 
@@ -235,7 +235,7 @@ All styles use VS Code's built-in `--vscode-*` CSS variables exclusively. The ex
 ```
 1. User selects text in VS Code editor
 2. User right-clicks → "Phi: Ask About Selection"
-3. commands.ts fires phi.askAboutSelection
+3. commands.ts fires phi-pi.askAboutSelection
 4. editor-context.ts.getSelectionContext() called
 5. Returns { file, startLine, endLine, text, language }
 6. PanelManager.openPanel() (reveals panel)

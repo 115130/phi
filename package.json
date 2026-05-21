@@ -104,7 +104,7 @@
       },
       {
         "command": "phi-pi.openTree",
-        "title": "Phi: Open Conversation Tree",
+        "title": "Phi-Pi: 打开对话树",
         "icon": "$(git-branch)"
       }
     ],

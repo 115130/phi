@@ -257,12 +257,12 @@ This file tracks all tasks for the Phi project.
 - [x] Branch summarization on navigation via `session.navigateTree()`
 - [x] Chat syncs after navigation
 - [x] Available in command palette: "Conversation Tree"
-- [x] `phi.openTree` VS Code command registered
+- [x] `phi-pi.openTree` VS Code command registered
 - [x] Tree CSS using `--vscode-*` variables
 
 ### Context Integration (Add to Chat) ✅
-- [x] `phi.addSelectionToChat` command — adds selected code as context chip in chat
-- [x] `phi.addFileToChat` command — adds file content as context chip in chat (explorer right-click)
+- [x] `phi-pi.addSelectionToChat` command — adds selected code as context chip in chat
+- [x] `phi-pi.addFileToChat` command — adds file content as context chip in chat (explorer right-click)
 - [x] Editor right-click context menu: "Phi: Add to Chat" (when selection exists)
 - [x] Explorer right-click context menu: "Phi: Add File to Chat" (files only, not folders)
 - [x] `Cmd+Shift+L` when selection exists → adds selection to chat (opens panel if needed)
