@@ -140,6 +140,11 @@
     "configuration": {
       "title": "Phi-Pi（φ）",
       "properties": {
+        "phi.blockImages": {
+          "type": "boolean",
+          "default": false,
+          "description": "禁止向 AI 发送图片。开启后，粘贴/拖入的图片不会被发送给 LLM。"
+        },
         "phi.autoContext": {
           "type": "boolean",
           "default": true,

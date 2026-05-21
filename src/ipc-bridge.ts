@@ -33,6 +33,7 @@ type WebviewMessage =
   // Agent controls
   | { type: 'compact' }
   | { type: 'set_auto_compaction'; enabled: boolean }
+  | { type: 'set_block_images'; enabled: boolean }
   | { type: 'get_session_stats' }
   // Auth
   | { type: 'login' }
@@ -52,7 +53,8 @@ type WebviewMessage =
   | { type: 'toggle_extension'; id: string; enabled: boolean }
   // Misc
   | { type: 'open_url'; url: string }
-  | { type: 'open_file_picker' };
+  | { type: 'open_file_picker' }
+  | { type: 'export_chat' };
 
 let initialized = false;
 
@@ -169,6 +171,11 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
       sendRpcResponse('set_auto_compaction', true);
       break;
 
+    case 'set_block_images':
+      await vscode.workspace.getConfiguration('phi').update('blockImages', message.enabled, true);
+      sendRpcResponse('set_block_images', true, { enabled: message.enabled });
+      break;
+
     case 'get_session_stats': {
       const stats = AgentManager.getSessionStats();
       const contextUsage = AgentManager.getContextUsage();
@@ -228,6 +235,12 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
       if (urlMsg.url) {
         vscode.env.openExternal(vscode.Uri.parse(urlMsg.url));
       }
+      break;
+    }
+
+    case 'export_chat': {
+      const exported = await AgentManager.exportSession();
+      sendRpcResponse('export_chat', !!exported, { path: exported });
       break;
     }
 

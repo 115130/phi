@@ -338,6 +338,20 @@ function buildWebviewHtml(
           </div>
           <button class="settings-toggle" id="toggle-completion-sound"></button>
         </div>
+        <div class="settings-row">
+          <span class="settings-label">禁止发送图片</span>
+          <span class="settings-meta">开启后图片不会被发给 AI</span>
+          <button class="settings-toggle" id="toggle-block-images"></button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">导出</div>
+        <button class="settings-nav-row" id="export-chat-btn">
+          <span class="settings-label">导出当前会话</span>
+          <span class="settings-nav-icon">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </span>
+        </button>
       </div>
       <div class="settings-section">
         <div class="settings-section-title">扩展</div>

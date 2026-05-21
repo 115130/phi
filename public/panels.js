@@ -23,6 +23,8 @@ export class PanelsManager {
     this.btnThinkingLevel = document.getElementById('btn-thinking-level');
     this.toggleShowThinking = document.getElementById('toggle-show-thinking');
     this.toggleCompletionSound = document.getElementById('toggle-completion-sound');
+    this.toggleBlockImages = document.getElementById('toggle-block-images');
+    this.exportChatBtn = document.getElementById('export-chat-btn');
     this.manageExtensionsBtn = document.getElementById('manage-extensions-btn');
 
     // DOM refs - Extensions
@@ -110,6 +112,22 @@ export class PanelsManager {
       this.toggleCompletionSound.className = `settings-toggle${nextValue ? ' on' : ''}`;
       localStorage.setItem('phi-completion-sound', String(nextValue));
       this.onToggleCompletionSound?.(nextValue);
+    });
+
+    // Block images toggle
+    VscodeIPC.on('rpc_response', (msg) => {
+      if (msg.command === 'set_block_images' && msg.success) {
+        this.toggleBlockImages.className = `settings-toggle${msg.data.enabled ? ' on' : ''}`;
+      }
+    });
+    this.toggleBlockImages.addEventListener('click', () => {
+      const isOn = this.toggleBlockImages.classList.contains('on');
+      VscodeIPC.send({ type: 'set_block_images', enabled: !isOn });
+    });
+
+    // Export chat
+    this.exportChatBtn.addEventListener('click', () => {
+      VscodeIPC.send({ type: 'export_chat' });
     });
 
     // ── About ──

@@ -180,6 +180,7 @@ export interface ExtensionInfo {
  * If the agent is streaming → queues via session.steer() (interrupts current turn)
  *
  * Images: strips the "data:mime;base64," prefix before sending to the SDK.
+ * If phi-pi.blockImages is enabled, images are discarded.
  */
 export async function prompt(
   text: string,
@@ -187,7 +188,11 @@ export async function prompt(
 ): Promise<void> {
   if (!session) throw new Error('[Phi] AgentManager not initialized');
 
-  const imagePayloads = images?.map((img) => ({
+  // Check if images are blocked by user setting
+  const blockImages = vscode.workspace.getConfiguration('phi').get<boolean>('blockImages') ?? false;
+  const finalImages = blockImages ? undefined : images;
+
+  const imagePayloads = finalImages?.map((img) => ({
     type: 'image' as const,
     data: img.data.replace(/^data:[^;]+;base64,/, ''),
     mimeType: img.mimeType,
@@ -376,6 +381,83 @@ export async function compact(): Promise<any> {
   return await session.compact();
 }
 
+/**
+ * Export the current session as a Markdown file.
+ * Returns the file path if saved, or null if cancelled.
+ */
+export async function exportSession(): Promise<string | null> {
+  if (!session) {
+    vscode.window.showWarningMessage('[Phi] 没有活动的会话。');
+    return null;
+  }
+
+  const entries = session.sessionManager.getEntries();
+  const lines: string[] = [];
+
+  lines.push('# Phi-Pi 对话导出\n');
+  const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+  lines.push(`导出时间：${now}\n`);
+  lines.push(`会话模型：${session.model?.id || '未知'}\n`);
+  lines.push(`提供商：${session.model?.provider || '未知'}\n`);
+  lines.push('---\n');
+
+  for (const entry of entries) {
+    if (entry.type !== 'message') continue;
+    const msg = entry.message;
+    if (msg.role === 'user') {
+      const text = typeof msg.content === 'string' ? msg.content : '[图片/复杂内容]';
+      lines.push(`## 🧑 用户\n\n${text}\n`);
+    } else if (msg.role === 'assistant') {
+      const textParts: string[] = [];
+      const toolCalls: string[] = [];
+      const content = msg.content as any[] | string;
+      if (typeof content === 'string') {
+        textParts.push(content);
+      } else if (Array.isArray(content)) {
+        for (const block of content) {
+          if (block.type === 'text') {
+            textParts.push(block.text);
+          } else if (block.type === 'tool_use' || block.type === 'toolCall') {
+            const args = JSON.stringify(block.arguments || block.input || {});
+            toolCalls.push(`  - **工具**: \`${block.name}\``);
+            if (args && args !== '{}') toolCalls.push(`    \`\`\`json\n    ${args}\n    \`\`\``);
+          }
+        }
+      }
+      if (textParts.length > 0) {
+        lines.push(`## 🤖 助手\n\n${textParts.join('\n')}\n`);
+      }
+      if (toolCalls.length > 0) {
+        lines.push('### 工具调用\n');
+        lines.push(toolCalls.join('\n') + '\n');
+      }
+    } else if (msg.role === 'toolResult') {
+      const toolName = (msg as any).toolName || '';
+      const resultText = typeof msg.content === 'string' ? msg.content : '[工具结果]';
+      if (resultText.length < 500) {
+        lines.push(`> **工具结果**${toolName ? `（${toolName}）` : ''}: ${resultText}\n`);
+      }
+    }
+  }
+
+  const uri = await vscode.window.showSaveDialog({
+    filters: { Markdown: ['md'] },
+    defaultUri: vscode.Uri.file(`phi-export-${Date.now()}.md`),
+    title: '导出会话为 Markdown',
+  });
+
+  if (!uri) return null;
+
+  const encoder = new TextEncoder();
+  await vscode.workspace.fs.writeFile(uri, encoder.encode(lines.join('\n')));
+  await vscode.window.showTextDocument(uri);
+
+  return uri.fsPath;
+}
+
+/**
+ * Enable or disable auto-compaction.
+ */
 export function setAutoCompaction(enabled: boolean): void {
   if (!session) return;
   session.setAutoCompactionEnabled(enabled);
