@@ -1840,6 +1840,29 @@ body.hide-thinking .thinking-block { display: none; }
   opacity: 0.6;
 }
 
+.keybinding-hints {
+  display: flex;
+  gap: 12px;
+  padding: 2px 12px;
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+  opacity: 0.5;
+  border-top: 1px solid var(--vscode-panel-border, transparent);
+}
+
+.keybinding-hints kbd {
+  display: inline-block;
+  padding: 0px 4px;
+  font-size: 10px;
+  font-family: var(--vscode-editor-font-family, monospace);
+  background: var(--vscode-keybindingLabel-background, rgba(127,127,127,0.1));
+  color: var(--vscode-keybindingLabel-foreground, var(--vscode-foreground));
+  border: 1px solid var(--vscode-keybindingLabel-border, rgba(127,127,127,0.2));
+  border-bottom-width: 2px;
+  border-bottom-color: var(--vscode-keybindingLabel-bottomBorder, rgba(127,127,127,0.3));
+  border-radius: 3px;
+}
+
 /* ═══════════════════════════════════════════════════════
    System / Error messages
    ═══════════════════════════════════════════════════════ */

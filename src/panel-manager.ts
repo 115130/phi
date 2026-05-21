@@ -274,6 +274,14 @@ function buildWebviewHtml(
         </div>
       </form>
 
+      <!-- Keybinding hints -->
+      <div class="keybinding-hints" id="keybinding-hints">
+        <span class="hint-item"><kbd>Esc</kbd> 中止</span>
+        <span class="hint-item"><kbd>⌘L</kbd> 打开</span>
+        <span class="hint-item"><kbd>⌘⇧=</kbd> 添加选中</span>
+        <span class="hint-item"><kbd>↑</kbd> 编辑上条消息</span>
+      </div>
+
       <!-- Context usage footer -->
       <div class="input-footer">
         <div class="pill session-cost" id="session-cost" title="会话费用"></div>
