@@ -58,7 +58,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     IpcBridge.forwardPiEvent(event);
   });
 
-  // 6. Register all commands (phi.openChat, phi.askAboutSelection, etc.)
+  // 6. Register all commands (phi-pi.openChat, phi-pi.askAboutSelection, etc.)
   registerCommands(ctx);
 
   // 7. Register floating "Chat ⌘+" button on text selection
@@ -72,7 +72,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   );
   statusBarItem.text = '$(comment-discussion) Phi';
   statusBarItem.tooltip = '打开 Phi 聊天';
-  statusBarItem.command = 'phi.openChat';
+  statusBarItem.command = 'phi-pi.openChat';
   statusBarItem.show();
   ctx.subscriptions.push(statusBarItem);
 
@@ -83,7 +83,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     setTimeout(async () => {
       try {
         // Focus the Phi view (creates it if needed)
-        await vscode.commands.executeCommand('phi.chatView.focus');
+        await vscode.commands.executeCommand('phi-pi.chatView.focus');
         // Small delay for the view to render
         await new Promise(r => setTimeout(r, 300));
         // Move the focused view to the secondary sidebar

@@ -8,7 +8,7 @@ import { getNonce } from './utils.js';
  * This ensures Phi lives in the sidebar — files never open inside it.
  *
  * Rules:
- * - Registered as a WebviewViewProvider for the "phi.chatView" view.
+ * - Registered as a WebviewViewProvider for the "phi-pi.chatView" view.
  * - All assets (JS, CSS) are loaded from extensionUri (local files, no CDN).
  * - The webview HTML must include a CSP nonce on all <script> tags.
  */
@@ -24,7 +24,7 @@ const messageHandlers: MessageHandler[] = [];
  * The WebviewViewProvider that VS Code calls when the view container is shown.
  */
 class PhiChatViewProvider implements vscode.WebviewViewProvider {
-  public static readonly viewType = 'phi.chatView';
+  public static readonly viewType = 'phi-pi.chatView';
 
   constructor(
     private readonly _extensionUri: vscode.Uri,
@@ -88,7 +88,7 @@ export function initialize(ctx: vscode.ExtensionContext): void {
  */
 export function openPanel(): void {
   // This command focuses the view container, triggering resolveWebviewView
-  vscode.commands.executeCommand('phi.chatView.focus');
+  vscode.commands.executeCommand('phi-pi.chatView.focus');
 }
 
 /**
@@ -149,7 +149,7 @@ function buildWebviewHtml(
       font-src ${webview.cspSource};
     ">
   <link rel="stylesheet" href="${styleUri}?v=${cacheBust}">
-  <title>Phi（φ）</title>
+  <title>Phi-Pi（φ）</title>
 </head>
 <body data-extension-mode="${webviewMode}">
   <div class="app-layout">
@@ -382,12 +382,12 @@ function buildWebviewHtml(
       </button>
     </div>
     <div class="about-body">
-      <div class="about-name">Phi（φ）— AI 编码助手</div>
+      <div class="about-name">Phi-Pi（φ）— AI 编码助手</div>
       <div class="about-desc">Pi 编码助手，原生集成在 VS Code 中。</div>
       <div class="about-table">
         <div class="about-row"><span class="about-key">版本</span><span class="about-val" id="about-version">—</span></div>
         <div class="about-row"><span class="about-key">Pi SDK</span><span class="about-val" id="about-pi-version">—</span></div>
-        <div class="about-row"><span class="about-key">作者</span><span class="about-val">gnassro</span></div>
+        <div class="about-row"><span class="about-key">作者</span><span class="about-val">Pi 社区（原 gnassro）</span></div>
         <div class="about-row"><span class="about-key">许可证</span><span class="about-val">MIT</span></div>
         <div class="about-row"><span class="about-key">引擎</span><span class="about-val">VS Code ≥1.85</span></div>
       </div>

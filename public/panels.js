@@ -117,10 +117,10 @@ export class PanelsManager {
     this.aboutClose.addEventListener('click', () => this.closeAbout());
     this.aboutOverlay.addEventListener('click', () => this.closeAbout());
     this.aboutReportIssue.addEventListener('click', () => {
-      VscodeIPC.send({ type: 'open_url', url: 'https://github.com/gnassro/phi/issues/new' });
+      VscodeIPC.send({ type: 'open_url', url: 'https://github.com/pi/phi-pi/issues/new' });
     });
     this.aboutGithub.addEventListener('click', () => {
-      VscodeIPC.send({ type: 'open_url', url: 'https://github.com/gnassro/phi' });
+      VscodeIPC.send({ type: 'open_url', url: 'https://github.com/pi/phi-pi' });
     });
 
     // ── Accounts ──

@@ -121,7 +121,7 @@ export async function initialize(workspaceCwd: string): Promise<void> {
     const disabledSet = new Set(disabledIds.filter((id) => !id.startsWith('<inline:')));
 
     const activeFactories = [];
-    if (!disabledSet.has('phi.legacy-google-providers')) {
+    if (!disabledSet.has('phi-pi.legacy-google-providers')) {
       activeFactories.push(legacyGoogleProvidersExtension);
     }
 
@@ -137,9 +137,9 @@ export async function initialize(workspaceCwd: string): Promise<void> {
 
           loadedExtensions = [
             {
-              id: 'phi.legacy-google-providers',
+              id: 'phi-pi.legacy-google-providers',
               name: 'Google Cloud Code Assist 和 Antigravity（旧版）',
-              enabled: !disabledSet.has('phi.legacy-google-providers'),
+              enabled: !disabledSet.has('phi-pi.legacy-google-providers'),
               isBuiltIn: true,
             },
             ...userExtensions.map((ext) => ({

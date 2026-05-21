@@ -172,11 +172,11 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
 
     // ── Auth ──
     case 'login':
-      vscode.commands.executeCommand('phi.login');
+      vscode.commands.executeCommand('phi-pi.login');
       break;
 
     case 'logout':
-      vscode.commands.executeCommand('phi.logout', message.providerId, message.providerName);
+      vscode.commands.executeCommand('phi-pi.logout', message.providerId, message.providerName);
       break;
 
     case 'get_accounts': {
@@ -187,11 +187,11 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
     }
 
     case 'add_api_key':
-      vscode.commands.executeCommand('phi.addApiKey');
+      vscode.commands.executeCommand('phi-pi.addApiKey');
       break;
 
     case 'remove_api_key':
-      vscode.commands.executeCommand('phi.removeApiKey', message.providerId, message.providerName);
+      vscode.commands.executeCommand('phi-pi.removeApiKey', message.providerId, message.providerName);
       break;
 
     // ── Skills ──

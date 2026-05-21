@@ -249,17 +249,17 @@ Full specification: `docs/ipc-protocol.md`
 
 | Command ID | Title | Keybinding | When |
 |---|---|---|---|
-| `phi.openChat` | Phi: Open Chat | `Cmd+Shift+L` / `Ctrl+Shift+L` | Always |
-| `phi.addSelectionToChat` | Phi: Add to Chat | `Cmd+Shift+=` / `Ctrl+Shift+=` | `editorHasSelection` |
-| `phi.addFileToChat` | Phi: Add File to Chat | — | Explorer right-click (files only) |
-| `phi.askAboutSelection` | Phi: Ask About Selection | — | `editorHasSelection` |
-| `phi.newSession` | Phi: New Session | — | Always |
-| `phi.abortSession` | Phi: Abort Current Turn | `Escape` | Panel focused |
-| `phi.login` | Phi: Login | — | Always |
-| `phi.logout` | Phi: Logout | — | Always |
-| `phi.addApiKey` | Phi: Add API Key | — | Always |
-| `phi.removeApiKey` | Phi: Remove API Key | — | Always |
-| `phi.openTree` | Phi: Open Conversation Tree | — | Always |
+| `phi-pi.openChat` | Phi: Open Chat | `Cmd+Shift+L` / `Ctrl+Shift+L` | Always |
+| `phi-pi.addSelectionToChat` | Phi: Add to Chat | `Cmd+Shift+=` / `Ctrl+Shift+=` | `editorHasSelection` |
+| `phi-pi.addFileToChat` | Phi: Add File to Chat | — | Explorer right-click (files only) |
+| `phi-pi.askAboutSelection` | Phi: Ask About Selection | — | `editorHasSelection` |
+| `phi-pi.newSession` | Phi: New Session | — | Always |
+| `phi-pi.abortSession` | Phi: Abort Current Turn | `Escape` | Panel focused |
+| `phi-pi.login` | Phi: Login | — | Always |
+| `phi-pi.logout` | Phi: Logout | — | Always |
+| `phi-pi.addApiKey` | Phi: Add API Key | — | Always |
+| `phi-pi.removeApiKey` | Phi: Remove API Key | — | Always |
+| `phi-pi.openTree` | Phi: Open Conversation Tree | — | Always |
 
 ---
 
@@ -301,7 +301,7 @@ Full reference: `docs/pi-sdk.md`
 
 4. **Use `--vscode-*` CSS variables for everything.** Every color, border, and shadow must use VS Code's built-in CSS variables (e.g. `var(--vscode-editor-background)`, `var(--vscode-foreground)`). No hardcoded `#hex` or `rgb()` in component styles. No custom theme definitions — the extension follows the user's VS Code theme automatically.
 
-5. **One panel at a time.** `panel-manager.ts` enforces that only one Phi WebviewPanel exists. If `phi.openChat` is called while a panel already exists, reveal the existing one — never create a second.
+5. **One panel at a time.** `panel-manager.ts` enforces that only one Phi WebviewPanel exists. If `phi-pi.openChat` is called while a panel already exists, reveal the existing one — never create a second.
 
 6. **Content Security Policy is mandatory.** The webview HTML must include a strict CSP with a nonce. All `<script>` tags must use the same nonce. No inline event handlers (`onclick=`, `onerror=`, etc.). VS Code enforces this.
 

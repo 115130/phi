@@ -128,7 +128,7 @@ pnpm run build            # or: npm run build
 ```bash
 # automatically runs build first
 pnpm run package          # or: npm run package
-code --install-extension phi-agent-0.7.1.vsix
+code --install-extension phi-pi-0.1.0.vsix
 ```
 
 ---

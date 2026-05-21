@@ -1,14 +1,14 @@
 {
-  "name": "phi-agent",
-  "displayName": "Phi — Pi AI Agent",
-  "description": "The Pi AI coding agent, natively inside VS Code. Full session continuity, real-time streaming, and deep editor context awareness.",
-  "version": "0.7.1",
-  "publisher": "gnassro",
+  "name": "phi-pi",
+  "displayName": "Phi-Pi AI Agent",
+  "description": "Phi-Pi：将 Pi AI 编程助手完整移植到 VS Code。支持全会话连续性、实时流式输出、深度编辑器上下文集成。",
+  "version": "0.1.0",
+  "publisher": "pi",
   "icon": "assets/phi-icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gnassro/phi"
+    "url": "https://github.com/pi/phi-pi"
   },
   "engines": {
     "vscode": "^1.85.0"
@@ -36,18 +36,18 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "phi-sidebar",
-          "title": "Phi（φ）",
+          "id": "phi-pi-sidebar",
+          "title": "Phi-Pi（φ）",
           "icon": "assets/phi-chat.svg"
         }
       ]
     },
     "views": {
-      "phi-sidebar": [
+      "phi-pi-sidebar": [
         {
           "type": "webview",
-          "id": "phi.chatView",
-          "name": "Phi"
+          "id": "phi-pi.chatView",
+          "name": "Phi-Pi"
         }
       ]
     },
@@ -98,8 +98,8 @@
         "icon": "$(key)"
       },
       {
-        "command": "phi.removeApiKey",
-        "title": "Phi: Remove API Key",
+        "command": "phi-pi.removeApiKey",
+        "title": "Phi-Pi: 删除 API 密钥",
         "icon": "$(trash)"
       },
       {
@@ -138,7 +138,7 @@
       ]
     },
     "configuration": {
-      "title": "Phi（φ）",
+      "title": "Phi-Pi（φ）",
       "properties": {
         "phi.autoContext": {
           "type": "boolean",

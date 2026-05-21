@@ -353,16 +353,16 @@ async function confirmProviderCredentialAction(
  * NOT here. Commands just open the panel and send messages.
  */
 export function registerCommands(ctx: vscode.ExtensionContext): void {
-  // ── phi.openChat ──────────────────────────────────────────────────────────
+  // ── phi-pi.openChat ──────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.openChat', () => {
+    vscode.commands.registerCommand('phi-pi.openChat', () => {
       PanelManager.openPanel();
     })
   );
 
-  // ── phi.addSelectionToChat ────────────────────────────────────────────────
+  // ── phi-pi.addSelectionToChat ────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.addSelectionToChat', () => {
+    vscode.commands.registerCommand('phi-pi.addSelectionToChat', () => {
       const contextBlock = EditorContext.buildSelectionContext();
       if (!contextBlock) {
         vscode.window.showInformationMessage('[Phi] 请先选中代码。');
@@ -373,9 +373,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.addFileToChat ─────────────────────────────────────────────────────
+  // ── phi-pi.addFileToChat ─────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.addFileToChat', (uri?: vscode.Uri) => {
+    vscode.commands.registerCommand('phi-pi.addFileToChat', (uri?: vscode.Uri) => {
       if (!uri) {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -394,9 +394,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.askAboutSelection ─────────────────────────────────────────────────
+  // ── phi-pi.askAboutSelection ─────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.askAboutSelection', async () => {
+    vscode.commands.registerCommand('phi-pi.askAboutSelection', async () => {
       const selectionPrompt = EditorContext.buildSelectionPrompt();
       if (!selectionPrompt) {
         vscode.window.showInformationMessage(
@@ -409,9 +409,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.newSession ────────────────────────────────────────────────────────
+  // ── phi-pi.newSession ────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.newSession', async () => {
+    vscode.commands.registerCommand('phi-pi.newSession', async () => {
       const confirmed = await vscode.window.showWarningMessage(
         '开始新的 Pi 会话？当前对话将被保存。',
         { modal: true },
@@ -425,9 +425,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.deleteSession ─────────────────────────────────────────────────────
+  // ── phi-pi.deleteSession ─────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.deleteSession', async (sessionPath?: string) => {
+    vscode.commands.registerCommand('phi-pi.deleteSession', async (sessionPath?: string) => {
       if (!sessionPath) return;
       const answer = await vscode.window.showWarningMessage(
         "确定要删除此会话吗？它将移至系统回收站。",
@@ -457,17 +457,17 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.abortSession ──────────────────────────────────────────────────────
+  // ── phi-pi.abortSession ──────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.abortSession', async () => {
+    vscode.commands.registerCommand('phi-pi.abortSession', async () => {
       if (!AgentManager.isStreaming()) return;
       await AgentManager.abort();
     })
   );
 
-  // ── phi.login ─────────────────────────────────────────────────────────────
+  // ── phi-pi.login ─────────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.login', async () => {
+    vscode.commands.registerCommand('phi-pi.login', async () => {
       await runLoginFlow({
         title: 'Phi: 登录',
         placeHolder: '选择一个提供商',
@@ -477,9 +477,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.logout ────────────────────────────────────────────────────────────
+  // ── phi-pi.logout ────────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.logout', async (providerId?: string, providerName?: string) => {
+    vscode.commands.registerCommand('phi-pi.logout', async (providerId?: string, providerName?: string) => {
       const picked = providerId
         ? getStoredCredentialProvider('oauth', providerId, providerName)
         : await pickStoredCredentialProvider('oauth', {
@@ -511,9 +511,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.addApiKey ─────────────────────────────────────────────────────────
+  // ── phi-pi.addApiKey ─────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.addApiKey', async () => {
+    vscode.commands.registerCommand('phi-pi.addApiKey', async () => {
       await runLoginFlow({
         authType: 'api_key',
         title: 'Phi: 添加 API 密钥',
@@ -524,9 +524,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.removeApiKey ──────────────────────────────────────────────────────
+  // ── phi-pi.removeApiKey ──────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.removeApiKey', async (providerId?: string, providerName?: string) => {
+    vscode.commands.registerCommand('phi-pi.removeApiKey', async (providerId?: string, providerName?: string) => {
       const picked = providerId
         ? getStoredCredentialProvider('api_key', providerId, providerName)
         : await pickStoredCredentialProvider('api_key', {
@@ -558,9 +558,9 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     })
   );
 
-  // ── phi.openTree ──────────────────────────────────────────────────────────
+  // ── phi-pi.openTree ──────────────────────────────────────────────────────────
   ctx.subscriptions.push(
-    vscode.commands.registerCommand('phi.openTree', () => {
+    vscode.commands.registerCommand('phi-pi.openTree', () => {
       PanelManager.openPanel();
       // Small delay to ensure webview is ready
       setTimeout(() => {

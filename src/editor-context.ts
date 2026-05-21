@@ -207,7 +207,7 @@ function getDiagnostics(): DiagnosticItem[] {
 
 /**
  * Build a formatted prompt string from the current selection.
- * Used by the "phi.askAboutSelection" command.
+ * Used by the "phi-pi.askAboutSelection" command.
  *
  * Example output:
  *   In `src/app.ts` lines 42-58 (typescript):
@@ -227,7 +227,7 @@ export function buildSelectionPrompt(): string | null {
 
 /**
  * Build a context block object from the current selection.
- * Used by "phi.addSelectionToChat" to insert a lightweight reference in the chat input.
+ * Used by "phi-pi.addSelectionToChat" to insert a lightweight reference in the chat input.
  * Only sends path + line numbers — Pi can read the file itself.
  */
 export function buildSelectionContext(): {
@@ -259,7 +259,7 @@ export function buildSelectionContext(): {
 
 /**
  * Build a context block object from a file URI.
- * Used by "phi.addFileToChat" to insert a lightweight file reference in the chat input.
+ * Used by "phi-pi.addFileToChat" to insert a lightweight file reference in the chat input.
  * Only sends the path — Pi can read the file itself.
  */
 export function buildFileContext(uri: vscode.Uri): {
