@@ -79,7 +79,7 @@ export class CostMonitor {
 
   _updateCostDisplay() {
     if (this.sessionTotalCost > 0) {
-      this.sessionCostEl.textContent = `$${this.sessionTotalCost.toFixed(4)}`;
+      this.sessionCostEl.textContent = `¥${(this.sessionTotalCost * 7.2).toFixed(2)}`;
       this.sessionCostEl.classList.add('visible');
     } else {
       this.sessionCostEl.classList.remove('visible');
@@ -89,12 +89,12 @@ export class CostMonitor {
   _updateTokenUsage() {
     if (this.lastInputTokens > 0 && this.contextWindowSize > 0) {
       const pct = Math.round((this.lastInputTokens / this.contextWindowSize) * 100);
-      this.tokenUsageEl.innerHTML = `<span>${pct}% context</span>`;
+      this.tokenUsageEl.innerHTML = `<span>上下文 ${pct}%</span>`;
       this.tokenUsageEl.classList.add('visible');
       this.tokenUsageEl.classList.remove('warning', 'critical');
       if (pct >= 80) this.tokenUsageEl.classList.add('critical');
       else if (pct >= 60) this.tokenUsageEl.classList.add('warning');
-      this.tokenUsageEl.title = `Context: ${(this.lastInputTokens / 1000).toFixed(1)}k / ${(this.contextWindowSize / 1000).toFixed(0)}k tokens`;
+      this.tokenUsageEl.title = `上下文: ${(this.lastInputTokens / 1000).toFixed(1)}k / ${(this.contextWindowSize / 1000).toFixed(0)}k tokens`;
     } else if (this.lastInputTokens > 0) {
       this.tokenUsageEl.innerHTML = `<span>${(this.lastInputTokens / 1000).toFixed(1)}k tokens</span>`;
       this.tokenUsageEl.classList.add('visible');
@@ -120,9 +120,9 @@ export class CostMonitor {
     const free = Math.max(0, this.contextWindowSize - totalUsed);
 
     const segments = [
-      { label: 'Cached', tokens: cacheRead, color: 'cache' },
-      { label: 'Input', tokens: input, color: 'messages' },
-      { label: 'Available', tokens: free, color: 'free' },
+      { label: '缓存', tokens: cacheRead, color: 'cache' },
+      { label: '输入', tokens: input, color: 'messages' },
+      { label: '可用', tokens: free, color: 'free' },
     ];
 
     this.contextBar.innerHTML = '';
@@ -145,7 +145,7 @@ export class CostMonitor {
     }
 
     const pct = Math.round((totalUsed / this.contextWindowSize) * 100);
-    this.contextVizUsed.textContent = `${pct}% used`;
+    this.contextVizUsed.textContent = `已用 ${pct}%`;
     this.contextVizTotal.textContent = `${this._formatTokens(totalUsed)} / ${this._formatTokens(this.contextWindowSize)}`;
   }
 }

@@ -80,7 +80,7 @@ export class SessionSidebar {
       item.classList.add('active');
     }
 
-    const title = session.name || session.firstMessage || 'Empty session';
+    const title = session.name || session.firstMessage || '空会话';
     const time = this.formatTime(session.mtime || session.modified || session.timestamp);
     const favIcon = this.isFavourite(item.dataset.filePath) ? '<span class="session-fav-icon">★</span>' : '';
 
@@ -88,7 +88,7 @@ export class SessionSidebar {
       <div class="session-title-row">
         ${favIcon}
         <div class="session-title" title="${this.escapeHtml(title)}">${this.escapeHtml(title)}</div>
-        <button class="session-delete-btn" aria-label="Delete Session" data-tooltip="Delete Session">🗑️</button>
+        <button class="session-delete-btn" aria-label="删除会话" data-tooltip="删除会话">🗑️</button>
       </div>
       <div class="session-meta">${time}</div>
     `;
@@ -115,7 +115,7 @@ export class SessionSidebar {
 
   render() {
     if (this.sessions.length === 0) {
-      this.container.innerHTML = '<div class="session-loading">No sessions found</div>';
+      this.container.innerHTML = '<div class="session-loading">未找到会话</div>';
       return;
     }
 
@@ -132,7 +132,7 @@ export class SessionSidebar {
 
       const header = document.createElement('div');
       header.className = 'project-header favourites-header';
-      header.innerHTML = `<span class="fav-star">★</span> <span>Favourites</span> <span class="project-count">${favSessions.length}</span>`;
+      header.innerHTML = `<span class="fav-star">★</span> <span>收藏</span> <span class="project-count">${favSessions.length}</span>`;
       favGroup.appendChild(header);
 
       const sessionsDiv = document.createElement('div');
@@ -172,10 +172,10 @@ export class SessionSidebar {
       const diffHours = Math.floor(diffMs / 3600000);
       const days = Math.floor(diffMs / 86400000);
 
-      if (diffMins < 1) return 'Just now';
+      if (diffMins < 1) return '刚才';
       if (diffMins < 60) return `${diffMins}m ago`;
       if (diffHours < 24) return `${diffHours}h ago`;
-      if (days === 1) return 'Yesterday';
+      if (days === 1) return '昨天';
       if (days < 7) return date.toLocaleDateString([], { weekday: 'long' });
       return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
     } catch {

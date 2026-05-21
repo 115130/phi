@@ -109,17 +109,17 @@ export class ModelPicker {
 
   _updateLabel() {
     if (this.requiresLogin) {
-      this.dropdownLabel.textContent = 'Login';
+      this.dropdownLabel.textContent = '登录';
       return;
     }
     const shortName = this.currentModelId.replace(/^claude-/, '').replace(/-\d{8}$/, '');
-    this.dropdownLabel.textContent = shortName || 'model';
+    this.dropdownLabel.textContent = shortName || '模型';
   }
 
   _updateButtonState() {
     this.dropdown.classList.toggle('login-required', this.requiresLogin);
-    this.dropdownBtn.setAttribute('aria-label', this.requiresLogin ? 'Open Accounts' : 'Switch model');
-    this.dropdownBtn.setAttribute('title', this.requiresLogin ? 'Open Accounts' : 'Switch model');
+    this.dropdownBtn.setAttribute('aria-label', this.requiresLogin ? '打开账户' : '切换模型');
+    this.dropdownBtn.setAttribute('title', this.requiresLogin ? '打开账户' : '切换模型');
   }
 
   _updateThinkingBtn() {
@@ -131,7 +131,7 @@ export class ModelPicker {
     this.dropdownMenu.innerHTML = '';
     const search = document.createElement('input');
     search.className = 'model-dropdown-search';
-    search.placeholder = 'Search models…';
+    search.placeholder = '搜索模型…';
     search.type = 'text';
     this.dropdownMenu.appendChild(search);
 

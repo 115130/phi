@@ -206,7 +206,7 @@ export class PanelsManager {
     if (extensions.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'extensions-loading';
-      empty.textContent = 'No extensions loaded.';
+      empty.textContent = '未加载扩展。';
       this.extensionsList.appendChild(empty);
       return;
     }
@@ -230,7 +230,7 @@ export class PanelsManager {
       if (ext.isBuiltIn) {
         const badge = document.createElement('span');
         badge.className = 'extension-badge';
-        badge.textContent = 'Built-in';
+        badge.textContent = '内置';
         nameLine.appendChild(badge);
       }
 
@@ -243,11 +243,11 @@ export class PanelsManager {
 
       const toggle = document.createElement('button');
       toggle.className = `settings-toggle${ext.enabled ? ' on' : ''}`;
-      toggle.setAttribute('aria-label', `${ext.enabled ? 'Disable' : 'Enable'} ${ext.name}`);
+      toggle.setAttribute('aria-label', `${ext.enabled ? '禁用' : '启用'} ${ext.name}`);
       toggle.addEventListener('click', () => {
         const isCurrentlyOn = toggle.classList.contains('on');
         toggle.className = `settings-toggle${isCurrentlyOn ? '' : ' on'}`;
-        toggle.setAttribute('aria-label', `${isCurrentlyOn ? 'Enable' : 'Disable'} ${ext.name}`);
+        toggle.setAttribute('aria-label', `${isCurrentlyOn ? '启用' : '禁用'} ${ext.name}`);
         VscodeIPC.send({ type: 'toggle_extension', id: ext.id, enabled: !isCurrentlyOn });
       });
 
@@ -260,7 +260,7 @@ export class PanelsManager {
   _createExtensionsLoading() {
     const loading = document.createElement('div');
     loading.className = 'extensions-loading';
-    loading.textContent = 'Loading extensions...';
+    loading.textContent = '正在加载扩展…';
     return loading;
   }
 
@@ -349,7 +349,7 @@ export class PanelsManager {
     if (activeOAuth.length === 0 && activeApiKeys.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'accounts-empty';
-      empty.textContent = 'No accounts configured yet';
+      empty.textContent = '尚未配置账户';
       this.accountsList.appendChild(empty);
       return;
     }
@@ -357,11 +357,11 @@ export class PanelsManager {
     if (activeOAuth.length > 0) {
       const oauthHeader = document.createElement('div');
       oauthHeader.className = 'accounts-section-header';
-      oauthHeader.textContent = 'OAuth';
+      oauthHeader.textContent = 'OAuth 登录';
       this.accountsList.appendChild(oauthHeader);
 
       activeOAuth.forEach(p => {
-        this.accountsList.appendChild(this._createAccountRow(p.name, '✓', 'Logout', () => {
+        this.accountsList.appendChild(this._createAccountRow(p.name, '✓', '退出登录', () => {
           VscodeIPC.send({ type: 'logout', providerId: p.id, providerName: p.name });
         }));
       });
@@ -370,11 +370,11 @@ export class PanelsManager {
     if (activeApiKeys.length > 0) {
       const apiHeader = document.createElement('div');
       apiHeader.className = 'accounts-section-header';
-      apiHeader.textContent = 'API Keys';
+      apiHeader.textContent = 'API 密钥';
       this.accountsList.appendChild(apiHeader);
 
       activeApiKeys.forEach(p => {
-        this.accountsList.appendChild(this._createAccountRow(p.name, '✓', 'Remove', () => {
+        this.accountsList.appendChild(this._createAccountRow(p.name, '✓', '删除', () => {
           VscodeIPC.send({ type: 'remove_api_key', providerId: p.id, providerName: p.name });
         }));
       });
@@ -415,7 +415,7 @@ export class PanelsManager {
     this.skillsList.innerHTML = '';
 
     if (this.loadedSkills.length === 0) {
-      this.skillsList.innerHTML = '<div style="opacity:0.5; text-align:center; padding: 20px 0;">No skills currently loaded.<br><br><span style="font-size: 10px;">Drop a <code>SKILL.md</code> in your <code>.pi/skills/</code> folder.</span></div>';
+      this.skillsList.innerHTML = '<div style="opacity:0.5; text-align:center; padding: 20px 0;">当前未加载技能。<br><br><span style="font-size: 10px;">将 <code>SKILL.md</code> 放入 <code>.pi/skills/</code> 文件夹。</span></div>';
       return;
     }
 

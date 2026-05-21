@@ -57,13 +57,13 @@ export class MessageRenderer {
       imagesHtml = '<div class="message-images">' +
         message.images.map(img => {
           const src = img.data.startsWith('data:') ? img.data : `data:${img.mimeType || 'image/png'};base64,${img.data}`;
-          return `<img class="message-image" src="${src}" alt="Attached image" />`;
+          return `<img class="message-image" src="${src}" alt="附件图片" />`;
         }).join('') +
         '</div>';
     }
 
     div.innerHTML = `
-      <button class="message-copy-btn" aria-label="Copy message"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="message-copy-btn" aria-label="复制消息"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       <div class="message-content">${imagesHtml}${renderUserMarkdown(message.content)}</div>
     `;
     this._setupCopyBtn(div);
@@ -121,11 +121,11 @@ export class MessageRenderer {
       div.innerHTML = `
         <div class="assistant-error-row">
           <div class="assistant-error" data-error="${this.escapeHtml(message.errorMessage)}">Error: ${this.escapeHtml(message.errorMessage)}</div>
-          <button class="message-copy-btn" aria-label="Copy message">${copyBtnSvg}</button>
+          <button class="message-copy-btn" aria-label="复制消息">${copyBtnSvg}</button>
         </div>
       `;
     } else {
-      const copyBtnHtml = !isStreaming ? `<button class="message-copy-btn" aria-label="Copy message">${copyBtnSvg}</button>` : '';
+      const copyBtnHtml = !isStreaming ? `<button class="message-copy-btn" aria-label="复制消息">${copyBtnSvg}</button>` : '';
 
       div.innerHTML = `
         <div class="message-actions-row">
@@ -281,7 +281,7 @@ export class MessageRenderer {
 
       const btn = document.createElement('button');
       btn.className = 'message-copy-btn';
-      btn.setAttribute('aria-label', 'Copy message');
+      btn.setAttribute('aria-label', '复制消息');
       btn.innerHTML = copyBtnSvg;
       row.appendChild(btn);
 
@@ -334,7 +334,7 @@ export class MessageRenderer {
       if (!actionsRow.querySelector('.message-usage')) {
         const span = document.createElement('span');
         span.className = 'message-usage';
-        span.textContent = `$${usage.cost.total.toFixed(4)}`;
+        span.textContent = `¥${(usage.cost.total * 7.2).toFixed(2)}`;
         actionsRow.insertBefore(span, actionsRow.firstChild);
       }
     }

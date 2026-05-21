@@ -133,7 +133,7 @@ export function transformMessages(messages, model, normalizeToolCallId) {
                         role: "toolResult",
                         toolCallId: tc.id,
                         toolName: tc.name,
-                        content: [{ type: "text", text: "No result provided" }],
+                        content: [{ type: "text", text: "未提供结果" }],
                         isError: true,
                         timestamp: Date.now(),
                     });

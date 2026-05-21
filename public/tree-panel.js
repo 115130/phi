@@ -264,9 +264,9 @@ export class TreePanel {
     opts.appendChild(title);
 
     const actions = [
-      { label: 'Go (no summary)', summarize: false },
-      { label: 'Go with summary', summarize: true },
-      { label: 'Go with custom summary…', summarize: true, custom: true },
+      { label: '前往（无摘要）', summarize: false },
+      { label: '带摘要前往', summarize: true },
+      { label: '自定义摘要前往…', summarize: true, custom: true },
     ];
 
     for (const action of actions) {
@@ -282,7 +282,7 @@ export class TreePanel {
           return;
         }
 
-        this.view.innerHTML = '<div class="tree-loading">Navigating...</div>';
+        this.view.innerHTML = '<div class="tree-loading">导航中…</div>';
         VscodeIPC.send({
           type: 'navigate_tree',
           targetId: node.id,
@@ -294,7 +294,7 @@ export class TreePanel {
 
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'tree-nav-btn cancel';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = '取消';
     cancelBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       opts.remove();
@@ -314,13 +314,13 @@ export class TreePanel {
 
     const label = document.createElement('div');
     label.className = 'tree-nav-title';
-    label.textContent = 'Custom summary instructions:';
+    label.textContent = '自定义摘要指令:';
     opts.appendChild(label);
 
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'tree-nav-input';
-    input.placeholder = 'Focus on…';
+    input.placeholder = '关注点…';
     opts.appendChild(input);
 
     const row = document.createElement('div');
@@ -328,11 +328,11 @@ export class TreePanel {
 
     const goBtn = document.createElement('button');
     goBtn.className = 'tree-nav-btn';
-    goBtn.textContent = 'Navigate';
+    goBtn.textContent = '导航';
     goBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       opts.remove();
-      this.view.innerHTML = '<div class="tree-loading">Navigating...</div>';
+      this.view.innerHTML = '<div class="tree-loading">导航中…</div>';
       VscodeIPC.send({
         type: 'navigate_tree',
         targetId: node.id,
@@ -344,7 +344,7 @@ export class TreePanel {
 
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'tree-nav-btn cancel';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = '取消';
     cancelBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       opts.remove();
@@ -370,13 +370,13 @@ export class TreePanel {
 
     const title = document.createElement('div');
     title.className = 'tree-nav-title';
-    title.textContent = 'Set label:';
+    title.textContent = '设置标签:';
     opts.appendChild(title);
 
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'tree-nav-input';
-    input.placeholder = 'checkpoint, v1, etc.';
+    input.placeholder = '检查点, v1, 等';
     input.value = node.label || '';
     opts.appendChild(input);
 
@@ -385,7 +385,7 @@ export class TreePanel {
 
     const saveBtn = document.createElement('button');
     saveBtn.className = 'tree-nav-btn';
-    saveBtn.textContent = 'Save';
+    saveBtn.textContent = '保存';
     saveBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       opts.remove();
@@ -396,7 +396,7 @@ export class TreePanel {
     if (node.label) {
       const clearBtn = document.createElement('button');
       clearBtn.className = 'tree-nav-btn cancel';
-      clearBtn.textContent = 'Clear';
+      clearBtn.textContent = '清除';
       clearBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         opts.remove();
@@ -407,7 +407,7 @@ export class TreePanel {
 
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'tree-nav-btn cancel';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = '取消';
     cancelBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       opts.remove();

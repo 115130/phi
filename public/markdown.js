@@ -341,10 +341,10 @@ function installCodeBlockCopyHandler() {
     if (!text) return;
 
     copyText(text).then(() => {
-      btn.textContent = 'Copied!';
+      btn.textContent = '已复制！';
       btn.classList.add('copied');
       setTimeout(() => {
-        btn.textContent = 'Copy';
+        btn.textContent = '复制';
         btn.classList.remove('copied');
       }, 2000);
     });

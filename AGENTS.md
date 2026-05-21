@@ -37,7 +37,7 @@ Do NOT leave documentation out of sync with the code. Future agents (and humans)
 
 ## What Is Phi?
 
-**Phi** (φ, the golden ratio) is a **VS Code extension** that brings the full power of the **Pi AI coding agent** (`@mariozechner/pi-coding-agent`) natively into VS Code.
+**Phi** (φ, the golden ratio) is a **VS Code extension** that brings the full power of the **Pi AI coding agent** (`@earendil-works/pi-coding-agent`) natively into VS Code.
 
 - **It is the agent itself**, running inside VS Code's Node.js extension host
 
@@ -129,7 +129,7 @@ phi/
 | Layer | Technology | Reason |
 |---|---|---|
 | Extension host language | TypeScript | Type-safe VS Code API access |
-| Pi agent engine | `@mariozechner/pi-coding-agent` | The Pi SDK — runs in extension host only |
+| Pi agent engine | `@earendil-works/pi-coding-agent` | The Pi SDK — runs in extension host only |
 | UI framework | Vanilla JS + CSS | No build complexity for webview |
 | Webview bundler | `esbuild` | Fast, zero-config, single-file output |
 | Syntax highlighting | `shiki` | Offline TextMate grammar highlighting in the webview |
@@ -267,7 +267,7 @@ Full specification: `docs/ipc-protocol.md`
 
 Full reference: `docs/pi-sdk.md`
 
-1. **Only `src/agent-manager.ts` imports from `@mariozechner/pi-coding-agent`.** No other file may import the Pi SDK directly.
+1. **Only `src/agent-manager.ts` imports from `@earendil-works/pi-coding-agent`.** No other file may import the Pi SDK directly.
 
 2. **Phi uses `AgentSessionRuntime` for session replacement.** `newSession()` / `switchSession()` must go through the runtime, not `AgentSession`.
 
@@ -297,7 +297,7 @@ Full reference: `docs/pi-sdk.md`
 
 2. **No React, no Vue, no framework.** The webview uses vanilla JS. This avoids a build pipeline for the frontend and keeps things simple. If a component pattern is needed, use plain ES6 classes.
 
-3. **Pi SDK stays in the extension host.** Never import `@mariozechner/pi-coding-agent` in any `public/` file. It is a Node.js library and will fail in Chromium.
+3. **Pi SDK stays in the extension host.** Never import `@earendil-works/pi-coding-agent` in any `public/` file. It is a Node.js library and will fail in Chromium.
 
 4. **Use `--vscode-*` CSS variables for everything.** Every color, border, and shadow must use VS Code's built-in CSS variables (e.g. `var(--vscode-editor-background)`, `var(--vscode-foreground)`). No hardcoded `#hex` or `rgb()` in component styles. No custom theme definitions — the extension follows the user's VS Code theme automatically.
 
@@ -439,8 +439,8 @@ dist/
 
 | Resource | Path | What It Provides |
 |---|---|---|
-| **Pi SDK docs** | `/Users/macbook/.nvm/versions/node/v24.14.0/lib/node_modules/@mariozechner/pi-coding-agent/docs/sdk.md` | All Pi SDK patterns and event types |
-| **Pi extension API** | `/Users/macbook/.nvm/versions/node/v24.14.0/lib/node_modules/@mariozechner/pi-coding-agent/docs/extensions.md` | AgentSessionEvent shapes |
+| **Pi SDK docs** | `<pi-sdk-install-path>/docs/sdk.md` | All Pi SDK patterns and event types |
+| **Pi extension API** | `<pi-sdk-install-path>/docs/extensions.md` | AgentSessionEvent shapes |
 
 ---
 

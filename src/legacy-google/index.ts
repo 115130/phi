@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type { ExtensionAPI } from '@mariozechner/pi-coding-agent';
+import type { ExtensionAPI } from '@earendil-works/pi-coding-agent';
 import { streamSimpleGoogleGeminiCli } from './google-gemini-cli.ts';
 import { geminiCliOAuthProvider } from './oauth-google-gemini-cli.ts';
 import { antigravityOAuthProvider } from './oauth-google-antigravity.ts';
@@ -8,7 +8,7 @@ import { geminiCliModels, antigravityModels } from './models.ts';
 export async function legacyGoogleProvidersExtension(pi: ExtensionAPI) {
   // Register Google Cloud Code Assist (Gemini CLI)
   pi.registerProvider("google-gemini-cli", {
-    name: "Google Cloud Code Assist (Gemini CLI)",
+    name: "Google Cloud Code Assist（Gemini CLI）",
     baseUrl: "https://cloudcode-pa.googleapis.com",
     api: "google-gemini-cli",
     models: geminiCliModels as any,
@@ -18,7 +18,7 @@ export async function legacyGoogleProvidersExtension(pi: ExtensionAPI) {
 
   // Register Google Antigravity
   pi.registerProvider("google-antigravity", {
-    name: "Google Antigravity",
+    name: "Google Antigravity（反重力）",
     baseUrl: "https://daily-cloudcode-pa.sandbox.googleapis.com",
     api: "google-gemini-cli",
     models: antigravityModels as any,

@@ -31,7 +31,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     await EnvManager.initialize(ctx);
   } catch (err) {
     vscode.window.showWarningMessage(
-      `[Phi] Could not apply provider environment settings: ${(err as Error).message}`
+      `[Phi] 无法应用提供商环境设置: ${(err as Error).message}`
     );
   }
 
@@ -41,7 +41,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     console.log(`[Phi] Pi runtime ready. CWD: ${cwd}`);
   } catch (err) {
     vscode.window.showErrorMessage(
-      `[Phi] Failed to start Pi session: ${(err as Error).message}`
+      `[Phi] 启动 Pi 会话失败: ${(err as Error).message}`
     );
     return;
   }
@@ -71,7 +71,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     1000
   );
   statusBarItem.text = '$(comment-discussion) Phi';
-  statusBarItem.tooltip = 'Open Phi Chat';
+  statusBarItem.tooltip = '打开 Phi 聊天';
   statusBarItem.command = 'phi.openChat';
   statusBarItem.show();
   ctx.subscriptions.push(statusBarItem);
@@ -94,8 +94,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       } catch {
         // If programmatic move fails, show a tip
         vscode.window.showInformationMessage(
-          'Tip: Right-click the Phi icon in the sidebar → "Move to Secondary Side Bar" to place it on the right.',
-          'Got it'
+          '提示：右键点击侧边栏的 Phi 图标 → 「移动到辅助侧边栏」可将其放在右侧。',
+          '知道了'
         );
       }
     }, 1500);

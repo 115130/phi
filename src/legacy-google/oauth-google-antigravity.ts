@@ -44,7 +44,7 @@ async function getNodeCreateServer() {
     }
     if (_createServer)
         return _createServer;
-    throw new Error("Antigravity OAuth is only available in Node.js environments");
+    throw new Error("Antigravity OAuth 仅在 Node.js 环境中可用");
 }
 async function startCallbackServer() {
     const createServer = await getNodeCreateServer();
@@ -67,22 +67,22 @@ async function startCallbackServer() {
                 const error = url.searchParams.get("error");
                 if (error) {
                     res.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthErrorHtml("Google authentication did not complete.", `Error: ${error}`));
+                    res.end(oauthErrorHtml("Google 认证未完成。", `Error: ${error}`));
                     return;
                 }
                 if (code && state) {
                     res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthSuccessHtml("Google authentication completed. You can close this window."));
+                    res.end(oauthSuccessHtml("Google 认证完成。你可以关闭此窗口。"));
                     settleWait?.({ code, state });
                 }
                 else {
                     res.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthErrorHtml("Missing code or state parameter."));
+                    res.end(oauthErrorHtml("缺少 code 或 state 参数。"));
                 }
             }
             else {
                 res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
-                res.end(oauthErrorHtml("Callback route not found."));
+                res.end(oauthErrorHtml("回调路由未找到。"));
             }
         });
         server.on("error", (err) => {
@@ -135,7 +135,7 @@ async function discoverProject(accessToken, onProgress) {
     };
     // Try endpoints in order: prod first, then sandbox
     const endpoints = ["https://cloudcode-pa.googleapis.com", "https://daily-cloudcode-pa.sandbox.googleapis.com"];
-    onProgress?.("Checking for existing project...");
+    onProgress?.("正在检查现有项目…");
     for (const endpoint of endpoints) {
         try {
             const loadResponse = await fetch(`${endpoint}/v1internal:loadCodeAssist`, {
@@ -167,7 +167,7 @@ async function discoverProject(accessToken, onProgress) {
         }
     }
     // Use fallback project ID
-    onProgress?.("Using default project...");
+    onProgress?.("正在使用默认项目…");
     return DEFAULT_PROJECT_ID;
 }
 /**
@@ -229,7 +229,7 @@ export async function loginAntigravity(onAuth, onProgress, onManualCodeInput) {
     const { clientId, clientSecret } = getOAuthClientCredentials();
     const { verifier, challenge } = await generatePKCE();
     // Start local server for callback
-    onProgress?.("Starting local server for OAuth callback...");
+    onProgress?.("正在启动本机 OAuth 回调服务器…");
     const server = await startCallbackServer();
     let code;
     try {
@@ -249,10 +249,10 @@ export async function loginAntigravity(onAuth, onProgress, onManualCodeInput) {
         // Notify caller with URL to open
         onAuth({
             url: authUrl,
-            instructions: "Complete the sign-in in your browser.",
+            instructions: "在浏览器中完成登录。",
         });
         // Wait for the callback, racing with manual input if provided
-        onProgress?.("Waiting for OAuth callback...");
+        onProgress?.("正在等待 OAuth 回调…");
         if (onManualCodeInput) {
             // Race between browser callback and manual input
             let manualInput;
@@ -312,10 +312,10 @@ export async function loginAntigravity(onAuth, onProgress, onManualCodeInput) {
             }
         }
         if (!code) {
-            throw new Error("No authorization code received");
+            throw new Error("未收到授权码");
         }
         // Exchange code for tokens
-        onProgress?.("Exchanging authorization code for tokens...");
+        onProgress?.("正在交换授权码获取令牌…");
         const tokenResponse = await fetch(TOKEN_URL, {
             method: "POST",
             headers: {
@@ -336,10 +336,10 @@ export async function loginAntigravity(onAuth, onProgress, onManualCodeInput) {
         }
         const tokenData = (await tokenResponse.json());
         if (!tokenData.refresh_token) {
-            throw new Error("No refresh token received. Please try again.");
+            throw new Error("未收到刷新令牌，请重试。");
         }
         // Get user email
-        onProgress?.("Getting user info...");
+        onProgress?.("正在获取用户信息…");
         const email = await getUserEmail(tokenData.access_token);
         // Discover project
         const projectId = await discoverProject(tokenData.access_token, onProgress);
@@ -360,7 +360,7 @@ export async function loginAntigravity(onAuth, onProgress, onManualCodeInput) {
 }
 export const antigravityOAuthProvider = {
     id: "google-antigravity",
-    name: "Antigravity (Gemini 3, Claude, GPT-OSS)",
+    name: "Antigravity（Gemini 3、Claude、GPT-OSS）",
     usesCallbackServer: true,
     async login(callbacks) {
         return loginAntigravity(callbacks.onAuth, callbacks.onProgress, callbacks.onManualCodeInput);
@@ -368,7 +368,7 @@ export const antigravityOAuthProvider = {
     async refreshToken(credentials) {
         const creds = credentials;
         if (!creds.projectId) {
-            throw new Error("Antigravity credentials missing projectId");
+            throw new Error("Antigravity 凭证缺少 projectId");
         }
         return refreshAntigravityToken(creds.refresh, creds.projectId);
     },

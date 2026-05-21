@@ -225,7 +225,7 @@ export function convertMessages(model, context) {
             if (hasImages && !modelSupportsMultimodalFunctionResponse) {
                 contents.push({
                     role: "user",
-                    parts: [{ text: "Tool result image:" }, ...imageParts],
+                    parts: [{ text: "工具结果图片:" }, ...imageParts],
                 });
             }
         }

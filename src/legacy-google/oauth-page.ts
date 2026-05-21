@@ -90,15 +90,15 @@ function renderPage(options) {
 }
 export function oauthSuccessHtml(message) {
     return renderPage({
-        title: "Authentication successful",
-        heading: "Authentication successful",
+        title: "认证成功",
+        heading: "认证成功",
         message,
     });
 }
 export function oauthErrorHtml(message, details) {
     return renderPage({
-        title: "Authentication failed",
-        heading: "Authentication failed",
+        title: "认证失败",
+        heading: "认证失败",
         message,
         details,
     });

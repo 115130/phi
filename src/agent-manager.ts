@@ -14,7 +14,7 @@ import {
   type SessionEntry,
   type SessionInfo,
   type SessionStats,
-} from '@mariozechner/pi-coding-agent';
+} from '@earendil-works/pi-coding-agent';
 import { legacyGoogleProvidersExtension } from './legacy-google/index.js';
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -23,7 +23,7 @@ import * as os from 'os';
 /**
  * AgentManager
  *
- * The ONLY module in Phi that imports from @mariozechner/pi-coding-agent.
+ * The ONLY module in Phi that imports from @earendil-works/pi-coding-agent.
  * All other files must go through this module's exported functions.
  *
  * Owns the Pi AgentSessionRuntime lifecycle:
@@ -138,7 +138,7 @@ export async function initialize(workspaceCwd: string): Promise<void> {
           loadedExtensions = [
             {
               id: 'phi.legacy-google-providers',
-              name: 'Google Cloud Code Assist & Antigravity (Legacy)',
+              name: 'Google Cloud Code Assist 和 Antigravity（旧版）',
               enabled: !disabledSet.has('phi.legacy-google-providers'),
               isBuiltIn: true,
             },
@@ -514,7 +514,7 @@ const API_KEY_PROVIDER_DISPLAY_NAMES: Record<string, string> = {
   'kimi-coding': 'Kimi For Coding',
   mistral: 'Mistral',
   minimax: 'MiniMax',
-  'minimax-cn': 'MiniMax (China)',
+  'minimax-cn': 'MiniMax（中国站）',
   opencode: 'OpenCode Zen',
   'opencode-go': 'OpenCode Go',
   openai: 'OpenAI',
@@ -661,9 +661,9 @@ function isApiKeyLoginProvider(providerId: string, oauthProviderIds: Set<string>
 function getProviderSetupHint(providerId: string): string | undefined {
   switch (providerId) {
     case BEDROCK_PROVIDER_ID:
-      return 'Uses AWS credentials or bearer tokens instead of a single API key.';
+      return '使用 AWS 凭证或 Bearer Token，而非单个 API 密钥。';
     case CLOUDFLARE_PROVIDER_ID:
-      return 'Requires CLOUDFLARE_ACCOUNT_ID in your environment in addition to the API key.';
+      return '除了 API 密钥外，还需要在环境中设置 CLOUDFLARE_ACCOUNT_ID。';
     default:
       return undefined;
   }
@@ -939,24 +939,24 @@ function getEntryPreview(entry: any): { preview: string; role?: string } {
       }
       // Fallback: if preview is still empty, show role
       if (!preview) {
-        preview = role === 'user' ? '(empty)' : '(tool calls)';
+        preview = role === 'user' ? '（空）' : '（工具调用）';
       }
       break;
     }
     case 'compaction':
-      preview = 'Context compacted';
+      preview = '上下文已压缩';
       break;
     case 'branch_summary':
-      preview = entry.summary?.substring(0, 80) || 'Branch summary';
+      preview = entry.summary?.substring(0, 80) || '分支摘要';
       break;
     case 'model_change':
-      preview = `Model → ${entry.modelId}`;
+      preview = `模型 → ${entry.modelId}`;
       break;
     case 'thinking_level_change':
       preview = `Thinking → ${entry.thinkingLevel}`;
       break;
     case 'custom_message':
-      preview = (entry as any).content?.substring(0, 80) || 'Custom message';
+      preview = (entry as any).content?.substring(0, 80) || '自定义消息';
       break;
     default:
       preview = entry.type;

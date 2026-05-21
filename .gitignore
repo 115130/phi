@@ -36,3 +36,9 @@ npm-debug.log*
 .published-version
 src/version.ts
 public/version.js
+
+# Pi SDK standalone binaries (not needed for VS Code extension usage)
+pi-sdk/coding-agent/dist/pi
+pi-sdk/coding-agent/dist/pi-self-contained
+pi-sdk/coding-agent/binaries/
+pi-sdk/coding-agent/pi-windows-x64.zip

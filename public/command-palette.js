@@ -7,11 +7,11 @@
 export class CommandPalette {
   constructor({ onCompact, onSessionStats, onOpenTree, onExpandAllTools, onCollapseAllTools }) {
     this.baseCommands = [
-      { icon: '🗜️', label: 'Compact', desc: 'Compact context to save tokens', action: onCompact },
-      { icon: '📊', label: 'Session Stats', desc: 'Show session statistics', action: onSessionStats },
-      { icon: '🌿', label: 'Conversation Tree', desc: 'Browse and navigate conversation branches', action: onOpenTree },
-      { icon: '⬇️', label: 'Expand All Tools', desc: 'Expand all tool cards', action: onExpandAllTools },
-      { icon: '⬆️', label: 'Collapse All Tools', desc: 'Collapse all tool cards', action: onCollapseAllTools },
+      { icon: '🗜️', label: '压缩', desc: '压缩上下文以节省 Token', action: onCompact },
+      { icon: '📊', label: '会话统计', desc: '显示会话统计信息', action: onSessionStats },
+      { icon: '🌿', label: '对话树', desc: '浏览和导航对话分支', action: onOpenTree },
+      { icon: '⬇️', label: '展开全部工具', desc: '展开所有工具卡片', action: onExpandAllTools },
+      { icon: '⬆️', label: '折叠全部工具', desc: '折叠所有工具卡片', action: onCollapseAllTools },
     ];
     this.commands = [...this.baseCommands];
     this.loadedSkills = [];

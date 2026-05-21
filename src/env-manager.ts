@@ -44,18 +44,18 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'cloudflare-ai-gateway': {
     providerId: 'cloudflare-ai-gateway',
     name: 'Cloudflare AI Gateway',
-    intro: 'Cloudflare AI Gateway requires an account ID and gateway ID in addition to the API key.',
+    intro: 'Cloudflare AI Gateway 除了 API 密钥外，还需要账户 ID 和网关 ID。',
     requiredEnv: [
       {
         name: 'CLOUDFLARE_ACCOUNT_ID',
-        label: 'Cloudflare account ID',
-        description: 'Required account ID for Cloudflare AI Gateway requests.',
-        placeholder: 'Cloudflare account ID',
+        label: 'Cloudflare 账户 ID',
+        description: 'Cloudflare AI Gateway 请求所需的账户 ID。',
+        placeholder: 'Cloudflare 账户 ID',
       },
       {
         name: 'CLOUDFLARE_GATEWAY_ID',
-        label: 'Cloudflare gateway ID',
-        description: 'The gateway ID configured in your Cloudflare dashboard.',
+        label: 'Cloudflare 网关 ID',
+        description: '在 Cloudflare 控制面板中配置的网关 ID。',
         placeholder: 'my-ai-gateway',
       },
     ],
@@ -64,13 +64,13 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'cloudflare-workers-ai': {
     providerId: 'cloudflare-workers-ai',
     name: 'Cloudflare Workers AI',
-    intro: 'Cloudflare Workers AI needs an account ID in addition to the API key.',
+    intro: 'Cloudflare Workers AI 除了 API 密钥外，还需要账户 ID。',
     requiredEnv: [
       {
         name: 'CLOUDFLARE_ACCOUNT_ID',
-        label: 'Cloudflare account ID',
-        description: 'Required account ID for Cloudflare Workers AI requests.',
-        placeholder: 'Cloudflare account ID',
+        label: 'Cloudflare 账户 ID',
+        description: 'Cloudflare Workers AI 请求所需的账户 ID。',
+        placeholder: 'Cloudflare 账户 ID',
       },
     ],
   },
@@ -78,30 +78,30 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'azure-openai-responses': {
     providerId: 'azure-openai-responses',
     name: 'Azure OpenAI Responses',
-    intro: 'Azure OpenAI needs either a base URL or a resource name in addition to the API key.',
+    intro: 'Azure OpenAI 除了 API 密钥外，还需要提供基础 URL 或资源名称。',
     requiredChoiceGroup: {
-      prompt: 'Choose how to configure the Azure OpenAI endpoint.',
+      prompt: '选择如何配置 Azure OpenAI 端点。',
       choices: [
         {
-          label: 'Use Azure OpenAI base URL',
-          description: 'Set AZURE_OPENAI_BASE_URL, e.g. https://my-resource.openai.azure.com',
+          label: '使用 Azure OpenAI 基础 URL',
+          description: '设置 AZURE_OPENAI_BASE_URL，例如 https://my-resource.openai.azure.com',
           env: [
             {
               name: 'AZURE_OPENAI_BASE_URL',
-              label: 'Azure OpenAI base URL',
-              description: 'Azure OpenAI or Cognitive Services endpoint URL.',
+              label: 'Azure OpenAI 基础 URL',
+              description: 'Azure OpenAI 或 Cognitive Services 端点 URL。',
               placeholder: 'https://your-resource.openai.azure.com',
             },
           ],
         },
         {
-          label: 'Use Azure resource name',
-          description: 'Set AZURE_OPENAI_RESOURCE_NAME instead of a full base URL',
+          label: '使用 Azure 资源名称',
+          description: '设置 AZURE_OPENAI_RESOURCE_NAME 替代完整的基础 URL',
           env: [
             {
               name: 'AZURE_OPENAI_RESOURCE_NAME',
-              label: 'Azure OpenAI resource name',
-              description: 'Azure OpenAI resource name used to derive the endpoint.',
+              label: 'Azure OpenAI 资源名称',
+              description: '用于推导端点的 Azure OpenAI 资源名称。',
               placeholder: 'your-resource-name',
             },
           ],
@@ -111,14 +111,14 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
     optionalEnv: [
       {
         name: 'AZURE_OPENAI_API_VERSION',
-        label: 'Azure OpenAI API version',
-        description: 'Optional API version override.',
+        label: 'Azure OpenAI API 版本',
+        description: '可选的 API 版本覆盖。',
         placeholder: '2024-02-01',
       },
       {
         name: 'AZURE_OPENAI_DEPLOYMENT_NAME_MAP',
-        label: 'Azure deployment mapping',
-        description: 'Optional model=deployment map, comma-separated.',
+        label: 'Azure 部署映射',
+        description: '可选的 model=deployment 映射，逗号分隔。',
         placeholder: 'gpt-4=my-gpt4,gpt-4o=my-gpt4o',
       },
     ],
@@ -127,51 +127,51 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'amazon-bedrock': {
     providerId: 'amazon-bedrock',
     name: 'Amazon Bedrock',
-    intro: 'Amazon Bedrock uses AWS credentials instead of a single API key.',
+    intro: 'Amazon Bedrock 使用 AWS 凭证而非单个 API 密钥。',
     requiredChoiceGroup: {
-      prompt: 'Choose how Amazon Bedrock should authenticate.',
+      prompt: '选择 Amazon Bedrock 的认证方式。',
       choices: [
         {
-          label: 'Use AWS profile',
-          description: 'Set AWS_PROFILE, optionally with AWS_REGION.',
+          label: '使用 AWS 配置文件',
+          description: '设置 AWS_PROFILE，可选设置 AWS_REGION。',
           env: [
             {
               name: 'AWS_PROFILE',
-              label: 'AWS profile',
-              description: 'AWS profile name for Bedrock.',
+              label: 'AWS 配置文件',
+              description: '用于 Bedrock 的 AWS 配置文件名称。',
               placeholder: 'default',
             },
           ],
         },
         {
-          label: 'Use IAM access keys',
-          description: 'Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.',
+          label: '使用 IAM 访问密钥',
+          description: '设置 AWS_ACCESS_KEY_ID 和 AWS_SECRET_ACCESS_KEY。',
           env: [
             {
               name: 'AWS_ACCESS_KEY_ID',
-              label: 'AWS access key ID',
-              description: 'AWS access key ID for Bedrock.',
+              label: 'AWS 访问密钥 ID',
+              description: '用于 Bedrock 的 AWS 访问密钥 ID。',
               placeholder: 'AKIA...',
               sensitive: true,
             },
             {
               name: 'AWS_SECRET_ACCESS_KEY',
-              label: 'AWS secret access key',
-              description: 'AWS secret access key for Bedrock.',
-              placeholder: 'AWS secret access key',
+              label: 'AWS 秘密访问密钥',
+              description: '用于 Bedrock 的 AWS 秘密访问密钥。',
+              placeholder: 'AWS 秘密访问密钥',
               sensitive: true,
             },
           ],
         },
         {
-          label: 'Use Bedrock bearer token',
-          description: 'Set AWS_BEARER_TOKEN_BEDROCK.',
+          label: '使用 Bedrock Bearer Token',
+          description: '设置 AWS_BEARER_TOKEN_BEDROCK。',
           env: [
             {
               name: 'AWS_BEARER_TOKEN_BEDROCK',
-              label: 'Bedrock bearer token',
-              description: 'Bearer token for Bedrock Converse API access.',
-              placeholder: 'Bearer token',
+              label: 'Bedrock Bearer 令牌',
+              description: '用于 Bedrock Converse API 访问的 Bearer 令牌。',
+              placeholder: 'Bearer 令牌',
               sensitive: true,
             },
           ],
@@ -181,8 +181,8 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
     optionalEnv: [
       {
         name: 'AWS_REGION',
-        label: 'AWS region',
-        description: 'Optional AWS region for Bedrock.',
+        label: 'AWS 区域',
+        description: '可选的 Bedrock AWS 区域。',
         placeholder: 'us-east-1',
       },
     ],
@@ -191,26 +191,26 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'google-vertex': {
     providerId: 'google-vertex',
     name: 'Google Vertex AI',
-    intro: 'Google Vertex AI needs a Google Cloud project. Location and credentials can also be set here.',
+    intro: 'Google Vertex AI 需要一个 Google Cloud 项目。也可以在此处设置区域和凭证。',
     requiredEnv: [
       {
         name: 'GOOGLE_CLOUD_PROJECT',
-        label: 'Google Cloud project',
-        description: 'Required Google Cloud project ID for Vertex AI.',
+        label: 'Google Cloud 项目',
+        description: 'Vertex AI 所需的 Google Cloud 项目 ID。',
         placeholder: 'your-project-id',
       },
     ],
     optionalEnv: [
       {
         name: 'GOOGLE_CLOUD_LOCATION',
-        label: 'Google Cloud location',
-        description: 'Optional Vertex AI location.',
+        label: 'Google Cloud 区域',
+        description: '可选的 Vertex AI 区域。',
         placeholder: 'us-central1',
       },
       {
         name: 'GOOGLE_APPLICATION_CREDENTIALS',
-        label: 'Application credentials file',
-        description: 'Optional path to a service account JSON file.',
+        label: '应用凭证文件',
+        description: '可选的服务账号 JSON 文件路径。',
         placeholder: '/path/to/service-account.json',
       },
     ],
@@ -218,29 +218,29 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
 
   'google-gemini-cli': {
     providerId: 'google-gemini-cli',
-    name: 'Google Cloud Code Assist (Gemini CLI)',
-    intro: 'Phi does not bundle Google OAuth client credentials. Configure your own OAuth client ID and secret to use the legacy Google Cloud Code Assist provider.',
+    name: 'Google Cloud Code Assist（Gemini CLI）',
+    intro: 'Phi 未内置 Google OAuth 客户端凭证。请配置你自己的 OAuth 客户端 ID 和密钥来使用旧版 Google Cloud Code Assist 提供商。',
     requiredEnv: [
       {
         name: 'PHI_GOOGLE_GEMINI_CLI_OAUTH_CLIENT_ID',
-        label: 'OAuth client ID',
-        description: 'OAuth client ID for the Google Cloud Code Assist / Gemini CLI flow.',
-        placeholder: 'OAuth client ID',
+        label: 'OAuth 客户端 ID',
+        description: '用于 Google Cloud Code Assist / Gemini CLI 流程的 OAuth 客户端 ID。',
+        placeholder: 'OAuth 客户端 ID',
         sensitive: true,
       },
       {
         name: 'PHI_GOOGLE_GEMINI_CLI_OAUTH_CLIENT_SECRET',
-        label: 'OAuth client secret',
-        description: 'OAuth client secret for the Google Cloud Code Assist / Gemini CLI flow.',
-        placeholder: 'OAuth client secret',
+        label: 'OAuth 客户端密钥',
+        description: '用于 Google Cloud Code Assist / Gemini CLI 流程的 OAuth 客户端密钥。',
+        placeholder: 'OAuth 客户端密钥',
         sensitive: true,
       },
     ],
     optionalEnv: [
       {
         name: 'GOOGLE_CLOUD_PROJECT',
-        label: 'Google Cloud project',
-        description: 'Optional Google Cloud project for paid Cloud Code Assist.',
+        label: 'Google Cloud 项目',
+        description: '付费版 Cloud Code Assist 可选的 Google Cloud 项目。',
         placeholder: 'your-project-id',
       },
     ],
@@ -249,20 +249,20 @@ const PROVIDER_ENV_SETUPS: Record<string, ProviderEnvSetupDefinition> = {
   'google-antigravity': {
     providerId: 'google-antigravity',
     name: 'Google Antigravity',
-    intro: 'Phi does not bundle Google OAuth client credentials. Configure your own OAuth client ID and secret to use the legacy Google Antigravity provider.',
+    intro: 'Phi 未内置 Google OAuth 客户端凭证。请配置你自己的 OAuth 客户端 ID 和密钥来使用旧版 Google Antigravity 提供商。',
     requiredEnv: [
       {
         name: 'PHI_GOOGLE_ANTIGRAVITY_OAUTH_CLIENT_ID',
-        label: 'OAuth client ID',
-        description: 'OAuth client ID for the Google Antigravity flow.',
-        placeholder: 'OAuth client ID',
+        label: 'OAuth 客户端 ID',
+        description: '用于 Google Antigravity 流程的 OAuth 客户端 ID。',
+        placeholder: 'OAuth 客户端 ID',
         sensitive: true,
       },
       {
         name: 'PHI_GOOGLE_ANTIGRAVITY_OAUTH_CLIENT_SECRET',
-        label: 'OAuth client secret',
-        description: 'OAuth client secret for the Google Antigravity flow.',
-        placeholder: 'OAuth client secret',
+        label: 'OAuth 客户端密钥',
+        description: '用于 Google Antigravity 流程的 OAuth 客户端密钥。',
+        placeholder: 'OAuth 客户端密钥',
         sensitive: true,
       },
     ],
@@ -414,23 +414,23 @@ async function configureEnvVar(
   if (globalValue) {
     const picked = await vscode.window.showQuickPick([
       {
-        label: `Use global ${env.name}`,
-        description: 'Detected in the VS Code process environment',
+        label: `使用全局 ${env.name}`,
+        description: '在 VS Code 进程环境中检测到',
         action: 'global' as const,
       },
       ...(localValue ? [{
-        label: `Keep existing Phi-local ${env.name}`,
-        description: 'Use the value already stored by Phi',
+        label: `保留 Phi 本地的 ${env.name}`,
+        description: '使用 Phi 已存储的值',
         action: 'keep-local' as const,
       }] : []),
       {
-        label: `Set Phi-local ${env.name}`,
-        description: 'Stored by Phi and applied only inside this extension',
+        label: `设置 Phi 本地的 ${env.name}`,
+        description: '由 Phi 存储，仅在此扩展内生效',
         action: 'local' as const,
       },
       ...(!required ? [{
-        label: `Skip ${env.name}`,
-        description: 'Leave this optional variable unchanged',
+        label: `跳过 ${env.name}`,
+        description: '保持此可选变量不变',
         action: 'skip' as const,
       }] : []),
     ], {
@@ -463,18 +463,18 @@ async function configureEnvVar(
   } else if (localValue) {
     const picked = await vscode.window.showQuickPick([
       {
-        label: `Keep existing Phi-local ${env.name}`,
-        description: 'Use the value already stored by Phi',
+        label: `保留 Phi 本地的 ${env.name}`,
+        description: '使用 Phi 已存储的值',
         action: 'keep-local' as const,
       },
       {
         label: `Replace Phi-local ${env.name}`,
-        description: 'Enter and store a new Phi-local value',
+        description: '输入并存储新的 Phi 本地值',
         action: 'local' as const,
       },
       ...(!required ? [{
-        label: `Skip ${env.name}`,
-        description: 'Leave this optional variable unchanged',
+        label: `跳过 ${env.name}`,
+        description: '保持此可选变量不变',
         action: 'skip' as const,
       }] : []),
     ], {
@@ -525,13 +525,13 @@ async function configureRequiredChoiceGroup(
         action: 'use-existing' as const,
       },
       {
-        label: 'Configure a different setup',
-        description: 'Override or add Phi-local environment variables',
+        label: '配置其他设置',
+        description: '覆盖或添加 Phi 本地环境变量',
         action: 'configure' as const,
       },
     ], {
       title: `${setup.name}: Environment setup`,
-      placeHolder: 'Existing environment values were detected.',
+      placeHolder: '检测到现有的环境变量值。',
       ignoreFocusOut: true,
     });
 
@@ -574,18 +574,18 @@ async function configureOptionalEnv(setup: ProviderEnvSetupDefinition, result: P
 
   const shouldConfigure = await vscode.window.showQuickPick([
     {
-      label: 'Skip optional environment variables',
-      description: 'You can configure them later by running Login / Setup again.',
+      label: '跳过可选环境变量',
+      description: '你可以稍后通过运行 登录/设置 再次配置。',
       action: 'skip' as const,
     },
     {
-      label: 'Configure optional environment variables',
+      label: '配置可选环境变量',
       description: optionalEnv.map((env) => env.name).join(', '),
       action: 'configure' as const,
     },
   ], {
     title: `${setup.name}: Optional environment`,
-    placeHolder: 'Do you want to configure optional provider environment variables?',
+    placeHolder: '是否要配置可选的提供商环境变量？',
     ignoreFocusOut: true,
   });
 
@@ -656,10 +656,10 @@ export async function configureProviderEnvironment(
     const proceed = await vscode.window.showInformationMessage(
       setup.intro,
       { modal: false },
-      'Continue Setup',
-      'Skip'
+      '继续设置',
+      '跳过'
     );
-    if (proceed !== 'Continue Setup') {
+    if (proceed !== '继续设置') {
       const requiredNames = [
         ...(setup.requiredEnv ?? []).map((env) => env.name),
         ...(setup.requiredChoiceGroup?.choices.flatMap((choice) => choice.env.map((env) => env.name)) ?? []),

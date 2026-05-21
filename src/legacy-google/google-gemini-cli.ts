@@ -4,7 +4,7 @@
  * Shared implementation for both google-gemini-cli and google-antigravity providers.
  * Uses the Cloud Code Assist API endpoint to access Gemini and Claude models.
  */
-import { calculateCost, AssistantMessageEventStream } from "@mariozechner/pi-ai";
+import { calculateCost, AssistantMessageEventStream } from '@earendil-works/pi-ai';
 import { convertMessages, convertTools, isThinkingPart, mapStopReasonString, mapToolChoice, retainThoughtSignature, } from "./google-shared.js";
 import { buildBaseOptions, clampReasoning } from "./simple-options.js";
 
@@ -44,10 +44,10 @@ function getAntigravityHeaders() {
     };
 }
 // Antigravity system instruction (compact version from CLIProxyAPI).
-const ANTIGRAVITY_SYSTEM_INSTRUCTION = "You are Antigravity, a powerful agentic AI coding assistant designed by the Google Deepmind team working on Advanced Agentic Coding." +
-    "You are pair programming with a USER to solve their coding task. The task may require creating a new codebase, modifying or debugging an existing codebase, or simply answering a question." +
-    "**Absolute paths only**" +
-    "**Proactiveness**";
+const ANTIGRAVITY_SYSTEM_INSTRUCTION = "你是 Antigravity，一个由 Google Deepmind 团队开发的强大 AI 编程助手。" +
+    "你正在与用户进行结对编程，解决他们的编码任务。任务可能涉及创建新的代码库、修改或调试现有代码库，或者简单地回答问题。" +
+    "**仅使用绝对路径**" +
+    "**积极主动**";
 // Counter for generating unique tool call IDs
 let toolCallCounter = 0;
 // Retry configuration
@@ -191,13 +191,13 @@ function extractErrorMessage(errorText) {
 function sleep(ms, signal) {
     return new Promise((resolve, reject) => {
         if (signal?.aborted) {
-            reject(new Error("Request was aborted"));
+            reject(new Error("请求已中断"));
             return;
         }
         const timeout = setTimeout(resolve, ms);
         signal?.addEventListener("abort", () => {
             clearTimeout(timeout);
-            reject(new Error("Request was aborted"));
+            reject(new Error("请求已中断"));
         });
     });
 }
@@ -225,7 +225,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
             // apiKey is JSON-encoded: { token, projectId }
             const apiKeyRaw = options?.apiKey;
             if (!apiKeyRaw) {
-                throw new Error("Google Cloud Code Assist requires OAuth authentication. Use /login to authenticate.");
+                throw new Error("Google Cloud Code Assist 需要 OAuth 认证。请使用 /login 进行认证。");
             }
             let accessToken;
             let projectId;
@@ -235,10 +235,10 @@ export const streamGoogleGeminiCli = (model, context, options) => {
                 projectId = parsed.projectId;
             }
             catch {
-                throw new Error("Invalid Google Cloud Code Assist credentials. Use /login to re-authenticate.");
+                throw new Error("Google Cloud Code Assist 凭证无效。请使用 /login 重新认证。");
             }
             if (!accessToken || !projectId) {
-                throw new Error("Missing token or projectId in Google Cloud credentials. Use /login to re-authenticate.");
+                throw new Error("Google Cloud 凭证中缺少 token 或 projectId。请使用 /login 重新认证。");
             }
             const isAntigravity = model.provider === "google-antigravity";
             const baseUrl = model.baseUrl?.trim();
@@ -267,7 +267,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
             let endpointIndex = 0;
             for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
                 if (options?.signal?.aborted) {
-                    throw new Error("Request was aborted");
+                    throw new Error("请求已中断");
                 }
                 try {
                     const endpoint = endpoints[endpointIndex];
@@ -307,13 +307,13 @@ export const streamGoogleGeminiCli = (model, context, options) => {
                         continue;
                     }
                     // Not retryable or max retries exceeded
-                    throw new Error(`Cloud Code Assist API error (${response.status}): ${extractErrorMessage(errorText)}`);
+                    throw new Error(`Cloud Code Assist API 错误 (${response.status}): ${extractErrorMessage(errorText)}`);
                 }
                 catch (error) {
                     // Check for abort - fetch throws AbortError, our code throws "Request was aborted"
                     if (error instanceof Error) {
                         if (error.name === "AbortError" || error.message === "Request was aborted") {
-                            throw new Error("Request was aborted");
+                            throw new Error("请求已中断");
                         }
                     }
                     // Extract detailed error message from fetch errors (Node includes cause)
@@ -357,7 +357,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
             };
             const streamResponse = async (activeResponse) => {
                 if (!activeResponse.body) {
-                    throw new Error("No response body");
+                    throw new Error("响应体为空");
                 }
                 let hasContent = false;
                 let currentBlock = null;
@@ -376,7 +376,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
                     while (true) {
                         // Check abort signal before each read
                         if (options?.signal?.aborted) {
-                            throw new Error("Request was aborted");
+                            throw new Error("请求已中断");
                         }
                         const { done, value } = await reader.read();
                         if (done)
@@ -578,13 +578,13 @@ export const streamGoogleGeminiCli = (model, context, options) => {
             let currentResponse = response;
             for (let emptyAttempt = 0; emptyAttempt <= MAX_EMPTY_STREAM_RETRIES; emptyAttempt++) {
                 if (options?.signal?.aborted) {
-                    throw new Error("Request was aborted");
+                    throw new Error("请求已中断");
                 }
                 if (emptyAttempt > 0) {
                     const backoffMs = EMPTY_STREAM_BASE_DELAY_MS * 2 ** (emptyAttempt - 1);
                     await sleep(backoffMs, options?.signal);
                     if (!requestUrl) {
-                        throw new Error("Missing request URL");
+                        throw new Error("缺少请求 URL");
                     }
                     currentResponse = await fetch(requestUrl, {
                         method: "POST",
@@ -595,7 +595,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
                     await options?.onResponse?.({ status: currentResponse.status, headers: headersToRecord(currentResponse.headers) }, model);
                     if (!currentResponse.ok) {
                         const retryErrorText = await currentResponse.text();
-                        throw new Error(`Cloud Code Assist API error (${currentResponse.status}): ${retryErrorText}`);
+                        throw new Error(`Cloud Code Assist API 错误 (${currentResponse.status}): ${retryErrorText}`);
                     }
                 }
                 const streamed = await streamResponse(currentResponse);
@@ -608,13 +608,13 @@ export const streamGoogleGeminiCli = (model, context, options) => {
                 }
             }
             if (!receivedContent) {
-                throw new Error("Cloud Code Assist API returned an empty response");
+                throw new Error("Cloud Code Assist API 返回了空响应");
             }
             if (options?.signal?.aborted) {
-                throw new Error("Request was aborted");
+                throw new Error("请求已中断");
             }
             if (output.stopReason === "aborted" || output.stopReason === "error") {
-                throw new Error("An unknown error occurred");
+                throw new Error("发生未知错误");
             }
             stream.push({ type: "done", reason: output.stopReason, message: output });
             stream.end();
@@ -636,7 +636,7 @@ export const streamGoogleGeminiCli = (model, context, options) => {
 export const streamSimpleGoogleGeminiCli = (model, context, options) => {
     const apiKey = options?.apiKey;
     if (!apiKey) {
-        throw new Error("Google Cloud Code Assist requires OAuth authentication. Use /login to authenticate.");
+        throw new Error("Google Cloud Code Assist 需要 OAuth 认证。请使用 /login 进行认证。");
     }
     const base = buildBaseOptions(model, options, apiKey);
     if (!options?.reasoning) {

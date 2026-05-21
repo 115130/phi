@@ -220,9 +220,9 @@ function renderQueuedMessages() {
     const el = document.createElement('div');
     el.className = 'queued-msg';
     el.innerHTML = `
-      <span class="queued-msg-label">Queued</span>
-      <span class="queued-msg-text">${escapeHtml(cmd.message)}${cmd.images?.length ? ' <span style="opacity:0.6;font-size:10px">📎 image</span>' : ''}</span>
-      <button class="queued-msg-cancel" title="Cancel">×</button>
+      <span class="queued-msg-label">已排队</span>
+      <span class="queued-msg-text">${escapeHtml(cmd.message)}${cmd.images?.length ? ' <span style="opacity:0.6;font-size:10px">📎 图片</span>' : ''}</span>
+      <button class="queued-msg-cancel" title="取消">×</button>
     `;
     el.querySelector('.queued-msg-cancel').addEventListener('click', () => {
       messageQueue.splice(i, 1);
@@ -243,7 +243,7 @@ function flushQueue() {
 abortBtn?.addEventListener('click', () => {
   currentAgentOutcome = 'aborted';
   VscodeIPC.send({ type: 'abort' });
-  messageRenderer.renderError('Aborted by user');
+  messageRenderer.renderError('用户已中断');
   showTypingIndicator(false);
 });
 
@@ -257,7 +257,7 @@ function handlePiEvent(event) {
       shouldNotifyOnAgentEnd = true;
       currentAgentOutcome = 'success';
       state.setStreaming(true);
-      showTypingIndicator(true, 'Thinking');
+      showTypingIndicator(true, '思考中');
       updateUI();
       break;
 
@@ -291,7 +291,7 @@ function handlePiEvent(event) {
         currentStreamingEl = messageRenderer.renderAssistantMessage(msg, true);
         currentThinking = '';
         currentText = '';
-        showTypingIndicator(true, 'Typing');
+        showTypingIndicator(true, '输入中');
       }
       break;
     }
@@ -302,11 +302,11 @@ function handlePiEvent(event) {
       if (ev.type === 'text_delta') {
         currentText += ev.delta;
         if (currentStreamingEl) messageRenderer.updateStreamingMessage(currentStreamingEl, currentText);
-        showTypingIndicator(true, 'Typing');
+        showTypingIndicator(true, '输入中');
       } else if (ev.type === 'thinking_delta') {
         currentThinking += ev.delta;
         if (currentStreamingEl) messageRenderer.updateStreamingThinking(currentStreamingEl, currentThinking);
-        showTypingIndicator(true, 'Thinking');
+        showTypingIndicator(true, '思考中');
       }
       break;
     }
@@ -334,7 +334,7 @@ function handlePiEvent(event) {
         if (usage?.input) costMonitor.setUsage(usage);
         costMonitor.updateDisplay();
         showNewMessageBadge();
-        showTypingIndicator(true, 'Thinking');
+        showTypingIndicator(true, '思考中');
       }
       break;
     }
@@ -360,7 +360,7 @@ function handlePiEvent(event) {
       const output = formatToolOutput(result);
       state.updateToolExecution(toolCallId, { status: isError ? 'error' : 'complete', output, isError });
       toolCardRenderer.finalizeToolCard(toolCallId, result, isError);
-      showTypingIndicator(true, 'Thinking');
+      showTypingIndicator(true, '思考中');
       break;
     }
 
@@ -368,7 +368,7 @@ function handlePiEvent(event) {
       const el = document.createElement('div');
       el.className = 'system-message compaction-message';
       el.id = 'compaction-indicator';
-      el.innerHTML = '<span class="compaction-spinner">⟳</span> Compacting context…';
+      el.innerHTML = '<span class="compaction-spinner">⟳</span> 正在压缩上下文…';
       messagesEl.appendChild(el);
       messageRenderer.scrollToBottom();
       break;
@@ -377,7 +377,7 @@ function handlePiEvent(event) {
     case 'auto_compaction_end': {
       const indicator = document.getElementById('compaction-indicator');
       if (indicator) {
-        indicator.innerHTML = '✓ Context compacted';
+        indicator.innerHTML = '✓ 上下文已压缩';
         indicator.classList.add('compaction-done');
       }
       VscodeIPC.send({ type: 'get_state' });
@@ -452,7 +452,7 @@ function handleSync(syncState) {
   }
 
   state.setStreaming(syncState.isStreaming);
-  showTypingIndicator(syncState.isStreaming, 'Thinking');
+  showTypingIndicator(syncState.isStreaming, '思考中');
   updateUI();
   costMonitor.updateDisplay();
 }
@@ -573,7 +573,7 @@ function renderHistoryMarker({ className, title, meta, summary, emptySummary }) 
 
   const content = document.createElement('pre');
   content.className = 'history-marker-summary hidden';
-  content.textContent = summary || emptySummary || 'No summary available.';
+  content.textContent = summary || emptySummary || '无可用摘要。';
 
   header.addEventListener('click', () => {
     el.classList.toggle('expanded');
@@ -590,10 +590,10 @@ function renderCompactionMarker(entry) {
   const timestamp = formatHistoryTimestamp(entry.timestamp);
   renderHistoryMarker({
     className: 'compaction-history-marker',
-    title: 'Context compacted here',
+    title: '此处上下文已压缩',
     meta: [tokens ? `Compacted from ${tokens}` : '', timestamp].filter(Boolean).join(' • '),
     summary: entry.summary || '',
-    emptySummary: 'This session was compacted, but no summary was saved.',
+    emptySummary: '此会话已被压缩，但未保存摘要。',
   });
 }
 
@@ -601,10 +601,10 @@ function renderBranchSummaryMarker(entry) {
   const timestamp = formatHistoryTimestamp(entry.timestamp);
   renderHistoryMarker({
     className: 'branch-summary-history-marker',
-    title: 'Branch summary inserted here',
+    title: '此处插入了分支摘要',
     meta: timestamp,
     summary: entry.summary || '',
-    emptySummary: 'No branch summary text was saved.',
+    emptySummary: '未保存分支摘要文本。',
   });
 }
 
@@ -652,7 +652,7 @@ document.addEventListener('keydown', (e) => {
     if (state.isStreaming) {
       currentAgentOutcome = 'aborted';
       VscodeIPC.send({ type: 'abort' });
-      messageRenderer.renderError('Aborted by user');
+      messageRenderer.renderError('用户已中断');
       showTypingIndicator(false);
     }
   }
@@ -671,7 +671,7 @@ function isInInput() {
 // UI helpers
 // ═══════════════════════════════════════
 
-function showTypingIndicator(show, text = 'Thinking') {
+function showTypingIndicator(show, text = '思考中') {
   if (typingTextEl) typingTextEl.textContent = text;
   if (show && typingIndicator) messagesEl.appendChild(typingIndicator);
   if (typingIndicator) typingIndicator.classList.toggle('hidden', !show);

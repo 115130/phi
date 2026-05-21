@@ -31,45 +31,45 @@ type LoginAuthType = 'oauth' | 'api_key';
 
 function getProviderStatusDescription(provider: AgentManager.LoginProviderInfo): string {
   if (provider.authType === 'oauth') {
-    if (provider.storedCredentialType === 'oauth') return '✓ Logged in';
-    if (provider.storedCredentialType === 'api_key') return 'API key stored';
+    if (provider.storedCredentialType === 'oauth') return '✓ 已登录';
+    if (provider.storedCredentialType === 'api_key') return '已存储 API 密钥';
   } else {
-    if (provider.storedCredentialType === 'api_key') return '✓ API key stored';
-    if (provider.storedCredentialType === 'oauth') return 'Subscription stored';
+    if (provider.storedCredentialType === 'api_key') return '✓ 已存储 API 密钥';
+    if (provider.storedCredentialType === 'oauth') return '已存储订阅';
   }
 
   switch (provider.authStatus.source) {
     case 'environment':
       return provider.authStatus.label
-        ? `Configured via ${provider.authStatus.label}`
-        : 'Configured via environment';
+        ? `通过 ${provider.authStatus.label} 配置`
+        : '通过环境变量配置';
     case 'models_json_key':
-      return 'Configured via ~/.pi/agent/models.json';
+      return '通过 ~/.pi/agent/models.json 配置';
     case 'models_json_command':
-      return 'Configured via command in ~/.pi/agent/models.json';
+      return '通过 ~/.pi/agent/models.json 中的命令配置';
     case 'fallback':
       return provider.authStatus.label
-        ? `Configured via ${provider.authStatus.label}`
-        : 'Configured via custom provider config';
+        ? `通过 ${provider.authStatus.label} 配置`
+        : '通过自定义提供商配置';
     case 'runtime':
       return provider.authStatus.label
-        ? `Configured via ${provider.authStatus.label}`
-        : 'Configured at runtime';
+        ? `通过 ${provider.authStatus.label} 配置`
+        : '通过运行时配置';
     case 'stored':
-      return provider.authType === 'oauth' ? '✓ Logged in' : '✓ API key stored';
+      return provider.authType === 'oauth' ? '✓ 已登录' : '✓ 已存储 API 密钥';
     default:
-      return provider.setupOnly ? 'External setup required' : '';
+      return provider.setupOnly ? '需要外部设置' : '';
   }
 }
 
 function getProviderDetail(provider: AgentManager.LoginProviderInfo): string | undefined {
   const parts: string[] = [];
   if (provider.authType === 'oauth') {
-    parts.push('Subscription / OAuth');
+    parts.push('订阅/OAuth');
   } else if (provider.setupOnly) {
-    parts.push('Provider setup');
+    parts.push('提供商设置');
   } else {
-    parts.push('API key');
+    parts.push('API 密钥');
   }
   if (provider.setupHint) {
     parts.push(provider.setupHint);
@@ -80,18 +80,18 @@ function getProviderDetail(provider: AgentManager.LoginProviderInfo): string | u
 async function pickLoginAuthType(): Promise<LoginAuthType | undefined> {
   const picked = await vscode.window.showQuickPick([
     {
-      label: 'Use a subscription',
-      description: 'Browser login for OAuth/subscription providers',
+      label: '使用订阅',
+      description: '浏览器登录 OAuth/订阅提供商',
       authType: 'oauth' as const,
     },
     {
-      label: 'Use an API key or provider setup',
-      description: 'Save an API key or follow provider-specific setup guidance',
+      label: '使用 API 密钥或提供商设置',
+      description: '保存 API 密钥或按提供商指引进行设置',
       authType: 'api_key' as const,
     },
   ], {
-    placeHolder: 'Choose how you want to authenticate',
-    title: 'Phi: Login',
+    placeHolder: '选择认证方式',
+    title: 'Phi: 登录',
   });
 
   return picked?.authType;
@@ -158,7 +158,7 @@ async function runOAuthLogin(provider: AgentManager.LoginProviderInfo): Promise<
   const envResult = await runProviderEnvSetup(provider);
   if (!envResult.completed) {
     vscode.window.showWarningMessage(
-      `${provider.name} login cancelled.${getEnvSetupSuffix(envResult)}`
+      `${provider.name} 登录已取消。${getEnvSetupSuffix(envResult)}`
     );
     return;
   }
@@ -169,7 +169,7 @@ async function runOAuthLogin(provider: AgentManager.LoginProviderInfo): Promise<
   await vscode.window.withProgress(
     {
       location: vscode.ProgressLocation.Notification,
-      title: `Logging in to ${provider.name}...`,
+      title: `正在登录 ${provider.name}…`,
       cancellable: true,
     },
     async (progress, token) => {
@@ -196,8 +196,8 @@ async function runOAuthLogin(provider: AgentManager.LoginProviderInfo): Promise<
           },
           onManualCodeInput: async () => {
             const code = await vscode.window.showInputBox({
-              prompt: 'Paste the authorization code from your browser',
-              placeHolder: 'Authorization code',
+              prompt: '从浏览器粘贴授权码',
+              placeHolder: '授权码',
               ignoreFocusOut: true,
             }, manualCodeCts.token);
             return code ?? '';
@@ -208,17 +208,17 @@ async function runOAuthLogin(provider: AgentManager.LoginProviderInfo): Promise<
         manualCodeCts.cancel();
         const authResult = await handleAuthChange();
         const selectedModelSuffix = authResult.switchedModel && authResult.selectedModel
-          ? ` Switched to ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
+          ? ` 已切换到 ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
           : '';
         vscode.window.showInformationMessage(
-          `✓ Logged in to ${provider.name} successfully.${getEnvSetupSuffix(envResult)}${selectedModelSuffix}`
+          `✓ 已成功登录 ${provider.name}。${getEnvSetupSuffix(envResult)}${selectedModelSuffix}`
         );
       } catch (err) {
         manualCodeCts.cancel();
         if (abortController.signal.aborted) {
-          vscode.window.showInformationMessage('Login cancelled.');
+          vscode.window.showInformationMessage('登录已取消。');
         } else {
-          vscode.window.showErrorMessage(`Login failed: ${(err as Error).message}`);
+          vscode.window.showErrorMessage(`登录失败: ${(err as Error).message}`);
         }
       } finally {
         manualCodeCts.dispose();
@@ -232,12 +232,12 @@ async function runApiKeySetup(provider: AgentManager.LoginProviderInfo): Promise
     const envResult = await runProviderEnvSetup(provider);
     const authResult = await handleAuthChange();
     const selectedModelSuffix = authResult.switchedModel && authResult.selectedModel
-      ? ` Switched to ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
+      ? ` 已切换到 ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
       : authResult.clearedModel
-        ? ' No authenticated models remain.'
+        ? ' 没有可用的认证模型。'
         : '';
     vscode.window.showInformationMessage(
-      `${provider.name} setup finished.${getEnvSetupSuffix(envResult)}${selectedModelSuffix}`
+      `${provider.name} 设置完成。${getEnvSetupSuffix(envResult)}${selectedModelSuffix}`
     );
     return;
   }
@@ -254,13 +254,13 @@ async function runApiKeySetup(provider: AgentManager.LoginProviderInfo): Promise
   const envResult = await runProviderEnvSetup(provider);
   const authResult = await handleAuthChange();
 
-  const parts = [`✓ API key saved for ${provider.name}.`];
+  const parts = [`✓ 已保存 ${provider.name} 的 API 密钥。`];
   const envSuffix = getEnvSetupSuffix(envResult).trim();
   if (envSuffix) {
     parts.push(envSuffix);
   }
   if (authResult.switchedModel && authResult.selectedModel) {
-    parts.push(`Switched to ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`);
+    parts.push(`已切换到 ${authResult.selectedModel.provider}/${authResult.selectedModel.id}。`);
   }
 
   vscode.window.showInformationMessage(parts.join(' '));
@@ -365,7 +365,7 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('phi.addSelectionToChat', () => {
       const contextBlock = EditorContext.buildSelectionContext();
       if (!contextBlock) {
-        vscode.window.showInformationMessage('[Phi] Select some code first.');
+        vscode.window.showInformationMessage('[Phi] 请先选中代码。');
         return;
       }
       PanelManager.openPanel();
@@ -379,14 +379,14 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       if (!uri) {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
-          vscode.window.showInformationMessage('[Phi] No file selected.');
+          vscode.window.showInformationMessage('[Phi] 未选中任何文件。');
           return;
         }
         uri = editor.document.uri;
       }
       const contextBlock = EditorContext.buildFileContext(uri);
       if (!contextBlock) {
-        vscode.window.showInformationMessage('[Phi] Could not read file.');
+        vscode.window.showInformationMessage('[Phi] 无法读取文件。');
         return;
       }
       PanelManager.openPanel();
@@ -400,7 +400,7 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       const selectionPrompt = EditorContext.buildSelectionPrompt();
       if (!selectionPrompt) {
         vscode.window.showInformationMessage(
-          '[Phi] Select some code first, then use "Ask About Selection".'
+          '[Phi] 请先选中代码，然后使用「询问选中内容」。'
         );
         return;
       }
@@ -413,14 +413,14 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
   ctx.subscriptions.push(
     vscode.commands.registerCommand('phi.newSession', async () => {
       const confirmed = await vscode.window.showWarningMessage(
-        'Start a new Pi session? The current conversation will be saved.',
+        '开始新的 Pi 会话？当前对话将被保存。',
         { modal: true },
-        'New Session'
+        '新建会话'
       );
-      if (confirmed === 'New Session') {
+      if (confirmed === '新建会话') {
         await AgentManager.newSession();
         IpcBridge.sendSync();
-        vscode.window.showInformationMessage('[Phi] New session started.');
+        vscode.window.showInformationMessage('[Phi] 新会话已创建。');
       }
     })
   );
@@ -430,12 +430,12 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('phi.deleteSession', async (sessionPath?: string) => {
       if (!sessionPath) return;
       const answer = await vscode.window.showWarningMessage(
-        "Are you sure you want to delete this session? It will be moved to the system trash.",
+        "确定要删除此会话吗？它将移至系统回收站。",
         { modal: true },
-        "Move to Trash"
+        "移到回收站"
       );
 
-      if (answer === "Move to Trash") {
+      if (answer === "移到回收站") {
         try {
           const fileUri = vscode.Uri.file(sessionPath);
           await vscode.workspace.fs.delete(fileUri, { useTrash: true });
@@ -451,7 +451,7 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
           const sessions = await AgentManager.getSessions();
           PanelManager.send({ type: 'sessions_list', sessions });
         } catch (err: any) {
-          vscode.window.showErrorMessage(`Failed to delete session: ${err.message}`);
+          vscode.window.showErrorMessage(`删除会话失败: ${err.message}`);
         }
       }
     })
@@ -469,10 +469,10 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
   ctx.subscriptions.push(
     vscode.commands.registerCommand('phi.login', async () => {
       await runLoginFlow({
-        title: 'Phi: Login',
-        placeHolder: 'Select a provider',
+        title: 'Phi: 登录',
+        placeHolder: '选择一个提供商',
         includeSetupOnly: true,
-        emptyMessage: '[Phi] No login-capable providers available.',
+        emptyMessage: '[Phi] 没有可登录的提供商。',
       });
     })
   );
@@ -483,19 +483,19 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       const picked = providerId
         ? getStoredCredentialProvider('oauth', providerId, providerName)
         : await pickStoredCredentialProvider('oauth', {
-          title: 'Phi: Logout',
-          placeHolder: 'Select a provider to log out from',
-          emptyMessage: '[Phi] Not logged in to any provider.',
+          title: 'Phi: 退出登录',
+          placeHolder: '选择要退出登录的提供商',
+          emptyMessage: '[Phi] 尚未登录任何提供商。',
         });
       if (!picked) {
-        if (providerId) vscode.window.showInformationMessage(`[Phi] ${providerName ?? providerId} is not logged in.`);
+        if (providerId) vscode.window.showInformationMessage(`[Phi] ${providerName ?? providerId} 未登录。`);
         return;
       }
 
       if (providerId) {
         const confirmed = await confirmProviderCredentialAction(
-          'Logout',
-          `Are you sure you want to log out from ${picked.name}?`
+          '退出登录',
+          `确定要退出登录 ${picked.name} 吗？`
         );
         if (!confirmed) return;
       }
@@ -503,11 +503,11 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       AgentManager.logout(picked.id);
       const authResult = await handleAuthChange();
       const suffix = authResult.switchedModel && authResult.selectedModel
-        ? ` Switched to ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
+        ? ` 已切换到 ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
         : authResult.clearedModel
-          ? ' No authenticated models remain.'
+          ? ' 没有可用的认证模型。'
           : '';
-      vscode.window.showInformationMessage(`Logged out from ${picked.name}.${suffix}`);
+      vscode.window.showInformationMessage(`已退出登录: ${picked.name}。${suffix}`);
     })
   );
 
@@ -516,10 +516,10 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('phi.addApiKey', async () => {
       await runLoginFlow({
         authType: 'api_key',
-        title: 'Phi: Add API Key',
-        placeHolder: 'Select a provider to add an API key',
+        title: 'Phi: 添加 API 密钥',
+        placeHolder: '选择要添加 API 密钥的提供商',
         includeSetupOnly: false,
-        emptyMessage: '[Phi] No API key providers available.',
+        emptyMessage: '[Phi] 没有可用的 API 密钥提供商。',
       });
     })
   );
@@ -530,19 +530,19 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       const picked = providerId
         ? getStoredCredentialProvider('api_key', providerId, providerName)
         : await pickStoredCredentialProvider('api_key', {
-          title: 'Phi: Remove API Key',
-          placeHolder: 'Select a provider to remove the API key',
-          emptyMessage: '[Phi] No API keys configured.',
+          title: 'Phi: 删除 API 密钥',
+          placeHolder: '选择要删除 API 密钥的提供商',
+          emptyMessage: '[Phi] 未配置 API 密钥。',
         });
       if (!picked) {
-        if (providerId) vscode.window.showInformationMessage(`[Phi] No API key stored for ${providerName ?? providerId}.`);
+        if (providerId) vscode.window.showInformationMessage(`[Phi] ${providerName ?? providerId} 未存储 API 密钥。`);
         return;
       }
 
       if (providerId) {
         const confirmed = await confirmProviderCredentialAction(
-          'Remove API Key',
-          `Are you sure you want to remove the API key for ${picked.name}?`
+          '删除 API 密钥',
+          `确定要删除 ${picked.name} 的 API 密钥吗？`
         );
         if (!confirmed) return;
       }
@@ -550,11 +550,11 @@ export function registerCommands(ctx: vscode.ExtensionContext): void {
       AgentManager.removeApiKey(picked.id);
       const authResult = await handleAuthChange();
       const suffix = authResult.switchedModel && authResult.selectedModel
-        ? ` Switched to ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
+        ? ` 已切换到 ${authResult.selectedModel.provider}/${authResult.selectedModel.id}.`
         : authResult.clearedModel
-          ? ' No authenticated models remain.'
+          ? ' 没有可用的认证模型。'
           : '';
-      vscode.window.showInformationMessage(`API key removed for ${picked.name}.${suffix}`);
+      vscode.window.showInformationMessage(`已删除 ${picked.name} 的 API 密钥。${suffix}`);
     })
   );
 

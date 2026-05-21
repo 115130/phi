@@ -40,7 +40,7 @@ async function getNodeCreateServer() {
     }
     if (_createServer)
         return _createServer;
-    throw new Error("Gemini CLI OAuth is only available in Node.js environments");
+    throw new Error("Gemini CLI OAuth 仅在 Node.js 环境中可用");
 }
 async function startCallbackServer() {
     const createServer = await getNodeCreateServer();
@@ -63,22 +63,22 @@ async function startCallbackServer() {
                 const error = url.searchParams.get("error");
                 if (error) {
                     res.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthErrorHtml("Google authentication did not complete.", `Error: ${error}`));
+                    res.end(oauthErrorHtml("Google 认证未完成。", `Error: ${error}`));
                     return;
                 }
                 if (code && state) {
                     res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthSuccessHtml("Google authentication completed. You can close this window."));
+                    res.end(oauthSuccessHtml("Google 认证完成。你可以关闭此窗口。"));
                     settleWait?.({ code, state });
                 }
                 else {
                     res.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
-                    res.end(oauthErrorHtml("Missing code or state parameter."));
+                    res.end(oauthErrorHtml("缺少 code 或 state 参数。"));
                 }
             }
             else {
                 res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
-                res.end(oauthErrorHtml("Callback route not found."));
+                res.end(oauthErrorHtml("回调路由未找到。"));
             }
         });
         server.on("error", (err) => {
@@ -180,7 +180,7 @@ async function discoverProject(accessToken, onProgress) {
         "X-Goog-Api-Client": "gl-node/22.17.0",
     };
     // Try to load existing project via loadCodeAssist
-    onProgress?.("Checking for existing Cloud Code Assist project...");
+    onProgress?.("正在检查现有 Cloud Code Assist 项目…");
     const loadResponse = await fetch(`${CODE_ASSIST_ENDPOINT}/v1internal:loadCodeAssist`, {
         method: "POST",
         headers,
@@ -223,14 +223,14 @@ async function discoverProject(accessToken, onProgress) {
         if (envProjectId) {
             return envProjectId;
         }
-        throw new Error("This account requires setting the GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_PROJECT_ID environment variable. " +
+        throw new Error("此账户需要设置 GOOGLE_CLOUD_PROJECT 或 GOOGLE_CLOUD_PROJECT_ID 环境变量。" +
             "See https://goo.gle/gemini-cli-auth-docs#workspace-gca");
     }
     // User needs to be onboarded - get the default tier
     const tier = getDefaultTier(data.allowedTiers);
     const tierId = tier?.id ?? TIER_FREE;
     if (tierId !== TIER_FREE && !envProjectId) {
-        throw new Error("This account requires setting the GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_PROJECT_ID environment variable. " +
+        throw new Error("此账户需要设置 GOOGLE_CLOUD_PROJECT 或 GOOGLE_CLOUD_PROJECT_ID 环境变量。" +
             "See https://goo.gle/gemini-cli-auth-docs#workspace-gca");
     }
     onProgress?.("Provisioning Cloud Code Assist project (this may take a moment)...");
@@ -272,8 +272,8 @@ async function discoverProject(accessToken, onProgress) {
     if (envProjectId) {
         return envProjectId;
     }
-    throw new Error("Could not discover or provision a Google Cloud project. " +
-        "Try setting the GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_PROJECT_ID environment variable. " +
+    throw new Error("无法发现或配置 Google Cloud 项目。" +
+        "请尝试设置 GOOGLE_CLOUD_PROJECT 或 GOOGLE_CLOUD_PROJECT_ID 环境变量。" +
         "See https://goo.gle/gemini-cli-auth-docs#workspace-gca");
 }
 /**
@@ -335,7 +335,7 @@ export async function loginGeminiCli(onAuth, onProgress, onManualCodeInput) {
     const { clientId, clientSecret } = getOAuthClientCredentials();
     const { verifier, challenge } = await generatePKCE();
     // Start local server for callback
-    onProgress?.("Starting local server for OAuth callback...");
+    onProgress?.("正在启动本机 OAuth 回调服务器…");
     const server = await startCallbackServer();
     let code;
     try {
@@ -355,10 +355,10 @@ export async function loginGeminiCli(onAuth, onProgress, onManualCodeInput) {
         // Notify caller with URL to open
         onAuth({
             url: authUrl,
-            instructions: "Complete the sign-in in your browser.",
+            instructions: "在浏览器中完成登录。",
         });
         // Wait for the callback, racing with manual input if provided
-        onProgress?.("Waiting for OAuth callback...");
+        onProgress?.("正在等待 OAuth 回调…");
         if (onManualCodeInput) {
             // Race between browser callback and manual input
             let manualInput;
@@ -418,10 +418,10 @@ export async function loginGeminiCli(onAuth, onProgress, onManualCodeInput) {
             }
         }
         if (!code) {
-            throw new Error("No authorization code received");
+            throw new Error("未收到授权码");
         }
         // Exchange code for tokens
-        onProgress?.("Exchanging authorization code for tokens...");
+        onProgress?.("正在交换授权码获取令牌…");
         const tokenResponse = await fetch(TOKEN_URL, {
             method: "POST",
             headers: {
@@ -442,10 +442,10 @@ export async function loginGeminiCli(onAuth, onProgress, onManualCodeInput) {
         }
         const tokenData = (await tokenResponse.json());
         if (!tokenData.refresh_token) {
-            throw new Error("No refresh token received. Please try again.");
+            throw new Error("未收到刷新令牌，请重试。");
         }
         // Get user email
-        onProgress?.("Getting user info...");
+        onProgress?.("正在获取用户信息…");
         const email = await getUserEmail(tokenData.access_token);
         // Discover project
         const projectId = await discoverProject(tokenData.access_token, onProgress);
@@ -466,7 +466,7 @@ export async function loginGeminiCli(onAuth, onProgress, onManualCodeInput) {
 }
 export const geminiCliOAuthProvider = {
     id: "google-gemini-cli",
-    name: "Google Cloud Code Assist (Gemini CLI)",
+    name: "Google Cloud Code Assist（Gemini CLI）",
     usesCallbackServer: true,
     async login(callbacks) {
         return loginGeminiCli(callbacks.onAuth, callbacks.onProgress, callbacks.onManualCodeInput);

@@ -1,4 +1,4 @@
-import type { AgentSessionEvent } from '@mariozechner/pi-coding-agent';
+import type { AgentSessionEvent } from '@earendil-works/pi-coding-agent';
 import * as vscode from 'vscode';
 import * as AgentManager from './agent-manager.js';
 import * as PanelManager from './panel-manager.js';
@@ -131,7 +131,7 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
       if (success) {
         sendRpcResponse('set_model', true);
       } else {
-        sendRpcResponse('set_model', false, undefined, 'Model not found');
+        sendRpcResponse('set_model', false, undefined, '未找到模型');
       }
       break;
     }
@@ -230,7 +230,7 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
         canSelectMany: true,
         canSelectFiles: true,
         canSelectFolders: false,
-        title: 'Attach files to chat',
+        title: '添加文件到聊天',
       });
       if (uris && uris.length > 0) {
         for (const uri of uris) {
@@ -250,7 +250,7 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
                 mimeType,
               });
             } catch (err) {
-              vscode.window.showWarningMessage(`[Phi] Could not read image: ${uri.fsPath}`);
+              vscode.window.showWarningMessage(`[Phi] 无法读取图片: ${uri.fsPath}`);
             }
           } else {
             // Non-image file: add as context reference

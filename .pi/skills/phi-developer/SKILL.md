@@ -10,7 +10,7 @@ This skill provides essential guidelines and commands for developing the **Phi V
 ## Core Architecture
 
 Phi runs in two completely separate sandbox environments that CANNOT share memory:
-1. **Extension Host** (`src/`): Runs Node.js, has access to the Pi SDK (`@mariozechner/pi-coding-agent`) and VS Code APIs (`vscode`).
+1. **Extension Host** (`src/`): Runs Node.js, has access to the Pi SDK (`@earendil-works/pi-coding-agent`) and VS Code APIs (`vscode`).
 2. **Webview UI** (`public/`): Runs in a Chromium sandbox. Vanilla JS & CSS only (No React, Vue, etc.). No Node.js APIs.
 
 ### Webview Module Structure

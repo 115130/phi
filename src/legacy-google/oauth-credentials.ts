@@ -108,8 +108,7 @@ export function getLegacyGoogleOAuthCredentials(
   }
 
   throw new Error(
-    `Missing ${definition.providerName} OAuth credentials. ` +
-    `Configure ${definition.clientIdEnv} and ${definition.clientSecretEnv} from Phi Login / Setup, ` +
-    `VS Code SecretStorage, or your shell environment.`
+    `缺少 ${definition.providerName} OAuth 凭证。` +
+    `请通过 Phi 登录/设置、VS Code SecretStorage 或 shell 环境变量配置 ${definition.clientIdEnv} 和 ${definition.clientSecretEnv}。`
   );
 }
