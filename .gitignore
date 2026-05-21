@@ -42,3 +42,4 @@ pi-sdk/coding-agent/dist/pi
 pi-sdk/coding-agent/dist/pi-self-contained
 pi-sdk/coding-agent/binaries/
 pi-sdk/coding-agent/pi-windows-x64.zip
+.direnv
