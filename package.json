@@ -53,47 +53,47 @@
     },
     "commands": [
       {
-        "command": "phi.openChat",
+        "command": "phi-pi.openChat",
         "title": "Phi: Open Chat",
         "icon": "$(comment-discussion)"
       },
       {
-        "command": "phi.addSelectionToChat",
+        "command": "phi-pi.addSelectionToChat",
         "title": "Phi: Add to Chat",
         "icon": "$(add)"
       },
       {
-        "command": "phi.addFileToChat",
+        "command": "phi-pi.addFileToChat",
         "title": "Phi: Add File to Chat",
         "icon": "$(add)"
       },
       {
-        "command": "phi.askAboutSelection",
+        "command": "phi-pi.askAboutSelection",
         "title": "Phi: Ask About Selection",
         "icon": "$(sparkle)"
       },
       {
-        "command": "phi.newSession",
+        "command": "phi-pi.newSession",
         "title": "Phi: New Session",
         "icon": "$(add)"
       },
       {
-        "command": "phi.abortSession",
+        "command": "phi-pi.abortSession",
         "title": "Phi: Abort Current Turn",
         "icon": "$(stop-circle)"
       },
       {
-        "command": "phi.login",
+        "command": "phi-pi.login",
         "title": "Phi: Login",
         "icon": "$(sign-in)"
       },
       {
-        "command": "phi.logout",
+        "command": "phi-pi.logout",
         "title": "Phi: Logout",
         "icon": "$(sign-out)"
       },
       {
-        "command": "phi.addApiKey",
+        "command": "phi-pi.addApiKey",
         "title": "Phi: Add API Key",
         "icon": "$(key)"
       },
@@ -103,19 +103,19 @@
         "icon": "$(trash)"
       },
       {
-        "command": "phi.openTree",
+        "command": "phi-pi.openTree",
         "title": "Phi: Open Conversation Tree",
         "icon": "$(git-branch)"
       }
     ],
     "keybindings": [
       {
-        "command": "phi.openChat",
+        "command": "phi-pi.openChat",
         "key": "ctrl+shift+l",
         "mac": "cmd+shift+l"
       },
       {
-        "command": "phi.addSelectionToChat",
+        "command": "phi-pi.addSelectionToChat",
         "key": "ctrl+shift+=",
         "mac": "cmd+shift+=",
         "when": "editorHasSelection"
@@ -124,16 +124,16 @@
     "menus": {
       "editor/context": [
         {
-          "command": "phi.addSelectionToChat",
+          "command": "phi-pi.addSelectionToChat",
           "when": "editorHasSelection",
-          "group": "phi@1"
+          "group": "phi-pi@1"
         }
       ],
       "explorer/context": [
         {
-          "command": "phi.addFileToChat",
+          "command": "phi-pi.addFileToChat",
           "when": "!explorerResourceIsFolder",
-          "group": "phi@1"
+          "group": "phi-pi@1"
         }
       ]
     },
