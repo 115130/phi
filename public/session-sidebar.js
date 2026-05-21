@@ -88,12 +88,22 @@ export class SessionSidebar {
       <div class="session-title-row">
         ${favIcon}
         <div class="session-title" title="${this.escapeHtml(title)}">${this.escapeHtml(title)}</div>
+        <button class="session-rename-btn" data-tooltip="重命名会话">✏️</button>
         <button class="session-delete-btn" aria-label="删除会话" data-tooltip="删除会话">🗑️</button>
       </div>
       <div class="session-meta">${time}</div>
     `;
 
     item.addEventListener('click', () => this.onSessionSelect(session));
+
+    // Rename button
+    const renameBtn = item.querySelector('.session-rename-btn');
+    if (renameBtn) {
+      renameBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.startRename(item, session);
+      });
+    }
 
     // Long-press / right-click for favourite toggle
     item.addEventListener('contextmenu', (e) => {
@@ -181,6 +191,49 @@ export class SessionSidebar {
     } catch {
       return '';
     }
+  }
+
+  startRename(item, session) {
+    const titleEl = item.querySelector('.session-title');
+    const currentName = session.name || session.firstMessage || '空会话';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentName;
+    input.className = 'session-rename-input';
+    // Remove inline border to inherit from CSS
+    input.style.border = 'none';
+    input.style.background = 'transparent';
+    input.style.color = 'inherit';
+    input.style.font = 'inherit';
+    input.style.width = '100%';
+    input.style.outline = 'none';
+
+    titleEl.replaceWith(input);
+    input.focus();
+    input.select();
+
+    const finishRename = () => {
+      const newName = input.value.trim();
+      if (newName && newName !== (session.name || session.firstMessage || '')) {
+        VscodeIPC.send({ type: 'set_session_name', name: newName });
+        // Update the session object in place
+        session.name = newName;
+      }
+      // Restore display
+      const displayText = newName || currentName;
+      const newTitle = document.createElement('div');
+      newTitle.className = 'session-title';
+      newTitle.title = this.escapeHtml(displayText);
+      newTitle.textContent = displayText;
+      input.replaceWith(newTitle);
+    };
+
+    input.addEventListener('blur', finishRename);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { input.blur(); }
+      if (e.key === 'Escape') { input.value = currentName; input.blur(); }
+    });
   }
 
   escapeHtml(text) {

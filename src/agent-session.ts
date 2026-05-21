@@ -360,6 +360,17 @@ export function getContextUsage() {
   return session.getContextUsage() ?? null;
 }
 
+/**
+ * Rename the current session.
+ */
+export function setSessionName(name: string): void {
+  if (!session) return;
+  session.setSessionName(name);
+}
+
+/**
+ * Trigger manual context compaction.
+ */
 export async function compact(): Promise<any> {
   if (!session) return;
   return await session.compact();

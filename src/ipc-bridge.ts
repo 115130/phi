@@ -24,6 +24,7 @@ type WebviewMessage =
   | { type: 'get_sessions' }
   | { type: 'switch_session'; sessionPath: string }
   | { type: 'new_session' }
+  | { type: 'set_session_name'; name: string }
   // Model & Thinking
   | { type: 'get_state' }
   | { type: 'get_available_models' }
@@ -110,6 +111,11 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
 
     case 'new_session':
       await AgentManager.newSession();
+      sendSync();
+      break;
+
+    case 'set_session_name':
+      AgentManager.setSessionName(message.name);
       sendSync();
       break;
 
