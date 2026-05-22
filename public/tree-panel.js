@@ -35,7 +35,7 @@ export class TreePanel {
     // IPC listeners
     VscodeIPC.on('tree_data', (msg) => {
       if (msg.error) {
-        this.view.innerHTML = `<div class="tree-empty">Failed to load tree: ${msg.error}</div>`;
+        this.view.innerHTML = `<div class="tree-empty">加载对话树失败: ${msg.error}</div>`;
         return;
       }
       this.currentNodes = msg.nodes;
@@ -53,7 +53,7 @@ export class TreePanel {
   open() {
     this.panel.classList.remove('hidden');
     this.overlay.classList.remove('hidden');
-    this.view.innerHTML = '<div class="tree-loading">Loading tree...</div>';
+    this.view.innerHTML = '<div class="tree-loading">正在加载对话树…</div>';
     VscodeIPC.send({ type: 'get_tree' });
   }
 
@@ -95,7 +95,7 @@ export class TreePanel {
     this.view.innerHTML = '';
 
     if (!nodes || nodes.length === 0) {
-      this.view.innerHTML = '<div class="tree-empty">No conversation entries yet</div>';
+      this.view.innerHTML = '<div class="tree-empty">暂无对话记录</div>';
       return;
     }
 
@@ -118,16 +118,16 @@ export class TreePanel {
       roleEl.className = 'tree-node-role';
 
       if (item.type === 'message') {
-        roleEl.textContent = item.role === 'user' ? 'user:' : 'assistant:';
+        roleEl.textContent = item.role === 'user' ? '用户:' : '助手:';
         roleEl.classList.add(item.role === 'user' ? 'user' : 'assistant');
       } else if (item.type === 'compaction') {
-        roleEl.textContent = '[compaction]:';
+        roleEl.textContent = '[压缩]:';
         roleEl.classList.add('meta');
       } else if (item.type === 'branch_summary') {
-        roleEl.textContent = '[branch summary]:';
+        roleEl.textContent = '[分支摘要]:';
         roleEl.classList.add('meta');
       } else if (item.type === 'model_change') {
-        roleEl.textContent = '[model]:';
+        roleEl.textContent = '[模型]:';
         roleEl.classList.add('meta');
       } else {
         roleEl.textContent = `[${item.type}]:`;
@@ -260,7 +260,7 @@ export class TreePanel {
     const previewText = (node.preview || '').substring(0, 40);
     const title = document.createElement('div');
     title.className = 'tree-nav-title';
-    title.textContent = `Navigate to: ${previewText}`;
+    title.textContent = `导航至: ${previewText}`;
     opts.appendChild(title);
 
     const actions = [

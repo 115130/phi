@@ -343,7 +343,7 @@ function handlePiEvent(event) {
       const { toolCallId, toolName, args } = event;
       state.addToolExecution(toolCallId, { toolName, args, status: 'pending' });
       toolCardRenderer.createToolCard(state.getToolExecution(toolCallId));
-      showTypingIndicator(true, `Working (${toolName})`);
+      showTypingIndicator(true, `执行中 (${toolName})`);
       break;
     }
 
@@ -591,7 +591,7 @@ function renderCompactionMarker(entry) {
   renderHistoryMarker({
     className: 'compaction-history-marker',
     title: '此处上下文已压缩',
-    meta: [tokens ? `Compacted from ${tokens}` : '', timestamp].filter(Boolean).join(' • '),
+    meta: [tokens ? `从 ${tokens} 压缩` : '', timestamp].filter(Boolean).join(' • '),
     summary: entry.summary || '',
     emptySummary: '此会话已被压缩，但未保存摘要。',
   });
@@ -745,12 +745,12 @@ VscodeIPC.on('rpc_response', (msg) => {
     case 'get_session_stats':
       if (data) {
         const lines = [
-          `📊 Session Stats`,
-          `Messages: ${data.totalMessages} (${data.userMessages} user, ${data.assistantMessages} assistant)`,
-          `Tool calls: ${data.toolCalls}`,
+          `📊 会话统计`,
+          `消息: ${data.totalMessages} 条（用户 ${data.userMessages} 条，助手 ${data.assistantMessages} 条）`,
+          `工具调用: ${data.toolCalls} 次`,
         ];
-        if (data.tokens) lines.push(`Context: ~${(data.tokens.input / 1000).toFixed(1)}k tokens`);
-        if (data.cost) lines.push(`Cost: $${data.cost.toFixed(4)}`);
+        if (data.tokens) lines.push(`上下文: ~${(data.tokens.input / 1000).toFixed(1)}k tokens`);
+        if (data.cost) lines.push(`费用: $${data.cost.toFixed(4)}`);
         messageRenderer.renderSystemMessage(lines.join('\n'));
       }
       break;

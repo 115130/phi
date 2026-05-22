@@ -138,16 +138,16 @@ function getEnvSetupSuffix(result: EnvManager.ProviderEnvSetupResult): string {
   if (!result.attempted) return '';
   if (result.completed) {
     const configured = [
-      ...result.configuredGlobal.map((name) => `${name} from global env`),
-      ...result.configuredLocal.map((name) => `${name} locally`),
+      ...result.configuredGlobal.map((name) => `${name}（来自全局环境）`),
+      ...result.configuredLocal.map((name) => `${name}（本地设置）`),
     ];
     return configured.length > 0
-      ? ` Environment configured: ${configured.join(', ')}.`
+      ? ` 环境已配置: ${configured.join(', ')}。`
       : '';
   }
   return result.missingRequired.length > 0
-    ? ` Environment setup incomplete: ${result.missingRequired.join(', ')} missing.`
-    : ' Environment setup incomplete.';
+    ? ` 环境设置未完成: 缺少 ${result.missingRequired.join(', ')}。`
+    : ' 环境设置未完成。';
 }
 
 async function runProviderEnvSetup(provider: AgentManager.LoginProviderInfo): Promise<EnvManager.ProviderEnvSetupResult> {
@@ -243,8 +243,8 @@ async function runApiKeySetup(provider: AgentManager.LoginProviderInfo): Promise
   }
 
   const apiKey = await vscode.window.showInputBox({
-    prompt: `Enter API key for ${provider.name}`,
-    placeHolder: 'API key',
+    prompt: `输入 ${provider.name} 的 API 密钥`,
+    placeHolder: 'API 密钥',
     password: true,
     ignoreFocusOut: true,
   });

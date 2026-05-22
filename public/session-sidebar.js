@@ -183,8 +183,8 @@ export class SessionSidebar {
       const days = Math.floor(diffMs / 86400000);
 
       if (diffMins < 1) return '刚才';
-      if (diffMins < 60) return `${diffMins}m ago`;
-      if (diffHours < 24) return `${diffHours}h ago`;
+      if (diffMins < 60) return `${diffMins}分钟前`;
+      if (diffHours < 24) return `${diffHours}小时前`;
       if (days === 1) return '昨天';
       if (days < 7) return date.toLocaleDateString([], { weekday: 'long' });
       return date.toLocaleDateString([], { month: 'short', day: 'numeric' });

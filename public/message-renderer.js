@@ -30,12 +30,12 @@ export class MessageRenderer {
     this.container.innerHTML = `
       <div class="welcome">
         <div class="welcome-icon">φ</div>
-        <p>Welcome to Phi</p>
-        <p class="hint">Type a message below to start chatting with Pi, or use <kbd>Cmd+Shift+L</kbd> to open this panel anytime.</p>
+        <p>欢迎使用 Phi</p>
+        <p class="hint">在下方输入消息以开始与 Pi 对话，或随时使用 <kbd>Cmd+Shift+L</kbd> 打开此面板。</p>
         <div class="shortcuts-hint">
-          <span>Enter — Send</span>
-          <span>Shift+Enter — Newline</span>
-          <span>Esc — Abort</span>
+          <span>Enter — 发送</span>
+          <span>Shift+Enter — 换行</span>
+          <span>Esc — 中止</span>
         </div>
       </div>
     `;
@@ -102,7 +102,7 @@ export class MessageRenderer {
 
     if (hasError) {
       const escaped = this.escapeHtml(message.errorMessage);
-      contentHtml += `<div class="assistant-error" data-error="${escaped}">Error: ${escaped}</div>`;
+      contentHtml += `<div class="assistant-error" data-error="${escaped}">错误: ${escaped}</div>`;
     }
 
     // Usage/cost info
@@ -120,7 +120,7 @@ export class MessageRenderer {
       // Error-only: single row with error text + copy button at right
       div.innerHTML = `
         <div class="assistant-error-row">
-          <div class="assistant-error" data-error="${this.escapeHtml(message.errorMessage)}">Error: ${this.escapeHtml(message.errorMessage)}</div>
+          <div class="assistant-error" data-error="${this.escapeHtml(message.errorMessage)}">错误: ${this.escapeHtml(message.errorMessage)}</div>
           <button class="message-copy-btn" aria-label="复制消息">${copyBtnSvg}</button>
         </div>
       `;
@@ -169,7 +169,7 @@ export class MessageRenderer {
 
     const label = document.createElement('span');
     label.className = 'thinking-label';
-    label.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M6.5 9h11"/><path d="M7 13h10"/></svg> Thinking';
+    label.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M6.5 9h11"/><path d="M7 13h10"/></svg> 思考';
     toggle.appendChild(label);
 
     const content = document.createElement('div');
@@ -206,7 +206,7 @@ export class MessageRenderer {
 
       const label = document.createElement('span');
       label.className = 'thinking-label';
-      label.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M6.5 9h11"/><path d="M7 13h10"/></svg> Thinking';
+      label.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/><path d="M6.5 9h11"/><path d="M7 13h10"/></svg> 思考';
       toggle.appendChild(label);
 
       const content = document.createElement('div');
@@ -275,7 +275,7 @@ export class MessageRenderer {
 
       const errorEl = document.createElement('div');
       errorEl.className = 'assistant-error';
-      errorEl.textContent = `Error: ${errorMessage}`;
+      errorEl.textContent = `错误: ${errorMessage}`;
       errorEl.dataset.error = errorMessage;
       row.appendChild(errorEl);
 
@@ -307,7 +307,7 @@ export class MessageRenderer {
       if (errorMessage) {
         const errorEl = document.createElement('div');
         errorEl.className = 'assistant-error';
-        errorEl.textContent = `Error: ${errorMessage}`;
+        errorEl.textContent = `错误: ${errorMessage}`;
         errorEl.dataset.error = errorMessage;
         contentDiv.appendChild(errorEl);
       }
