@@ -391,7 +391,7 @@ async function promptForLocalEnv(
     ignoreFocusOut: true,
     validateInput: (input) => {
       if (required && input.trim().length === 0) {
-        return `${env.name} is required.`;
+        return `${env.name} 是必填项。`;
       }
       return undefined;
     },
@@ -530,7 +530,7 @@ async function configureRequiredChoiceGroup(
         action: 'configure' as const,
       },
     ], {
-      title: `${setup.name}: Environment setup`,
+      title: `${setup.name}: 环境设置`,
       placeHolder: '检测到现有的环境变量值。',
       ignoreFocusOut: true,
     });
@@ -547,7 +547,7 @@ async function configureRequiredChoiceGroup(
       choice,
     })),
     {
-      title: `${setup.name}: Environment setup`,
+      title: `${setup.name}: 环境设置`,
       placeHolder: group.prompt,
       ignoreFocusOut: true,
       matchOnDescription: true,
@@ -584,7 +584,7 @@ async function configureOptionalEnv(setup: ProviderEnvSetupDefinition, result: P
       action: 'configure' as const,
     },
   ], {
-    title: `${setup.name}: Optional environment`,
+    title: `${setup.name}: 可选环境变量`,
     placeHolder: '是否要配置可选的提供商环境变量？',
     ignoreFocusOut: true,
   });

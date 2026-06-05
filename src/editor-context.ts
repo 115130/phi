@@ -220,9 +220,9 @@ export function buildSelectionPrompt(): string | null {
   if (!ctx.file || !ctx.selection) return null;
 
   const lang = ctx.language ?? '';
-  const lines = `lines ${ctx.selection.startLine}-${ctx.selection.endLine}`;
+  const lines = `第${ctx.selection.startLine}-${ctx.selection.endLine}行`;
 
-  return `In \`${ctx.file}\` ${lines} (${lang}):\n\`\`\`${lang}\n${ctx.selection.text}\n\`\`\``;
+  return `在 \`${ctx.file}\` ${lines} (${lang}):\n\`\`\`${lang}\n${ctx.selection.text}\n\`\`\``;
 }
 
 /**

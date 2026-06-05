@@ -74,7 +74,7 @@ export function renderMarkdown(text, options = {}) {
       const langLabel = getLanguageLabel(block.languageInfo);
       const highlightAttrs = shouldHighlight ? ` data-language="${escapeHtml(block.languageInfo || '')}"` : '';
       html += `<div class="code-block-wrapper"${highlightAttrs}>`;
-      html += `<div class="code-block-header"><span>${escapeHtml(langLabel)}</span><button class="copy-btn" type="button">Copy</button></div>`;
+      html += `<div class="code-block-header"><span>${escapeHtml(langLabel)}</span><button class="copy-btn" type="button">复制</button></div>`;
       html += `<pre><code>${escapeHtml(block.code)}</code></pre></div>`;
       continue;
     }
