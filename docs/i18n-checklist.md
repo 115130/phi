@@ -20,11 +20,11 @@
 
 | # | 文件 | 行号 | 原文 | 说明 | 状态 |
 |---|------|------|------|------|------|
-| 7 | `src/env-manager.ts` | 387 | `${providerName}: ${env.label}` | label 已为中文，仅作标题框架 | ⬜ |
-| 8 | `src/env-manager.ts` | 388 | `${env.description} (${env.name})` | description 已为中文 | ⬜ |
-| 9 | `src/env-manager.ts` | 437 | `${setup.name}: ${env.label}` | 同 #7 | ⬜ |
-| 10 | `public/app.js` | 539-541 | `X tokens` / `Xk tokens` / `XM tokens` | tokens 是通用术语，可保留 | ⬜ |
-| 11 | `public/message-renderer.js` | 112 | `$${cost}` | $ 是货币符号，通用 | ⬜ |
+| 7 | `src/env-manager.ts` | 387 | `${providerName}: ${env.label}` | label 已为中文 | ✅ 无需翻译 |
+| 8 | `src/env-manager.ts` | 388 | `${env.description} (${env.name})` | description 已为中文 | ✅ 无需翻译 |
+| 9 | `src/env-manager.ts` | 437 | `${setup.name}: ${env.label}` | 同 #7 | ✅ 无需翻译 |
+| 10 | `public/app.js` | 539-541 | `X tokens` / `Xk tokens` / `XM tokens` | tokens 是通用术语 | ✅ 无需翻译 |
+| 11 | `public/message-renderer.js` | 112 | `$${cost}` | $ 是货币符号 | ✅ 无需翻译 |
 
 ## 🟢 已确认跳过
 
