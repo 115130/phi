@@ -717,7 +717,21 @@ VscodeIPC.on('sessions_list', (msg) => {
 VscodeIPC.on('add_context', (msg) => {
   if (msg.context) chatInput.insertContextRef(msg.context);
 });
-VscodeIPC.on('editor_context', () => { /* future: editor context badge */ });
+VscodeIPC.on('editor_context', (msg) => {
+  const ctx = msg.context;
+  const badge = document.getElementById('editor-context-badge');
+  if (!badge) return;
+  if (ctx?.file) {
+    const fileName = ctx.file.split('/').pop() || ctx.file;
+    const lang = ctx.language || '';
+    const sel = ctx.selection ? `:${ctx.selection.startLine}` : '';
+    badge.textContent = `📄 ${fileName}${sel}${lang ? ` (${lang})` : ''}`;
+    badge.classList.remove('hidden');
+    badge.title = ctx.file;
+  } else {
+    badge.classList.add('hidden');
+  }
+});
 VscodeIPC.on('set_theme', () => { /* no-op: VS Code handles theming */ });
 VscodeIPC.on('prefill_input', (msg) => {
   if (msg.text) {
@@ -740,6 +754,12 @@ VscodeIPC.on('rpc_response', (msg) => {
   }
 
   switch (command) {
+    case 'set_model':
+      if (data?.model) {
+        modelPicker.setModel(data.model);
+      }
+      break;
+
     case 'get_state':
       if (data) {
         modelPicker.handleStateResponse(data);

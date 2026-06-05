@@ -230,6 +230,7 @@ function buildWebviewHtml(
     </button>
 
     <!-- ── Input area ── -->
+    <div class="editor-context-badge hidden" id="editor-context-badge" title=""></div>
     <div class="input-area">
       <div class="queued-messages hidden" id="queued-messages"></div>
       <div class="image-previews hidden" id="image-previews"></div>

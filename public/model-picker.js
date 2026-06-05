@@ -8,6 +8,7 @@ import { VscodeIPC } from './vscode-ipc.js';
 export class ModelPicker {
   constructor() {
     this.currentModelId = '';
+    this.currentProvider = '';
     this.availableModels = [];
     this.currentThinkingLevel = 'off';
     this.contextWindowSize = 0;
@@ -53,10 +54,12 @@ export class ModelPicker {
     if (model) {
       this.requiresLogin = false;
       this.currentModelId = model.id || '';
+      this.currentProvider = model.provider || '';
       this.contextWindowSize = model.contextWindow || 0;
     } else {
       this.requiresLogin = true;
       this.currentModelId = '';
+      this.currentProvider = '';
       this.contextWindowSize = 0;
       this.close();
     }
@@ -113,7 +116,10 @@ export class ModelPicker {
       return;
     }
     const shortName = this.currentModelId.replace(/^claude-/, '').replace(/-\d{8}$/, '');
-    this.dropdownLabel.textContent = shortName || '模型';
+    // 多个 provider 有同名模型时，显示 provider 缩写以区分
+    const dupes = this.availableModels.filter(m => m.id === this.currentModelId);
+    const suffix = dupes.length > 1 && this.currentProvider ? ` @${this.currentProvider}` : '';
+    this.dropdownLabel.textContent = (shortName || '模型') + suffix;
   }
 
   _updateButtonState() {
@@ -145,8 +151,9 @@ export class ModelPicker {
       this.availableModels.forEach(m => {
         const shortName = m.id.replace(/-\d{8}$/, '');
         if (query && !shortName.toLowerCase().includes(query) && !(m.provider || '').toLowerCase().includes(query)) return;
+        const isActive = m.id === this.currentModelId && m.provider === this.currentProvider;
         const el = document.createElement('div');
-        el.className = `model-dropdown-item${m.id === this.currentModelId ? ' active' : ''}`;
+        el.className = `model-dropdown-item${isActive ? ' active' : ''}`;
         const ctxK = m.contextWindow ? `${(m.contextWindow / 1000).toFixed(0)}k` : '';
         const providerLabel = m.provider && m.provider !== 'anthropic' ? `<span class="model-dropdown-item-provider">${m.provider}</span>` : '';
         el.innerHTML = `<span>${shortName}${providerLabel}</span><span class="model-dropdown-item-ctx">${ctxK}</span>`;
@@ -154,6 +161,7 @@ export class ModelPicker {
           this.close();
           VscodeIPC.send({ type: 'set_model', provider: m.provider, modelId: m.id });
           this.currentModelId = m.id;
+          this.currentProvider = m.provider;
           this._updateLabel();
           if (m.contextWindow) {
             this.contextWindowSize = m.contextWindow;

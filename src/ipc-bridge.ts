@@ -24,6 +24,7 @@ type WebviewMessage =
   | { type: 'get_sessions' }
   | { type: 'switch_session'; sessionPath: string }
   | { type: 'new_session' }
+  | { type: 'fork_session' }
   | { type: 'set_session_name'; name: string }
   // Model & Thinking
   | { type: 'get_state' }
@@ -116,6 +117,11 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
       sendSync();
       break;
 
+    case 'fork_session':
+      await AgentManager.forkSession();
+      sendSync();
+      break;
+
     case 'set_session_name':
       AgentManager.setSessionName(message.name);
       sendSync();
@@ -137,7 +143,8 @@ async function handleWebviewMessage(message: WebviewMessage): Promise<void> {
     case 'set_model': {
       const success = await AgentManager.setModel(message.provider, message.modelId);
       if (success) {
-        sendRpcResponse('set_model', true);
+        const state = AgentManager.getState();
+        sendRpcResponse('set_model', true, { model: state?.model ?? null });
       } else {
         sendRpcResponse('set_model', false, undefined, '未找到模型');
       }

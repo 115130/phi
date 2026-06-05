@@ -245,6 +245,23 @@ export async function newSession(): Promise<void> {
   logModelFallbackMessage('New session', runtime.modelFallbackMessage);
 }
 
+/**
+ * Fork the current session into a new session file, preserving all history.
+ */
+export async function forkSession(): Promise<void> {
+  if (!runtime) throw new Error('[Phi] AgentManager not initialized');
+  const currentFile = session?.sessionFile;
+  if (!currentFile) throw new Error('[Phi] No active session to fork');
+  const forkedManager = SessionManager.forkFrom(currentFile, cwd);
+  const forkedPath = forkedManager.getSessionFile();
+  if (!forkedPath) throw new Error('[Phi] Fork failed — no session file');
+  await runtime.switchSession(forkedPath);
+  bindSession(runtime.session);
+  await reconcileModelAfterAuthChange();
+  logRuntimeDiagnostics('Fork session', runtime.diagnostics);
+  logModelFallbackMessage('Fork session', runtime.modelFallbackMessage);
+}
+
 // ─── State accessors ──────────────────────────────────────────────────────────
 
 export function isStreaming(): boolean {
