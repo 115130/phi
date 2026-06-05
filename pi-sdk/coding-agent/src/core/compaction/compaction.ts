@@ -784,7 +784,7 @@ export async function compact(
 						thinkingLevel,
 						streamFn,
 					)
-				: Promise.resolve("No prior history."),
+				: Promise.resolve("无先前历史。"),
 			generateTurnPrefixSummary(
 				turnPrefixMessages,
 				model,

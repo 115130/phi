@@ -551,7 +551,7 @@ export class InteractiveMode {
 		if (this.settingsManager.getCollapseChangelog()) {
 			const versionMatch = this.changelogMarkdown.match(/##\s+\[?(\d+\.\d+\.\d+)\]?/);
 			const latestVersion = versionMatch ? versionMatch[1] : this.version;
-			const condensedText = `Updated to v${latestVersion}. Use ${theme.bold("/changelog")} to view full changelog.`;
+			const condensedText = `已更新至 v${latestVersion}。使用 ${theme.bold("/changelog")} 查看完整更新日志。`;
 			this.chatContainer.addChild(new Text(condensedText, 1, 0));
 		} else {
 			this.chatContainer.addChild(new Text(theme.bold(theme.fg("accent", "What's New")), 1, 0));
@@ -636,7 +636,7 @@ export class InteractiveMode {
 			);
 			const onboarding = theme.fg(
 				"dim",
-				`Pi can explain its own features and look up its docs. Ask it how to use or extend Pi.`,
+				`Pi 可以解释自己的功能并查阅文档。请向它询问如何使用或扩展 Pi。`,
 			);
 			this.builtInHeader = new ExpandableText(
 				() => `${logo}\n${compactInstructions}\n${compactOnboarding}\n\n${onboarding}`,
@@ -2871,7 +2871,7 @@ export class InteractiveMode {
 				const label =
 					event.reason === "manual"
 						? `Compacting context... ${cancelHint}`
-						: `${event.reason === "overflow" ? "Context overflow detected, " : ""}Auto-compacting... ${cancelHint}`;
+						: `${event.reason === "overflow" ? "检测到上下文溢出， " : ""}Auto-compacting... ${cancelHint}`;
 				this.autoCompactionLoader = new Loader(
 					this.ui,
 					(spinner) => theme.fg("accent", spinner),
@@ -3456,7 +3456,7 @@ export class InteractiveMode {
 		try {
 			const result = await this.session.cycleModel(direction);
 			if (result === undefined) {
-				const msg = this.session.scopedModels.length > 0 ? "Only one model in scope" : "Only one model available";
+				const msg = this.session.scopedModels.length > 0 ? "范围内仅有一个模型" : "仅有一个可用模型";
 				this.showStatus(msg);
 			} else {
 				this.footer.invalidate();
@@ -3528,7 +3528,7 @@ export class InteractiveMode {
 			// Split by space to support editor arguments (e.g., "code --wait")
 			const [editor, ...editorArgs] = editorCmd.split(" ");
 
-			process.stdout.write(`Launching external editor: ${editorCmd}\nPi will resume when the editor exits.\n`);
+			process.stdout.write(`正在启动外部编辑器: ${editorCmd}\nPi 将在编辑器退出后恢复。\n`);
 
 			// Do not use spawnSync here. On Windows, synchronous child_process calls can keep
 			// Node/libuv's console input read active after ui.stop() pauses stdin, racing
@@ -3616,7 +3616,7 @@ export class InteractiveMode {
 
 	showPackageUpdateNotification(packages: string[]): void {
 		const action = theme.fg("accent", `${APP_NAME} update`);
-		const updateInstruction = theme.fg("muted", "Package updates are available. Run ") + action;
+		const updateInstruction = theme.fg("muted", "有可用的包更新。运行 ") + action;
 		const packageLines = packages.map((pkg) => `- ${pkg}`).join("\n");
 
 		this.chatContainer.addChild(new Spacer(1));
@@ -4289,7 +4289,7 @@ export class InteractiveMode {
 							wantsSummary = summaryChoice !== "无摘要";
 
 							if (summaryChoice === "自定义提示词摘要") {
-								customInstructions = await this.showExtensionEditor("Custom summarization instructions");
+								customInstructions = await this.showExtensionEditor("自定义摘要指令");
 								if (customInstructions === undefined) {
 									// User cancelled - loop back to summary selector
 									continue;
@@ -4516,7 +4516,7 @@ export class InteractiveMode {
 		const providerOptions = this.getLoginProviderOptions(authType);
 		if (providerOptions.length === 0) {
 			this.showStatus(
-				authType === "oauth" ? "No subscription providers available." : "No API key providers available.",
+				authType === "oauth" ? "没有可用的订阅提供商。" : "No API key providers available.",
 			);
 			return;
 		}
@@ -4561,7 +4561,7 @@ export class InteractiveMode {
 		const providerOptions = this.getLogoutProviderOptions();
 		if (providerOptions.length === 0) {
 			this.showStatus(
-				"No stored credentials to remove. /logout only removes credentials saved by /login; environment variables and models.json config are unchanged.",
+				"没有可删除的已存储凭据。/logout 仅删除通过 /login 保存的凭据；环境变量bles and models.json config are unchanged.",
 			);
 			return;
 		}
@@ -4585,7 +4585,7 @@ export class InteractiveMode {
 						await this.updateAvailableProviderCount();
 						const message =
 							providerOption.authType === "oauth"
-								? `Logged out of ${providerOption.name}`
+								? `已退出 ${providerOption.name}`
 								: `Removed stored API key for ${providerOption.name}. Environment variables and models.json config are unchanged.`;
 						this.showStatus(message);
 					} catch (error: unknown) {
@@ -4609,7 +4609,7 @@ export class InteractiveMode {
 	): Promise<void> {
 		this.session.modelRegistry.refresh();
 
-		const actionLabel = authType === "oauth" ? `Logged in to ${providerName}` : `Saved API key for ${providerName}`;
+		const actionLabel = authType === "oauth" ? `已登录 ${providerName}` : `Saved API key for ${providerName}`;
 
 		let selectedModel: Model<any> | undefined;
 		let selectionError: string | undefined;
@@ -4709,7 +4709,7 @@ export class InteractiveMode {
 		try {
 			const apiKey = (await dialog.showPrompt("Enter API key:")).trim();
 			if (!apiKey) {
-				throw new Error("API key cannot be empty.");
+				throw new Error("API 密钥不能为空。");
 			}
 
 			this.session.modelRegistry.authStorage.set(providerId, { type: "api_key", key: apiKey });
@@ -4817,7 +4817,7 @@ export class InteractiveMode {
 							});
 					} else if (providerId === "github-copilot") {
 						// GitHub Copilot polls after onAuth
-						dialog.showWaiting("Waiting for browser authentication...");
+						dialog.showWaiting("正在等待浏览器认证…");
 					}
 					// For Anthropic: onPrompt is called immediately after
 				},
@@ -4985,7 +4985,7 @@ export class InteractiveMode {
 			return;
 		}
 
-		const confirmed = await this.showExtensionConfirm("Import session", `Replace current session with ${inputPath}?`);
+		const confirmed = await this.showExtensionConfirm("Import session", `替换当前会话为 ${inputPath}？`);
 		if (!confirmed) {
 			this.showStatus("导入已取消");
 			return;
@@ -5153,7 +5153,7 @@ export class InteractiveMode {
 
 		this.session.setSessionName(name);
 		this.chatContainer.addChild(new Spacer(1));
-		this.chatContainer.addChild(new Text(theme.fg("dim", `Session name set: ${name}`), 1, 0));
+		this.chatContainer.addChild(new Text(theme.fg("dim", `会话名称已设置: ${name}`), 1, 0));
 		this.ui.requestRender();
 	}
 
@@ -5204,7 +5204,7 @@ export class InteractiveMode {
 						.reverse()
 						.map((e) => e.content)
 						.join("\n\n")
-				: "No changelog entries found.";
+				: "未找到更新日志条目。";
 
 		this.chatContainer.addChild(new Spacer(1));
 		this.chatContainer.addChild(new DynamicBorder());
@@ -5371,7 +5371,7 @@ export class InteractiveMode {
 
 		const debugLogPath = getDebugLogPath();
 		const debugData = [
-			`Debug output at ${new Date().toISOString()}`,
+			`调试输出于 ${new Date().toISOString()}`,
 			`Terminal: ${width}x${height}`,
 			`Total lines: ${allLines.length}`,
 			"",

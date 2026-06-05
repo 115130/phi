@@ -259,7 +259,7 @@ export function createReadToolDefinition(
 										content = [{ type: "text", text: textNote }];
 									} else {
 										const dimensionNote = formatDimensionNote(resized);
-										let textNote = `Read image file [${resized.mimeType}]`;
+										let textNote = `读取图片文件 [${resized.mimeType}]`;
 										if (dimensionNote) textNote += `\n${dimensionNote}`;
 										if (nonVisionImageNote) textNote += `\n${nonVisionImageNote}`;
 										content = [
@@ -268,7 +268,7 @@ export function createReadToolDefinition(
 										];
 									}
 								} else {
-									let textNote = `Read image file [${mimeType}]`;
+									let textNote = `读取图片文件 [${mimeType}]`;
 									if (nonVisionImageNote) textNote += `\n${nonVisionImageNote}`;
 									content = [
 										{ type: "text", text: textNote },
@@ -286,7 +286,7 @@ export function createReadToolDefinition(
 								const startLineDisplay = startLine + 1;
 								// Check if offset is out of bounds.
 								if (startLine >= allLines.length) {
-									throw new Error(`Offset ${offset} is beyond end of file (${allLines.length} lines total)`);
+									throw new Error(`偏移量 ${offset} 超出文件末尾（共 ${allLines.length} 行）`);
 								}
 								let selectedContent: string;
 								let userLimitedLines: number | undefined;

@@ -190,7 +190,7 @@ class ConfigSelectorHeader implements Component {
 
 		return [
 			truncateToWidth(`${title}${" ".repeat(spacing)}${hint}`, width, ""),
-			theme.fg("muted", "Type to filter resources"),
+			theme.fg("muted", "输入以筛选资源"),
 		];
 	}
 }

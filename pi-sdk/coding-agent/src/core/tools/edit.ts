@@ -115,7 +115,7 @@ function prepareEditArguments(input: unknown): EditToolInput {
 
 function validateEditInput(input: EditToolInput): { path: string; edits: Edit[] } {
 	if (!Array.isArray(input.edits) || input.edits.length === 0) {
-		throw new Error("Edit tool input is invalid. edits must contain at least one replacement.");
+		throw new Error("Edit 工具输入无效。edits 必须包含至少一个替换项。");
 	}
 	return { path: input.path, edits: input.edits };
 }
@@ -347,7 +347,7 @@ export function createEditToolDefinition(
 									if (signal) {
 										signal.removeEventListener("abort", onAbort);
 									}
-									reject(new Error(`Could not edit file: ${path}. ${errorMessage}.`));
+									reject(new Error(`无法编辑文件: ${path}。${errorMessage}。`));
 									return;
 								}
 

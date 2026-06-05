@@ -157,7 +157,7 @@ export function createFindToolDefinition(
 						// If custom operations provide glob(), use that instead of fd.
 						if (customOps?.glob) {
 							if (!(await ops.exists(searchPath))) {
-								settle(() => reject(new Error(`Path not found: ${searchPath}`)));
+								settle(() => reject(new Error(`路径未找到: ${searchPath}`)));
 								return;
 							}
 							if (signal?.aborted) {
@@ -175,7 +175,7 @@ export function createFindToolDefinition(
 							if (results.length === 0) {
 								settle(() =>
 									resolve({
-										content: [{ type: "text", text: "No files found matching pattern" }],
+										content: [{ type: "text", text: "未找到匹配模式的文件" }],
 										details: undefined,
 									}),
 								);
@@ -273,7 +273,7 @@ export function createFindToolDefinition(
 
 						child.on("error", (error) => {
 							cleanup();
-							settle(() => reject(new Error(`Failed to run fd: ${error.message}`)));
+							settle(() => reject(new Error(`运行 fd 失败: ${error.message}`)));
 						});
 
 						child.on("close", (code) => {
@@ -293,7 +293,7 @@ export function createFindToolDefinition(
 							if (!output) {
 								settle(() =>
 									resolve({
-										content: [{ type: "text", text: "No files found matching pattern" }],
+										content: [{ type: "text", text: "未找到匹配模式的文件" }],
 										details: undefined,
 									}),
 								);

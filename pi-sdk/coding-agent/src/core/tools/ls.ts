@@ -130,14 +130,14 @@ export function createLsToolDefinition(
 
 						// Check if path exists.
 						if (!(await ops.exists(dirPath))) {
-							reject(new Error(`Path not found: ${dirPath}`));
+							reject(new Error(`路径未找到: ${dirPath}`));
 							return;
 						}
 
 						// Check if path is a directory.
 						const stat = await ops.stat(dirPath);
 						if (!stat.isDirectory()) {
-							reject(new Error(`Not a directory: ${dirPath}`));
+							reject(new Error(`不是目录: ${dirPath}`));
 							return;
 						}
 
@@ -146,7 +146,7 @@ export function createLsToolDefinition(
 						try {
 							entries = await ops.readdir(dirPath);
 						} catch (e: any) {
-							reject(new Error(`Cannot read directory: ${e.message}`));
+							reject(new Error(`无法读取目录: ${e.message}`));
 							return;
 						}
 

@@ -94,7 +94,7 @@ Examples:
 
 		if (!provider) {
 			const rl = createInterface({ input: process.stdin, output: process.stdout });
-			console.log("Select a provider:\n");
+			console.log("选择一个提供商:\n");
 			for (let i = 0; i < PROVIDERS.length; i++) {
 				console.log(`  ${i + 1}. ${PROVIDERS[i].name}`);
 			}

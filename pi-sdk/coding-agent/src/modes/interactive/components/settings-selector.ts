@@ -370,7 +370,7 @@ export class SettingsSelectorComponent extends Container {
 		// Image auto-resize toggle (always available, affects both attached and read images)
 		items.splice(supportsImages ? 3 : 1, 0, {
 			id: "auto-resize-images",
-			label: "Auto-resize images",
+			label: "自动缩放图片",
 			description: "将大图缩放到 2000x2000 以内以获得更好的模型兼容性",
 			currentValue: config.autoResizeImages ? "true" : "false",
 			values: ["true", "false"],
@@ -441,7 +441,7 @@ export class SettingsSelectorComponent extends Container {
 		items.splice(clearOnShrinkIndex + 1, 0, {
 			id: "terminal-progress",
 			label: "终端进度",
-			description: "Show OSC 9;4 progress indicators in the terminal tab bar",
+			description: "在终端标签栏显示 OSC 9;4 进度指示器",
 			currentValue: config.showTerminalProgress ? "true" : "false",
 			values: ["true", "false"],
 		});

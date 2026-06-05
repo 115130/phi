@@ -293,7 +293,7 @@ export async function generateBranchSummary(
 	const { messages, fileOps } = prepareBranchEntries(entries, tokenBudget);
 
 	if (messages.length === 0) {
-		return { summary: "No content to summarize" };
+		return { summary: "没有可摘要的内容" };
 	}
 
 	// Transform to LLM-compatible messages, then serialize to text
@@ -348,7 +348,7 @@ export async function generateBranchSummary(
 	summary += formatFileOperations(readFiles, modifiedFiles);
 
 	return {
-		summary: summary || "No summary generated",
+		summary: summary || "未生成摘要",
 		readFiles,
 		modifiedFiles,
 	};

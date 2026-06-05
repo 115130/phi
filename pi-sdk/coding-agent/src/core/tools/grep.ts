@@ -180,7 +180,7 @@ export function createGrepToolDefinition(
 						try {
 							isDirectory = await ops.isDirectory(searchPath);
 						} catch {
-							settle(() => reject(new Error(`Path not found: ${searchPath}`)));
+							settle(() => reject(new Error(`路径未找到: ${searchPath}`)));
 							return;
 						}
 
@@ -292,7 +292,7 @@ export function createGrepToolDefinition(
 
 						child.on("error", (error) => {
 							cleanup();
-							settle(() => reject(new Error(`Failed to run ripgrep: ${error.message}`)));
+							settle(() => reject(new Error(`运行 ripgrep 失败: ${error.message}`)));
 						});
 						child.on("close", async (code) => {
 							cleanup();
@@ -348,7 +348,7 @@ export function createGrepToolDefinition(
 							}
 							if (linesTruncated) {
 								notices.push(
-									`Some lines truncated to ${GREP_MAX_LINE_LENGTH} chars. Use read tool to see full lines`,
+									`部分行被截断至 ${GREP_MAX_LINE_LENGTH} 字符。使用 read 工具查看完整行`,
 								);
 								details.linesTruncated = true;
 							}

@@ -383,7 +383,7 @@ export function createBashToolDefinition(
 					}
 					if (err instanceof Error && err.message.startsWith("timeout:")) {
 						const timeoutSecs = err.message.split(":")[1];
-						throw new Error(appendStatus(text, `Command timed out after ${timeoutSecs} seconds`));
+						throw new Error(appendStatus(text, `命令在 ${timeoutSecs} 秒后超时`));
 					}
 					throw err;
 				}
@@ -391,7 +391,7 @@ export function createBashToolDefinition(
 				const snapshot = await finishOutput();
 				const { text: outputText, details } = formatOutput(snapshot);
 				if (exitCode !== 0 && exitCode !== null) {
-					throw new Error(appendStatus(outputText, `Command exited with code ${exitCode}`));
+					throw new Error(appendStatus(outputText, `命令退出，代码 ${exitCode}`));
 				}
 				return { content: [{ type: "text", text: outputText }], details };
 			} finally {

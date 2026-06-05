@@ -123,7 +123,7 @@ export class UserMessageSelectorComponent extends Container {
 		this.addChild(new Text(theme.bold("Fork from Message"), 1, 0));
 		this.addChild(
 			new Text(
-				theme.fg("muted", "Select a user message to copy the active path up to that point into a new session"),
+				theme.fg("muted", "选择一条用户消息，将当前会话路径复制到该节点并创建新会话"),
 				1,
 				0,
 			),

@@ -365,7 +365,7 @@ export class AgentSession {
 		if (isOAuth) {
 			throw new Error(
 				`Authentication failed for "${model.provider}". ` +
-					`Credentials may have expired or network is unavailable. ` +
+					`凭据可能已过期或网络不可用。 ` +
 					`Run '/login ${model.provider}' to re-authenticate.`,
 			);
 		}
@@ -1030,7 +1030,7 @@ export class AgentSession {
 				if (isOAuth) {
 					throw new Error(
 						`Authentication failed for "${this.model.provider}". ` +
-							`Credentials may have expired or network is unavailable. ` +
+							`凭据可能已过期或网络不可用。 ` +
 							`Run '/login ${this.model.provider}' to re-authenticate.`,
 					);
 				}
