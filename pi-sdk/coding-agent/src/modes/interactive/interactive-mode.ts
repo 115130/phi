@@ -740,12 +740,12 @@ export class InteractiveMode {
 		const { migratedProviders, modelFallbackMessage, initialMessage, initialImages, initialMessages } = this.options;
 
 		if (migratedProviders && migratedProviders.length > 0) {
-			this.showWarning(`Migrated credentials to auth.json: ${migratedProviders.join(", ")}`);
+			this.showWarning(`凭据已迁移至 auth.json: ${migratedProviders.join(", ")}`);
 		}
 
 		const modelsJsonError = this.session.modelRegistry.getError();
 		if (modelsJsonError) {
-			this.showError(`models.json error: ${modelsJsonError}`);
+			this.showError(`models.json 错误: ${modelsJsonError}`);
 		}
 
 		if (modelFallbackMessage) {
@@ -1511,7 +1511,7 @@ export class InteractiveMode {
 						if (!result.cancelled) {
 							this.renderCurrentSessionState();
 							this.editor.setText(result.selectedText ?? "");
-							this.showStatus("Forked to new session");
+							this.showStatus("已 Fork 到新会话");
 						}
 						return { cancelled: result.cancelled };
 					} catch (error: unknown) {
@@ -1534,7 +1534,7 @@ export class InteractiveMode {
 					if (result.editorText && !this.editor.getText().trim()) {
 						this.editor.setText(result.editorText);
 					}
-					this.showStatus("Navigated to selected point");
+					this.showStatus("已导航到选中节点");
 					void this.flushCompactionQueue({ willRetry: false });
 					return { cancelled: false };
 				},
@@ -1664,7 +1664,7 @@ export class InteractiveMode {
 				if (matchesKey(data, shortcutStr as KeyId)) {
 					// Run handler async, don't block input
 					Promise.resolve(shortcut.handler(createContext())).catch((err) => {
-						this.showError(`Shortcut handler error: ${err instanceof Error ? err.message : String(err)}`);
+						this.showError(`快捷键处理错误: ${err instanceof Error ? err.message : String(err)}`);
 					});
 					return true;
 				}
@@ -2594,7 +2594,7 @@ export class InteractiveMode {
 				const command = isExcluded ? text.slice(2).trim() : text.slice(1).trim();
 				if (command) {
 					if (this.session.isBashRunning) {
-						this.showWarning("A bash command is already running. Press Esc to cancel it first.");
+						this.showWarning("已有一个 Bash 命令正在运行。请先按 Esc 取消。");
 						this.editor.setText(text);
 						return;
 					}
@@ -2898,9 +2898,9 @@ export class InteractiveMode {
 				}
 				if (event.aborted) {
 					if (event.reason === "manual") {
-						this.showError("Compaction cancelled");
+						this.showError("压缩已取消");
 					} else {
-						this.showStatus("Auto-compaction cancelled");
+						this.showStatus("自动压缩已取消");
 					}
 				} else if (event.result) {
 					this.chatContainer.clear();
@@ -3201,7 +3201,7 @@ export class InteractiveMode {
 		const compactionCount = allEntries.filter((e) => e.type === "compaction").length;
 		if (compactionCount > 0) {
 			const times = compactionCount === 1 ? "1 time" : `${compactionCount} times`;
-			this.showStatus(`Session compacted ${times}`);
+			this.showStatus(`会话已压缩 ${times} 次`);
 		}
 	}
 
@@ -3355,7 +3355,7 @@ export class InteractiveMode {
 
 	private handleCtrlZ(): void {
 		if (process.platform === "win32") {
-			this.showStatus("Suspend to background is not supported on Windows");
+			this.showStatus("Windows 不支持挂起到后台");
 			return;
 		}
 
@@ -3425,9 +3425,9 @@ export class InteractiveMode {
 	private handleDequeue(): void {
 		const restored = this.restoreQueuedMessagesToEditor();
 		if (restored === 0) {
-			this.showStatus("No queued messages to restore");
+			this.showStatus("没有可恢复的队列消息");
 		} else {
-			this.showStatus(`Restored ${restored} queued message${restored > 1 ? "s" : ""} to editor`);
+			this.showStatus(`已恢复 ${restored} 条队列消息到编辑器`);
 		}
 	}
 
@@ -3444,11 +3444,11 @@ export class InteractiveMode {
 	private cycleThinkingLevel(): void {
 		const newLevel = this.session.cycleThinkingLevel();
 		if (newLevel === undefined) {
-			this.showStatus("Current model does not support thinking");
+			this.showStatus("当前模型不支持思考");
 		} else {
 			this.footer.invalidate();
 			this.updateEditorBorderColor();
-			this.showStatus(`Thinking level: ${newLevel}`);
+			this.showStatus(`思考级别: ${newLevel}`);
 		}
 	}
 
@@ -3463,7 +3463,7 @@ export class InteractiveMode {
 				this.updateEditorBorderColor();
 				const thinkingStr =
 					result.model.reasoning && result.thinkingLevel !== "off" ? ` (thinking: ${result.thinkingLevel})` : "";
-				this.showStatus(`Switched to ${result.model.name || result.model.id}${thinkingStr}`);
+				this.showStatus(`已切换到 ${result.model.name || result.model.id}${thinkingStr}`);
 				void this.maybeWarnAboutAnthropicSubscriptionAuth(result.model);
 			}
 		} catch (error) {
@@ -3504,14 +3504,14 @@ export class InteractiveMode {
 			this.chatContainer.addChild(this.streamingComponent);
 		}
 
-		this.showStatus(`Thinking blocks: ${this.hideThinkingBlock ? "hidden" : "visible"}`);
+		this.showStatus(`思考块: ${this.hideThinkingBlock ? "隐藏" : "可见"}`);
 	}
 
 	private async openExternalEditor(): Promise<void> {
 		// Determine editor (respect $VISUAL, then $EDITOR)
 		const editorCmd = process.env.VISUAL || process.env.EDITOR;
 		if (!editorCmd) {
-			this.showWarning("No editor configured. Set $VISUAL or $EDITOR environment variable.");
+			this.showWarning("未配置编辑器。请设置 $VISUAL 或 $EDITOR 环境变量。");
 			return;
 		}
 
@@ -3713,7 +3713,7 @@ export class InteractiveMode {
 		this.editor.addToHistory?.(text);
 		this.editor.setText("");
 		this.updatePendingMessagesDisplay();
-		this.showStatus("Queued message for after compaction");
+		this.showStatus("队列消息将在压缩后处理");
 	}
 
 	private isExtensionCommand(text: string): boolean {
@@ -4000,7 +4000,7 @@ export class InteractiveMode {
 				await this.session.setModel(model);
 				this.footer.invalidate();
 				this.updateEditorBorderColor();
-				this.showStatus(`Model: ${model.id}`);
+				this.showStatus(`模型: ${model.id}`);
 				void this.maybeWarnAboutAnthropicSubscriptionAuth(model);
 				this.checkDaxnutsEasterEgg(model);
 			} catch (error) {
@@ -4083,7 +4083,7 @@ export class InteractiveMode {
 						this.footer.invalidate();
 						this.updateEditorBorderColor();
 						done();
-						this.showStatus(`Model: ${model.id}`);
+						this.showStatus(`模型: ${model.id}`);
 						void this.maybeWarnAboutAnthropicSubscriptionAuth(model);
 						this.checkDaxnutsEasterEgg(model);
 					} catch (error) {
@@ -4107,7 +4107,7 @@ export class InteractiveMode {
 		const allModels = this.session.modelRegistry.getAvailable();
 
 		if (allModels.length === 0) {
-			this.showStatus("No models available");
+			this.showStatus("无可用模型");
 			return;
 		}
 
@@ -4166,7 +4166,7 @@ export class InteractiveMode {
 								? undefined // All enabled = clear filter
 								: enabledIds;
 						this.settingsManager.setEnabledModels(newPatterns ? [...newPatterns] : undefined);
-						this.showStatus("Model selection saved to settings");
+						this.showStatus("模型选择已保存到设置");
 					},
 					onCancel: () => {
 						done();
@@ -4182,7 +4182,7 @@ export class InteractiveMode {
 		const userMessages = this.session.getUserMessagesForForking();
 
 		if (userMessages.length === 0) {
-			this.showStatus("No messages to fork from");
+			this.showStatus("没有可 Fork 的消息");
 			return;
 		}
 
@@ -4203,7 +4203,7 @@ export class InteractiveMode {
 						this.renderCurrentSessionState();
 						this.editor.setText(result.selectedText ?? "");
 						done();
-						this.showStatus("Forked to new session");
+						this.showStatus("已 Fork 到新会话");
 					} catch (error: unknown) {
 						done();
 						this.showError(error instanceof Error ? error.message : String(error));
@@ -4222,7 +4222,7 @@ export class InteractiveMode {
 	private async handleCloneCommand(): Promise<void> {
 		const leafId = this.sessionManager.getLeafId();
 		if (!leafId) {
-			this.showStatus("Nothing to clone yet");
+			this.showStatus("暂无内容可克隆");
 			return;
 		}
 
@@ -4235,7 +4235,7 @@ export class InteractiveMode {
 
 			this.renderCurrentSessionState();
 			this.editor.setText("");
-			this.showStatus("Cloned to new session");
+			this.showStatus("已克隆到新会话");
 		} catch (error: unknown) {
 			this.showError(error instanceof Error ? error.message : String(error));
 		}
@@ -4247,7 +4247,7 @@ export class InteractiveMode {
 		const initialFilterMode = this.settingsManager.getTreeFilterMode();
 
 		if (tree.length === 0) {
-			this.showStatus("No entries in session");
+			this.showStatus("会话中无条目");
 			return;
 		}
 
@@ -4260,7 +4260,7 @@ export class InteractiveMode {
 					// Selecting the current leaf is a no-op (already there)
 					if (entryId === realLeafId) {
 						done();
-						this.showStatus("Already at this point");
+						this.showStatus("已在此节点");
 						return;
 					}
 
@@ -4328,12 +4328,12 @@ export class InteractiveMode {
 
 						if (result.aborted) {
 							// Summarization aborted - re-show tree selector with same selection
-							this.showStatus("Branch summarization cancelled");
+							this.showStatus("分支摘要已取消");
 							this.showTreeSelector(entryId);
 							return;
 						}
 						if (result.cancelled) {
-							this.showStatus("Navigation cancelled");
+							this.showStatus("导航已取消");
 							return;
 						}
 
@@ -4343,7 +4343,7 @@ export class InteractiveMode {
 						if (result.editorText && !this.editor.getText().trim()) {
 							this.editor.setText(result.editorText);
 						}
-						this.showStatus("Navigated to selected point");
+						this.showStatus("已导航到选中节点");
 						void this.flushCompactionQueue({ willRetry: false });
 					} catch (error) {
 						this.showError(error instanceof Error ? error.message : String(error));
@@ -4422,13 +4422,13 @@ export class InteractiveMode {
 				return result;
 			}
 			this.renderCurrentSessionState();
-			this.showStatus("Resumed session");
+			this.showStatus("会话已恢复");
 			return result;
 		} catch (error: unknown) {
 			if (error instanceof MissingSessionCwdError) {
 				const selectedCwd = await this.promptForMissingSessionCwd(error);
 				if (!selectedCwd) {
-					this.showStatus("Resume cancelled");
+					this.showStatus("恢复已取消");
 					return { cancelled: true };
 				}
 				const result = await this.runtimeHost.switchSession(sessionPath, {
@@ -4439,7 +4439,7 @@ export class InteractiveMode {
 					return result;
 				}
 				this.renderCurrentSessionState();
-				this.showStatus("Resumed session in current cwd");
+				this.showStatus("已在当前目录恢复会话");
 				return result;
 			}
 			return this.handleFatalRuntimeError("恢复会话失败", error);
@@ -4589,7 +4589,7 @@ export class InteractiveMode {
 								: `Removed stored API key for ${providerOption.name}. Environment variables and models.json config are unchanged.`;
 						this.showStatus(message);
 					} catch (error: unknown) {
-						this.showError(`Logout failed: ${error instanceof Error ? error.message : String(error)}`);
+						this.showError(`退出登录失败: ${error instanceof Error ? error.message : String(error)}`);
 					}
 				},
 				() => {
@@ -4641,11 +4641,11 @@ export class InteractiveMode {
 		this.footer.invalidate();
 		this.updateEditorBorderColor();
 		if (selectedModel) {
-			this.showStatus(`${actionLabel}. Selected ${selectedModel.id}. Credentials saved to ${getAuthPath()}`);
+			this.showStatus(`${actionLabel}。已选择 ${selectedModel.id}。凭据已保存至 ${getAuthPath()}`);
 			void this.maybeWarnAboutAnthropicSubscriptionAuth(selectedModel);
 			this.checkDaxnutsEasterEgg(selectedModel);
 		} else {
-			this.showStatus(`${actionLabel}. Credentials saved to ${getAuthPath()}`);
+			this.showStatus(`${actionLabel}。凭据已保存至 ${getAuthPath()}`);
 			if (selectionError) {
 				this.showError(selectionError);
 			} else {
@@ -4855,11 +4855,11 @@ export class InteractiveMode {
 
 	private async handleReloadCommand(): Promise<void> {
 		if (this.session.isStreaming) {
-			this.showWarning("Wait for the current response to finish before reloading.");
+			this.showWarning("请等待当前响应完成后再重新加载。");
 			return;
 		}
 		if (this.session.isCompacting) {
-			this.showWarning("Wait for compaction to finish before reloading.");
+			this.showWarning("请等待压缩完成后再重新加载。");
 			return;
 		}
 
@@ -4922,14 +4922,14 @@ export class InteractiveMode {
 				force: false,
 				showDiagnosticsWhenQuiet: true,
 			});
-			const modelsJsonError = this.session.modelRegistry.getError();
-			if (modelsJsonError) {
-				this.showError(`models.json error: ${modelsJsonError}`);
+			const modelsJsonError2 = this.session.modelRegistry.getError();
+			if (modelsJsonError2) {
+				this.showError(`models.json 错误: ${modelsJsonError2}`);
 			}
-			this.showStatus("Reloaded keybindings, extensions, skills, prompts, themes");
+			this.showStatus("已重新加载快捷键、扩展、技能、提示词、主题");
 		} catch (error) {
 			dismissReloadBox(previousEditor as Component);
-			this.showError(`Reload failed: ${error instanceof Error ? error.message : String(error)}`);
+			this.showError(`重新加载失败: ${error instanceof Error ? error.message : String(error)}`);
 		}
 	}
 
@@ -4939,10 +4939,10 @@ export class InteractiveMode {
 		try {
 			if (outputPath?.endsWith(".jsonl")) {
 				const filePath = this.session.exportToJsonl(outputPath);
-				this.showStatus(`Session exported to: ${filePath}`);
+				this.showStatus(`会话已导出至: ${filePath}`);
 			} else {
 				const filePath = await this.session.exportToHtml(outputPath);
-				this.showStatus(`Session exported to: ${filePath}`);
+				this.showStatus(`会话已导出至: ${filePath}`);
 			}
 		} catch (error: unknown) {
 			this.showError(`导出会话失败: ${error instanceof Error ? error.message : "未知错误"}`);
@@ -4981,13 +4981,13 @@ export class InteractiveMode {
 	private async handleImportCommand(text: string): Promise<void> {
 		const inputPath = this.getPathCommandArgument(text, "/import");
 		if (!inputPath) {
-			this.showError("Usage: /import <path.jsonl>");
+			this.showError("用法: /import <文件路径.jsonl>");
 			return;
 		}
 
 		const confirmed = await this.showExtensionConfirm("Import session", `Replace current session with ${inputPath}?`);
 		if (!confirmed) {
-			this.showStatus("Import cancelled");
+			this.showStatus("导入已取消");
 			return;
 		}
 
@@ -4999,25 +4999,25 @@ export class InteractiveMode {
 			this.statusContainer.clear();
 			const result = await this.runtimeHost.importFromJsonl(inputPath);
 			if (result.cancelled) {
-				this.showStatus("Import cancelled");
+				this.showStatus("导入已取消");
 				return;
 			}
 			this.renderCurrentSessionState();
-			this.showStatus(`Session imported from: ${inputPath}`);
+			this.showStatus(`会话已从 ${inputPath} 导入`);
 		} catch (error: unknown) {
 			if (error instanceof MissingSessionCwdError) {
 				const selectedCwd = await this.promptForMissingSessionCwd(error);
 				if (!selectedCwd) {
-					this.showStatus("Import cancelled");
+					this.showStatus("导入已取消");
 					return;
 				}
 				const result = await this.runtimeHost.importFromJsonl(inputPath, selectedCwd);
 				if (result.cancelled) {
-					this.showStatus("Import cancelled");
+					this.showStatus("导入已取消");
 					return;
 				}
 				this.renderCurrentSessionState();
-				this.showStatus(`Session imported from: ${inputPath}`);
+				this.showStatus(`会话已从 ${inputPath} 导入`);
 				return;
 			}
 			if (error instanceof SessionImportFileNotFoundError) {
@@ -5033,11 +5033,11 @@ export class InteractiveMode {
 		try {
 			const authResult = spawnSync("gh", ["auth", "status"], { encoding: "utf-8" });
 			if (authResult.status !== 0) {
-				this.showError("GitHub CLI is not logged in. Run 'gh auth login' first.");
+				this.showError("GitHub CLI 未登录。请先运行 gh auth login。");
 				return;
 			}
 		} catch {
-			this.showError("GitHub CLI (gh) is not installed. Install it from https://cli.github.com/");
+			this.showError("GitHub CLI (gh) 未安装。请从 https://cli.github.com/ 安装。");
 			return;
 		}
 
@@ -5075,7 +5075,7 @@ export class InteractiveMode {
 		loader.onAbort = () => {
 			proc?.kill();
 			restoreEditor();
-			this.showStatus("Share cancelled");
+			this.showStatus("分享已取消");
 		};
 
 		try {
@@ -5113,7 +5113,7 @@ export class InteractiveMode {
 
 			// Create the preview URL
 			const previewUrl = getShareViewerUrl(gistId);
-			this.showStatus(`Share URL: ${previewUrl}\nGist: ${gistUrl}`);
+			this.showStatus(`分享链接: ${previewUrl}\nGist: ${gistUrl}`);
 		} catch (error: unknown) {
 			if (!loader.signal.aborted) {
 				restoreEditor();
@@ -5125,13 +5125,13 @@ export class InteractiveMode {
 	private async handleCopyCommand(): Promise<void> {
 		const text = this.session.getLastAssistantText();
 		if (!text) {
-			this.showError("No agent messages to copy yet.");
+			this.showError("暂无助手消息可复制。");
 			return;
 		}
 
 		try {
 			await copyToClipboard(text);
-			this.showStatus("Copied last agent message to clipboard");
+			this.showStatus("已复制最后一条助手消息到剪贴板");
 		} catch (error) {
 			this.showError(error instanceof Error ? error.message : String(error));
 		}
@@ -5145,7 +5145,7 @@ export class InteractiveMode {
 				this.chatContainer.addChild(new Spacer(1));
 				this.chatContainer.addChild(new Text(theme.fg("dim", `Session name: ${currentName}`), 1, 0));
 			} else {
-				this.showWarning("Usage: /name <name>");
+				this.showWarning("用法: /name <名称>");
 			}
 			this.ui.requestRender();
 			return;
@@ -5513,7 +5513,7 @@ export class InteractiveMode {
 		const messageCount = entries.filter((e) => e.type === "message").length;
 
 		if (messageCount < 2) {
-			this.showWarning("Nothing to compact (no messages yet)");
+			this.showWarning("没有可压缩的内容（尚无消息）");
 			return;
 		}
 
