@@ -1,6 +1,6 @@
 {
   "name": "phi-pi",
-  "displayName": "Phi-Pi AI Agent",
+  "displayName": "Phi-Pi AI 助手",
   "description": "Phi-Pi：将 Pi AI 编程助手完整移植到 VS Code。支持全会话连续性、实时流式输出、深度编辑器上下文集成。",
   "version": "0.1.0",
   "publisher": "pi",
@@ -148,7 +148,7 @@
         "phi.autoContext": {
           "type": "boolean",
           "default": true,
-          "description": "Automatically send editor context (active file, selection) to Pi when opening the chat panel."
+          "description": "自动将编辑器上下文（当前文件、选中内容）发送给 Pi。"
         },
         "phi.disabledExtensions": {
           "type": "array",
@@ -156,7 +156,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Pi extension IDs disabled in Phi. Managed by the Extensions section in Phi Settings."
+          "description": "Phi 中已禁用的 Pi 扩展 ID。通过 Phi 设置中的扩展管理。"
         }
       }
     }

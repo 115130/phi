@@ -263,7 +263,7 @@ export class AgentSessionRuntime {
 			targetLeafId = selectedEntry.id;
 		} else {
 			if (selectedEntry.type !== "message" || selectedEntry.message.role !== "user") {
-				throw new Error("Invalid entry ID for forking");
+				throw new Error("无效的分支目标条目 ID");
 			}
 			targetLeafId = selectedEntry.parentId;
 			selectedText = extractUserMessageText(selectedEntry.message.content);

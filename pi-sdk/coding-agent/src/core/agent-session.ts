@@ -410,7 +410,7 @@ export class AgentSession {
 				if (err instanceof Error) {
 					throw err;
 				}
-				throw new Error(`Extension failed, blocking execution: ${String(err)}`);
+				throw new Error(`扩展执行失败，阻止操作: ${String(err)}`);
 			}
 		};
 
@@ -1415,7 +1415,7 @@ export class AgentSession {
 	 */
 	async setModel(model: Model<any>): Promise<void> {
 		if (!this._modelRegistry.hasConfiguredAuth(model)) {
-			throw new Error(`No API key for ${model.provider}/${model.id}`);
+			throw new Error(`未找到 ${model.provider}/${model.id} 的 API 密钥`);
 		}
 
 		const previousModel = this.model;
@@ -1628,9 +1628,9 @@ export class AgentSession {
 				// Check why we can't compact
 				const lastEntry = pathEntries[pathEntries.length - 1];
 				if (lastEntry?.type === "compaction") {
-					throw new Error("Already compacted");
+					throw new Error("会话已压缩，无需再次压缩");
 				}
-				throw new Error("Nothing to compact (session too small)");
+				throw new Error("会话内容太少，无需压缩");
 			}
 
 			let extensionCompaction: CompactionResult | undefined;
@@ -1646,7 +1646,7 @@ export class AgentSession {
 				})) as SessionBeforeCompactResult | undefined;
 
 				if (result?.cancel) {
-					throw new Error("Compaction cancelled");
+					throw new Error("压缩已取消");
 				}
 
 				if (result?.compaction) {
@@ -1685,7 +1685,7 @@ export class AgentSession {
 			}
 
 			if (this._compactionAbortController.signal.aborted) {
-				throw new Error("Compaction cancelled");
+				throw new Error("压缩已取消");
 			}
 
 			this.sessionManager.appendCompaction(summary, firstKeptEntryId, tokensBefore, details, fromExtension);
@@ -2666,12 +2666,12 @@ export class AgentSession {
 
 		// Model required for summarization
 		if (options.summarize && !this.model) {
-			throw new Error("No model available for summarization");
+			throw new Error("没有可用于摘要的模型");
 		}
 
 		const targetEntry = this.sessionManager.getEntry(targetId);
 		if (!targetEntry) {
-			throw new Error(`Entry ${targetId} not found`);
+			throw new Error(`未找到条目 ${targetId}`);
 		}
 
 		// Collect entries to summarize (from old leaf to common ancestor)
