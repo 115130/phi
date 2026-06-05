@@ -1,10 +1,10 @@
-# Phi (φ) — Pi AI Agent for VS Code
+# Phi (φ) — VS Code 版 Pi AI 助手
 
 <p align="center">
   <img src="assets/phi-icon.png" alt="Phi Logo" width="128" height="128">
 </p>
 
-> The golden ratio of AI-powered development.
+> AI 驱动开发的黄金比例。
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.7.1-blue" alt="Version">
@@ -21,12 +21,12 @@
 </p>
 
 <p align="center">
-  Support the project by giving the <a href="https://github.com/gnassro/phi">repo</a> a ⭐ and showing some ❤️!
+  给 <a href="https://github.com/gnassro/phi">仓库</a> 点个 ⭐ 来表达支持吧！❤️
 </p>
 
-Phi brings the [Pi](https://github.com/badlogic/pi-mono) AI coding agent into VS Code as a native extension. Chat with an AI agent that can read, write, and edit your code — directly from the sidebar.
+Phi 将 [Pi](https://github.com/badlogic/pi-mono) AI 编码助手作为原生扩展引入 VS Code。在侧边栏中直接与能够读取、编写和编辑代码的 AI 助手对话。
 
-> **⚠️ Note:** Phi is a community-built extension and does **not** yet cover the full Pi agent feature set. It's a work in progress, built through vibe coding, and we welcome all contributions to help reach full Pi parity. See [Contributing](#contributing) below.
+> **⚠️ 注意：** Phi 是一个社区构建的扩展，**尚未**覆盖 Pi 助手的全部功能。它仍在开发中，通过 vibe coding 构建，我们欢迎所有贡献来帮助实现完整的 Pi 功能对等。详见下方 [贡献指南](#contributing)。
 
 <p align="center">
   <img src="assets/screenshots/scr1.png" alt="Phi in action" width="700">
@@ -34,58 +34,58 @@ Phi brings the [Pi](https://github.com/badlogic/pi-mono) AI coding agent into VS
 
 ---
 
-## ✨ Features
+## ✨ 功能特性
 
-### 💬 AI Chat in the Sidebar
-A full-featured chat interface right inside VS Code. Send messages, receive streamed responses, and watch the agent think and work in real time. Assistant code blocks are syntax-highlighted across many programming languages and follow your VS Code theme.
+### 💬 侧边栏 AI 对话
+直接在 VS Code 中的全功能对话界面。发送消息、接收流式响应、实时观察助手思考和工作。助手代码块支持多种编程语言的语法高亮，并遵循您的 VS Code 主题。
 
-### 🛠️ Tool Execution Cards
-See exactly what the agent is doing — read, write, edit, and bash tool calls render as collapsible cards with live output streaming, inline diffs for edits, copy buttons, and auto-collapse on completion.
+### 🛠️ 工具执行卡片
+精确查看助手的操作 — read、write、edit 和 bash 工具调用渲染为可折叠卡片，支持实时输出流、编辑内联差异、复制按钮和完成后自动折叠。
 
-### 🧠 Thinking Blocks
-When the model thinks before responding, you see it. Collapsible thinking blocks show the agent's reasoning process, toggleable from settings.
+### 🧠 思考块
+当模型在回答前进行思考时，您可以直观看到。可折叠的思考块显示助手的推理过程，可在设置中切换。
 
-### 📂 Editor-Aware Context
-Phi knows what you're working on:
-- **Add selection to chat** — select code, press `⌘+` (Mac) / `Ctrl++` (Win/Linux), or right-click → "Phi: Add to Chat"
-- **Add file to chat** — right-click a file in Explorer → "Phi: Add File to Chat"
-- **Attach files** — click the 📎 button in the input area to attach images or any file type via the native file picker
-- **Paste images** — paste images from clipboard (`Cmd+V`) to attach them inline
-- **Ask about selection** — right-click selected code → "Phi: Ask About Selection"
+### 📂 编辑器感知上下文
+Phi 知道您在做什么：
+- **将选中内容添加到对话** — 选中代码，按 `⌘+` (Mac) / `Ctrl++` (Win/Linux)，或右键 → "Phi: Add to Chat"
+- **将文件添加到对话** — 在资源管理器中右键文件 → "Phi: Add File to Chat"
+- **附加文件** — 点击输入区 📎 按钮通过原生文件选择器附加图片或任意类型文件
+- **粘贴图片** — 从剪贴板粘贴图片 (`Cmd+V`) 以内联方式附加
+- **询问选中内容** — 右键选中代码 → "Phi: Ask About Selection"
 
-Context references appear as lightweight chips showing the filename only — Pi reads the full file content itself.
+上下文引用以轻量级标签形式显示仅文件名 — Pi 会自行读取完整文件内容。
 
-### 📜 Session History
-Browse and switch between past conversations, grouped by project. Search sessions by name. Favorites supported. Restored chats show the full current branch and mark where context compaction happened, with expandable compaction summaries.
+### 📜 会话历史
+浏览和切换历史对话，按项目分组。按名称搜索会话。支持收藏功能。恢复的对话显示完整的当前分支并标记上下文压缩点，附带可展开的压缩摘要。
 
-### 🌿 Conversation Tree
-Navigate conversation branches, set labels on entries, and branch with optional context summaries. Full tree visualization with role icons and branch count badges.
+### 🌿 对话树
+浏览对话分支、为条目设置标签、带可选上下文摘要创建分支。完整的树状可视化，带角色图标和分支计数徽章。
 
-### 🔧 Model & Settings
-- **Model dropdown** with search — switch between all available models
-- **Thinking level** — cycle off / low / medium / high
-- **Auto-compaction** — toggle automatic context compaction
-- **Manual compaction** — via command palette with progress indicator
-- **Experimental task alert sounds** — optional sounds for successful completion and failed runs (still under development/testing)
-- **Manage Pi Extensions** — Settings opens a dedicated extension manager where loaded Pi extensions, including the built-in legacy Google providers, can be enabled or disabled
-- **Session cost & token usage** — live display in the footer with context window visualizer
+### 🔧 模型与设置
+- **模型下拉框** 带搜索 — 切换所有可用模型
+- **思考级别** — 循环切换 关闭 / 低 / 中 / 高
+- **自动压缩** — 切换自动上下文压缩
+- **手动压缩** — 通过命令面板触发，带进度指示
+- **实验性任务提示音** — 可选的成功完成和失败运行的提示音（仍在开发/测试中）
+- **管理 Pi 扩展** — 设置中打开专用扩展管理器，可启用/禁用已加载的 Pi 扩展（包括内置的旧版 Google 提供商）
+- **会话费用与 Token 用量** — 页脚实时显示，带上下文窗口可视化
 
-### 🔑 Accounts & Auth
-- **Unified login / setup flow** — subscriptions via OAuth plus API-key-capable providers discovered from Pi's model registry
-- **Guided provider environment setup** — providers can ask for required env vars step-by-step during Login / Setup
-- **Global or Phi-local env vars** — if VS Code sees an existing env var, Phi offers to use it; otherwise values can be saved locally in VS Code SecretStorage and applied only inside Phi
-- **`Phi: Add API Key` remains a shortcut** — for built-in and custom non-OAuth providers, but `Phi: Login` is now the primary entry point
-- Stored credentials live in `~/.phi/auth.json` — separate from Pi CLI auth; environment and `models.json` auth still work too
-- **Cloudflare Workers AI & AI Gateway** — guided setup for required `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_GATEWAY_ID`
-- **Amazon Bedrock** — guided setup for AWS profile, IAM keys, or bearer-token env vars
-- **Built-in legacy Google providers extension** — Phi keeps Google Cloud Code Assist (Gemini CLI) and Google Antigravity available via a built-in Pi extension, even though newer Pi SDK versions removed these providers after Google started restricting some external OAuth usage. Release builds can embed Google OAuth credentials at build time for Pi-like out-of-the-box login; if none are embedded, configure your own client ID/secret during **Login / Setup**. Use responsibly and follow Google's account terms; the extension can be disabled from **Settings → Manage Pi Extensions**.
-- **No model available?** — the header model control turns into a **Login** button that opens the Accounts panel
+### 🔑 账户与认证
+- **统一登录/设置流程** — 通过 OAuth 订阅加上从 Pi 模型注册表发现的 API 密钥提供商
+- **引导式提供商环境设置** — 提供商可在登录/设置过程中逐步请求所需的环境变量
+- **全局或 Phi 本地环境变量** — 如果 VS Code 检测到已有的环境变量，Phi 提供使用选项；否则值可保存在 VS Code SecretStorage 中仅对 Phi 生效
+- **`Phi: Add API Key` 保留为快捷方式** — 适用于内置和自定义非 OAuth 提供商，但 `Phi: Login` 是主要入口
+- 存储的凭据位于 `~/.phi/auth.json` — 与 Pi CLI 认证分离；环境和 `models.json` 认证方式同样有效
+- **Cloudflare Workers AI & AI Gateway** — 引导式设置所需的 `CLOUDFLARE_ACCOUNT_ID` 和 `CLOUDFLARE_GATEWAY_ID`
+- **Amazon Bedrock** — 引导式设置 AWS 配置文件、IAM 密钥或 Bearer Token 环境变量
+- **内置旧版 Google 提供商扩展** — Phi 通过内置 Pi 扩展保留 Google Cloud Code Assist (Gemini CLI) 和 Google Antigravity，即使在较新 Pi SDK 版本中这些提供商已被移除。发布版本可在构建时嵌入 Google OAuth 凭据以实现 Pi 风格的开箱即用登录；若未嵌入，请在 **登录/设置** 过程中配置您自己的客户端 ID/密钥。请负责任地使用并遵守 Google 账户条款；该扩展可从 **设置 → 管理 Pi 扩展** 中禁用。
+- **没有可用模型？** — 标题栏模型控件变为 **登录** 按钮，点击打开账户面板
 
-### 🖥️ Custom Providers (Ollama, vLLM, LM Studio…)
+### 🖥️ 自定义提供商 (Ollama, vLLM, LM Studio…)
 Phi inherits full custom provider support from the Pi SDK. Add any OpenAI-compatible local or remote model by editing `~/.pi/agent/models.json` — no extension restart needed, changes are picked up next time you open the model picker.
 
-### Maintainer note: legacy Google OAuth defaults
-To make published builds behave like Pi 0.70.6, set these as CI/local build environment secrets before packaging. For local testing, `scripts/build-ext.mjs` also loads them from `.env`. They are embedded into the generated `.vsix`, but never committed to source:
+### 维护者说明：旧版 Google OAuth 默认值
+要使发布的构建版本表现得像 Pi 0.70.6，打包前将这些设置为 CI/本地构建环境密钥。对于本地测试，`scripts/build-ext.mjs` 也会从 `.env` 加载它们。它们会被嵌入生成的 `.vsix` 中，但从不提交到源码：
 
 ```text
 PHI_EMBEDDED_GOOGLE_GEMINI_CLI_OAUTH_CLIENT_ID
@@ -94,25 +94,25 @@ PHI_EMBEDDED_GOOGLE_ANTIGRAVITY_OAUTH_CLIENT_ID
 PHI_EMBEDDED_GOOGLE_ANTIGRAVITY_OAUTH_CLIENT_SECRET
 ```
 
-See [Custom Providers](#-custom-providers) for setup instructions.
+设置说明见 [自定义提供商](#-custom-providers)。
 
-### ⌨️ Keyboard Shortcuts
+### ⌨️ 键盘快捷键
 
-| Action | Shortcut |
+| 操作 | 快捷键 |
 |---|---|
-| Open Phi chat | `Cmd+Shift+L` / `Ctrl+Shift+L` |
-| Add selection to chat | Select code → `⌘+` (Mac) / `Ctrl++` (Windows/Linux) |
-| Abort current turn | `Escape` (when panel focused) |
-| Focus chat input | Press `/` inside the Phi panel |
+| 打开 Phi 对话 | `Cmd+Shift+L` / `Ctrl+Shift+L` |
+| 将选中内容添加到对话 | Select code → `⌘+` (Mac) / `Ctrl++` (Windows/Linux) |
+| 中止当前轮次 | `Escape` (when panel focused) |
+| 聚焦对话输入 | 在 Phi 面板内按 `/` |
 
-### 🎨 Native VS Code Theming
-No custom themes — Phi automatically follows your VS Code theme (dark, light, high contrast) using built-in `--vscode-*` CSS variables.
+### 🎨 原生 VS Code 主题
+无需自定义主题 — Phi 自动遵循您的 VS Code 主题（暗色、亮色、高对比度），使用内置的 `--vscode-*` CSS 变量。
 
 ---
 
-## 📦 Install
+## 📦 安装
 
-### From Source (Development)
+### 从源码安装（开发）
 
 ```bash
 git clone https://github.com/gnassro/phi.git
@@ -120,63 +120,63 @@ cd phi
 pnpm install              # or: npm install
 pnpm run build            # or: npm run build
 
-# Press F5 in VS Code to launch Extension Development Host
+# 在 VS Code 中按 F5 启动扩展开发主机
 ```
 
-### Package & Install Locally
+### 打包并本地安装
 
 ```bash
-# automatically runs build first
+# 自动先运行构建
 pnpm run package          # or: npm run package
 code --install-extension phi-pi-0.1.0.vsix
 ```
 
 ---
 
-## 🧰 Usage
+## 🧰 使用指南
 
-| Action | How |
+| 操作 | 方法 |
 |---|---|
-| Open Phi chat | `Cmd+Shift+L` / `Ctrl+Shift+L` |
-| Ask about selected code | Right-click → "Phi: Ask About Selection" |
-| Add selection to chat | Select code → `Cmd+Shift+=` |
-| Add file to chat | Right-click file in Explorer → "Phi: Add File to Chat" |
-| Attach files | Click 📎 in the input area (images + any file type) |
-| Paste images | `Cmd+V` / `Ctrl+V` with image in clipboard |
-| New session | Command Palette → "Phi: New Session" |
-| Switch session | Click the 🕐 history button → select a session |
-| Switch model | Click the model dropdown in the header |
-| Compact context | Click the commands button (in chat input) → "Compact" |
-| View session stats | Click the commands button (in chat input) → "Session Stats" |
-| Login / provider setup | Command Palette → "Phi: Login" or the Accounts panel button |
-| Add API key (direct shortcut) | Command Palette → "Phi: Add API Key" |
-| Add custom provider | Edit `~/.pi/agent/models.json` (see [Custom Providers](#-custom-providers)) |
+| 打开 Phi 对话 | `Cmd+Shift+L` / `Ctrl+Shift+L` |
+| 询问选中代码 | 右键 → "Phi: Ask About Selection" |
+| 将选中内容添加到对话 | 选中代码 → `Cmd+Shift+=` |
+| 将文件添加到对话 | 资源管理器中右键文件 → "Phi: Add File to Chat" |
+| 附加文件 | 点击输入区 📎（图片 + 任意文件类型）|
+| 粘贴图片 | 剪贴板中有图片时 `Cmd+V` / `Ctrl+V` |
+| 新建会话 | 命令面板 → "Phi: New Session" |
+| 切换会话 | 点击 🕐 历史按钮 → 选择会话 |
+| 切换模型 | 点击标题栏中的模型下拉框 |
+| 压缩上下文 | 点击命令按钮（在对话输入区）→ "压缩" |
+| 查看会话统计 | 点击命令按钮（在对话输入区）→ "会话统计" |
+| 登录 / 提供商设置 | 命令面板 → "Phi: Login" 或账户面板按钮 |
+| 添加 API 密钥（直接快捷方式）| 命令面板 → "Phi: Add API Key" |
+| 添加自定义提供商 | 编辑 `~/.pi/agent/models.json`（参见 [自定义提供商](#-custom-providers)）|
 
 ---
 
-## ⚠️ Disclaimer
+## ⚠️ 免责声明
 
-This extension is in **early development** and comes with no warranty. Please be aware:
+此扩展处于**早期开发阶段**，不提供任何保证。请注意：
 
-- **Not all features have been fully tested** — some may behave unexpectedly
-- **Only tested on macOS** — Windows and Linux are untested and may have issues
-- **Use at your own risk** — always review AI-generated code changes before accepting them
+- **并非所有功能都经过充分测试** — 某些功能可能出现意外行为
+- **仅在 macOS 上测试过** — Windows 和 Linux 未经测试，可能存在兼容性问题
+- **使用风险自负** — 始终在接受 AI 生成的代码更改之前进行审查
 
-If you encounter any bugs or issues, please [open an issue](https://github.com/gnassro/phi/issues) on GitHub. Your feedback helps improve the extension for everyone.
+如果遇到任何 bug 或问题，请在 GitHub 上 [提交 issue](https://github.com/gnassro/phi/issues)。您的反馈有助于改进扩展。
 
 ---
 
-## 🖥️ Custom Providers
+## 🖥️ 自定义提供商
 
-Phi supports any OpenAI-compatible model server (Ollama, vLLM, LM Studio, OpenRouter, proxies, etc.) through the Pi SDK's `models.json` config file. No code changes, no extension restart — just edit the file and open the model picker.
+Phi 通过 Pi SDK 的 `models.json` 配置文件支持任何 OpenAI 兼容的模型服务器（Ollama、vLLM、LM Studio、OpenRouter、代理等）。无需修改代码，无需重启扩展 — 只需编辑文件并打开模型选择器即可。
 
-### Setup
+### 设置
 
-**1. Create or edit `~/.pi/agent/models.json`**
+**1. 创建或编辑 `~/.pi/agent/models.json`**
 
-This file is shared with the Pi CLI, so any provider you add works in both.
+此文件与 Pi CLI 共享，因此您添加的任何提供商在两个环境中都可用。
 
-**2. Add your provider**
+**2. 添加您的提供商**
 
 ```json
 {
@@ -206,44 +206,44 @@ This file is shared with the Pi CLI, so any provider you add works in both.
 }
 ```
 
-**3. Open the model picker in Phi and select your model**
+**3. 在 Phi 中打开模型选择器并选择您的模型**
 
-The new model will appear immediately — no restart needed.
+新模型将立即出现 — 无需重启。
 
-### The `compat` block (important for local models)
+### `compat` 配置块（对本地模型很重要）
 
-Most local servers (Ollama, vLLM, LM Studio, SGLang) don't fully implement the OpenAI spec. Without the `compat` block, the system prompt gets sent using the `developer` role which local servers silently ignore — causing the model to act as plain chat instead of a coding agent.
+大多数本地服务器（Ollama、vLLM、LM Studio、SGLang）并未完全实现 OpenAI 规范。没有 `compat` 块，系统提示词会以 `developer` 角色发送，而本地服务器会静默忽略它 — 导致模型表现为普通聊天而非编码助手。
 
-| Flag | What it fixes |
+| 标志 | 解决的问题 |
 |---|---|
-| `supportsDeveloperRole: false` | Sends system prompt as `system` role (understood by all servers) |
-| `supportsReasoningEffort: false` | Disables `reasoning_effort` param (unsupported by local servers) |
-| `maxTokensField: "max_tokens"` | Uses `max_tokens` instead of `max_completion_tokens` |
+| `supportsDeveloperRole: false` | 将系统提示词以 `system` 角色发送（所有服务器均支持）|
+| `supportsReasoningEffort: false` | 禁用 `reasoning_effort` 参数（本地服务器不支持）|
+| `maxTokensField: "max_tokens"` | 使用 `max_tokens` 而非 `max_completion_tokens` |
 
-> **Always include the `compat` block for Ollama, vLLM, LM Studio, and similar servers.**
+> **对于 Ollama、vLLM、LM Studio 及类似服务器，务必包含 `compat` 配置块。**
 
-### Supported API types
+### 支持的 API 类型
 
-| `api` value | Use for |
+| `api` 值 | 适用于 |
 |---|---|
-| `openai-completions` | Ollama, vLLM, LM Studio, OpenRouter, most compatible servers |
-| `anthropic-messages` | Anthropic Claude API or compatible proxies |
+| `openai-completions` | Ollama、vLLM、LM Studio、OpenRouter、大多数兼容服务器 |
+| `anthropic-messages` | Anthropic Claude API 或兼容代理 |
 | `openai-responses` | OpenAI Responses API |
 | `google-generative-ai` | Google Gemini API |
 
-### Authentication for custom providers
+### 自定义提供商的认证
 
-Phi's **Add API Key** dialog only manages built-in providers. For custom providers, configure authentication directly in `~/.pi/agent/models.json` via the provider's `apiKey` field.
+Phi 的 **添加 API 密钥** 对话框仅管理内置提供商。对于自定义提供商，请直接在 `~/.pi/agent/models.json` 中通过提供商的 `apiKey` 字段配置认证。
 
-The `apiKey` value can be either:
-- an environment variable name such as `OPENROUTER_API_KEY`
-- a literal value for local or private setups
+`apiKey` 值可以是：
+- 环境变量名称，如 `OPENROUTER_API_KEY`
+- 本地或私有设置的明文值
 
-For local servers like Ollama that don't require a real key, set `"apiKey": "ollama"` in `models.json` (any non-empty value works).
+对于不需要真实密钥的本地服务器（如 Ollama），在 `models.json` 中设置 `"apiKey": "ollama"`（任意非空值均可）。
 
-### Multiple providers
+### 多个提供商
 
-You can define as many providers as you like:
+您可以定义任意数量的提供商：
 
 ```json
 {
@@ -274,84 +274,84 @@ You can define as many providers as you like:
 }
 ```
 
-> For the full `models.json` reference, see the [Pi SDK documentation](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/models.md).
+> 完整的 `models.json` 参考文档，请参见 [Pi SDK 文档](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/models.md)。
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ 架构
 
-Phi is a VS Code extension built with TypeScript + vanilla JS:
+Phi 是用 TypeScript + 原生 JS 构建的 VS Code 扩展：
 
-- **Extension Host** (Node.js) — runs the Pi SDK directly, manages sessions, handles auth
-- **Webview** (Chromium sandbox) — chat UI, tool cards, settings panels
-- **IPC** — all communication via VS Code's built-in message passing (`postMessage`)
+- **扩展主机** (Node.js) — 直接运行 Pi SDK，管理会话，处理认证
+- **Webview** (Chromium 沙箱) — 对话 UI、工具卡片、设置面板
+- **IPC** — 所有通信通过 VS Code 内置的消息传递 (`postMessage`)
 
-The Pi SDK runs in the same Node.js process as the extension host — no external servers, no WebSocket, no HTTP. Sessions are stored at `~/.pi/agent/sessions/` (shared with the Pi CLI).
+Pi SDK 在与扩展主机相同的 Node.js 进程中运行 — 无需外部服务器、无需 WebSocket、无需 HTTP。会话存储在 `~/.pi/agent/sessions/`（与 Pi CLI 共享）。
 
 ---
 
-## 🔗 Relation to Pi
+## 🔗 与 Pi 的关系
 
-| Project | What it is |
+| 项目 | 说明 |
 |---|---|
-| [**Pi**](https://github.com/badlogic/pi-mono) | The CLI AI coding agent (`pi` command) |
-| **Phi** | A VS Code extension that brings Pi into the editor |
+| [**Pi**](https://github.com/badlogic/pi-mono) | CLI AI 编码助手（`pi` 命令）|
+| **Phi** | 将 Pi 引入编辑器的 VS Code 扩展 |
 
-Phi uses the [Pi SDK](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) (`@earendil-works/pi-coding-agent@0.75.4`) to run the agent directly inside VS Code's extension host.
+Phi 使用 [Pi SDK](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) (`@earendil-works/pi-coding-agent@0.75.4`) 直接在 VS Code 扩展主机中运行助手。
 
-> **Pi SDK compatibility:** Phi is built and tested against Pi SDK `0.73.0`. Newer versions may work but are not guaranteed until tested.
-
----
-
-## 🚧 Current Status
-
-Phi is functional and covers the core Pi agent experience, but it is **not yet a complete implementation** of all Pi features. Here's what's included:
-
-### ✅ What Works
-- Full chat with streaming responses
-- Tool execution (read, write, edit, bash) with live output
-- Session history, switching, and continuity
-- Conversation tree with branching and navigation
-- Model switching, thinking levels, context compaction
-- Unified subscription login/setup + API key management
-- Editor context integration (selection, file, diagnostics)
-- Cost and token tracking with context window visualizer
-
-We welcome contributions to add more features! See [Contributing](#contributing).
+> **Pi SDK 兼容性：** Phi 基于 Pi SDK `0.73.0` 构建和测试。更新版本可能兼容但不保证，需经测试确认。
 
 ---
 
-## 🤝 Contributing
+## 🚧 当前状态
 
-**Phi is a vibe-coded project** — built with AI agents (using Pi), iteratively refined, and open to everyone.
+Phi 功能可用并覆盖了核心 Pi 助手体验，但**尚未完整实现**所有 Pi 功能。以下是已包含的内容：
 
-Whether you want to fix a bug, add a missing Pi feature, improve the UI, or write tests — contributions are welcome!
+### ✅ 已实现的功能
+- 全功能对话与流式响应
+- 工具执行（read、write、edit、bash）与实时输出
+- 会话历史、切换与连续性
+- 对话树与分支导航
+- 模型切换、思考级别、上下文压缩
+- 统一订阅登录/设置 + API 密钥管理
+- 编辑器上下文集成（选中内容、文件、诊断信息）
+- 费用和 Token 追踪与上下文窗口可视化
 
-### How to Contribute
-
-1. **Fork** the repository
-2. **Clone** and install: `pnpm install`
-3. **Build**: `pnpm run build`
-4. **Test**: Press F5 in VS Code to launch the Extension Development Host
-5. **Submit a PR** with a clear description of what you changed and why
-
-### Areas Where Help Is Needed
-- Bringing more Pi agent features into Phi
-- Testing on different platforms (Windows, Linux)
-- UI/UX improvements
-- Documentation
-- Accessibility
-
-See `AGENTS.md` for the full technical reference — it's written for both humans and AI agents working on this codebase.
+欢迎贡献更多功能！参见 [贡献指南](#contributing)。
 
 ---
 
-## 📝 License
+## 🤝 贡献指南
 
-This project is licensed under the [MIT License](LICENSE).
+**Phi 是一个 vibe-coded 项目** — 使用 AI 助手（通过 Pi）构建、迭代优化，并对所有人开放。
+
+无论您想修复 bug、添加缺失的 Pi 功能、改进 UI 还是编写测试 — 都欢迎贡献！
+
+### 如何贡献
+
+1. **Fork** 仓库
+2. **克隆** 并安装：`pnpm install`
+3. **构建**：`pnpm run build`
+4. **测试**：在 VS Code 中按 F5 启动扩展开发主机
+5. **提交 PR** 并清晰描述您更改了什么以及为什么
+
+### 需要帮助的领域
+- 将更多 Pi 助手功能引入 Phi
+- 在不同平台（Windows、Linux）上测试
+- UI/UX 改进
+- 文档
+- 无障碍访问
+
+完整技术参考见 `AGENTS.md` — 它同时为人类和在此代码库上工作的 AI 助手编写。
 
 ---
 
-## 🙏 Credits
+## 📝 许可证
 
-Built on top of the [Pi](https://github.com/badlogic/pi-mono) agent by [Mario Zechner](https://github.com/badlogic).
+本项目采用 [MIT 许可证](LICENSE)。
+
+---
+
+## 🙏 致谢
+
+基于 [Mario Zechner](https://github.com/badlogic) 开发的 [Pi](https://github.com/badlogic/pi-mono) 助手构建。

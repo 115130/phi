@@ -1,23 +1,23 @@
 ---
 name: phi-developer
-description: Guide to working on the Phi VS Code extension project. Load this skill when adding features, fixing bugs, testing, or updating the UI for the Phi (pi-coding-agent) extension. It explains architecture, IPC, and VS Code extension constraints.
+description: Phi VS Code 扩展开发指南。在添加功能、修复 bug、测试或更新 Phi (pi-coding-agent) 扩展的 UI 时加载此技能。它解释了架构、IPC 和 VS Code 扩展约束。
 ---
 
-# Phi Developer Skill
+# Phi 开发者技能
 
-This skill provides essential guidelines and commands for developing the **Phi VS Code extension** (a native implementation of the Pi AI coding agent).
+此技能为开发 **Phi VS Code 扩展**（Pi AI 编码助手的原生实现）提供基本指南和命令。
 
-## Core Architecture
+## 核心架构
 
-Phi runs in two completely separate sandbox environments that CANNOT share memory:
-1. **Extension Host** (`src/`): Runs Node.js, has access to the Pi SDK (`@earendil-works/pi-coding-agent`) and VS Code APIs (`vscode`).
-2. **Webview UI** (`public/`): Runs in a Chromium sandbox. Vanilla JS & CSS only (No React, Vue, etc.). No Node.js APIs.
+Phi 运行在两个完全独立的沙箱环境中，它们**无法共享内存**：
+1. **扩展主机** (`src/`)：运行 Node.js，可访问 Pi SDK (`@earendil-works/pi-coding-agent`) 和 VS Code API (`vscode`)。
+2. **Webview UI** (`public/`)：运行在 Chromium 沙箱中。仅使用原生 JS 和 CSS（不使用 React、Vue 等）。无 Node.js API。
 
-### Webview Module Structure
-The webview UI is split into focused ES6 class modules:
-- `app.js` — Slim orchestrator (~430 lines): event loop, sync, message queue, keyboard shortcuts
-- `image-manager.js` — Image paste, drag-drop, file picker, preview rendering
-- `model-picker.js` — Model dropdown with search, thinking level button
+### Webview 模块结构
+Webview UI 被拆分为专注的 ES6 类模块：
+- `app.js` — 轻量级协调器（约 430 行）：事件循环、同步、消息队列、键盘快捷键
+- `image-manager.js` — 图片粘贴、拖放、文件选择、预览渲染
+- `model-picker.js` — 带搜索功能的模型下拉框、思考级别按钮
 - `cost-monitor.js` — Session cost, token usage, context window visualization
 - `command-palette.js` — Command palette overlay with skill injection
 - `tree-panel.js` — Conversation tree rendering, navigation, labeling
