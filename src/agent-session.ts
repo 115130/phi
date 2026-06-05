@@ -12,7 +12,6 @@ import {
   type SessionInfo,
   type SessionStats,
 } from '@earendil-works/pi-coding-agent';
-import { legacyGoogleProvidersExtension } from './legacy-google/index.js';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as os from 'os';
@@ -71,6 +70,7 @@ export async function initialize(workspaceCwd: string): Promise<void> {
 
     const activeFactories = [];
     if (!disabledSet.has('phi-pi.legacy-google-providers')) {
+      const { legacyGoogleProvidersExtension } = await import('./legacy-google/index.js');
       activeFactories.push(legacyGoogleProvidersExtension);
     }
 

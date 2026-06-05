@@ -5,6 +5,7 @@
  * All communication via VscodeIPC (VS Code message passing).
  */
 import { VscodeIPC } from './vscode-ipc.js';
+import { highlightRenderedCodeBlocks } from './syntax-highlighter.js';
 import { ChatInput } from './chat-input.js';
 import { MessageRenderer } from './message-renderer.js';
 import { ToolCardRenderer } from './tool-card.js';
@@ -458,6 +459,11 @@ function handleSync(syncState) {
 }
 
 function renderHistory(entries) {
+  // 隐藏容器避免逐条渲染触发重排，全部 DOM 构建完再一次性显示
+  messagesEl.style.display = 'none';
+
+  let latestUsage = null;
+
   for (const entry of entries) {
     if (entry.type === 'compaction') {
       renderCompactionMarker(entry);
@@ -506,7 +512,7 @@ function renderHistory(entries) {
           },
           false, true
         );
-        if (msg.usage?.input) costMonitor.setUsage(msg.usage);
+        if (msg.usage?.input) latestUsage = msg.usage;
       }
 
       for (const tc of toolCalls) {
@@ -517,7 +523,16 @@ function renderHistory(entries) {
     }
   }
 
+  // 恢复显示 — 浏览器一次性布局
+  messagesEl.style.display = '';
+
+  if (latestUsage) costMonitor.setUsage(latestUsage);
   costMonitor.updateDisplay();
+
+  // 延迟语法高亮，不阻塞首屏渲染
+  requestAnimationFrame(() => {
+    highlightRenderedCodeBlocks(messagesEl);
+  });
 
   // Jump to bottom instantly
   messagesEl.style.scrollBehavior = 'auto';

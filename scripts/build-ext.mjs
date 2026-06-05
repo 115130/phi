@@ -55,9 +55,10 @@ const options = {
   outfile: 'dist/extension.js',
   format: 'esm',
   platform: 'node',
-  target: 'node18',
+  target: 'node20',
   external: ['vscode'],
   minify: true,
+  drop: ['console', 'debugger'],
   banner: {
     js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);",
   },

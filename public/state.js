@@ -1,54 +1,15 @@
 /**
- * State Manager - Manages chat state
+ * State Manager — 精简版，仅保留实际使用的状态追踪
  */
 
 export class StateManager {
   constructor() {
-    this.messages = [];
-    this.toolExecutions = new Map(); // toolCallId -> tool execution data
+    this.toolExecutions = new Map();
     this.isStreaming = false;
-    this.currentStreamingMessage = null;
-    this.listeners = new Set();
-  }
-
-  addListener(callback) {
-    this.listeners.add(callback);
-  }
-
-  removeListener(callback) {
-    this.listeners.delete(callback);
-  }
-
-  notifyListeners() {
-    this.listeners.forEach(callback => callback());
-  }
-
-  addMessage(message) {
-    this.messages.push(message);
-    this.notifyListeners();
-  }
-
-  updateLastMessage(updates) {
-    if (this.messages.length > 0) {
-      const lastMessage = this.messages[this.messages.length - 1];
-      Object.assign(lastMessage, updates);
-      this.notifyListeners();
-    }
-  }
-
-  setStreamingMessage(message) {
-    this.currentStreamingMessage = message;
-    this.notifyListeners();
-  }
-
-  clearStreamingMessage() {
-    this.currentStreamingMessage = null;
-    this.notifyListeners();
   }
 
   setStreaming(isStreaming) {
     this.isStreaming = isStreaming;
-    this.notifyListeners();
   }
 
   addToolExecution(toolCallId, data) {
@@ -61,14 +22,12 @@ export class StateManager {
       isError: false,
       ...data
     });
-    this.notifyListeners();
   }
 
   updateToolExecution(toolCallId, updates) {
     const tool = this.toolExecutions.get(toolCallId);
     if (tool) {
       Object.assign(tool, updates);
-      this.notifyListeners();
     }
   }
 
@@ -76,15 +35,8 @@ export class StateManager {
     return this.toolExecutions.get(toolCallId);
   }
 
-  getAllToolExecutions() {
-    return Array.from(this.toolExecutions.values());
-  }
-
   reset() {
-    this.messages = [];
     this.toolExecutions.clear();
     this.isStreaming = false;
-    this.currentStreamingMessage = null;
-    this.notifyListeners();
   }
 }
