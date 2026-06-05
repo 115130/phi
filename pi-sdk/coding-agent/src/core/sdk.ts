@@ -225,7 +225,7 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 			model = restoredModel;
 		}
 		if (!model) {
-			modelFallbackMessage = `Could not restore model ${existingSession.model.provider}/${existingSession.model.modelId}`;
+			modelFallbackMessage = `无法恢复模型 ${existingSession.model.provider}/${existingSession.model.modelId}`;
 		}
 	}
 

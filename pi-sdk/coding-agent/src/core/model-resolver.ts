@@ -598,7 +598,7 @@ export async function restoreModelFromSession(
 		}
 		return {
 			model: currentModel,
-			fallbackMessage: `Could not restore model ${savedProvider}/${savedModelId} (${reason}). Using ${currentModel.provider}/${currentModel.id}.`,
+			fallbackMessage: `无法恢复模型 ${savedProvider}/${savedModelId}（${reason}）。正在使用 ${currentModel.provider}/${currentModel.id}。`,
 		};
 	}
 
@@ -628,7 +628,7 @@ export async function restoreModelFromSession(
 
 		return {
 			model: fallbackModel,
-			fallbackMessage: `Could not restore model ${savedProvider}/${savedModelId} (${reason}). Using ${fallbackModel.provider}/${fallbackModel.id}.`,
+			fallbackMessage: `无法恢复模型 ${savedProvider}/${savedModelId}（${reason}）。正在使用 ${fallbackModel.provider}/${fallbackModel.id}。`,
 		};
 	}
 
