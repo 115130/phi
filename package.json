@@ -186,11 +186,13 @@
     "typescript": "^5.3.0"
   },
   "dependencies": {
-    "@google/genai": "1.46.0",
     "@earendil-works/pi-agent-core": "file:./pi-sdk/agent",
     "@earendil-works/pi-ai": "file:./pi-sdk/ai",
     "@earendil-works/pi-coding-agent": "file:./pi-sdk/coding-agent",
     "@earendil-works/pi-tui": "file:./pi-sdk/tui",
+    "@google/genai": "1.46.0",
+    "@shikijs/core": "4.0.2",
+    "@shikijs/engine-javascript": "4.0.2",
     "shiki": "^4.0.2"
   }
 }
